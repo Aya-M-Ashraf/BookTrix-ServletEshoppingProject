@@ -18,13 +18,10 @@
         <link type="text/css" rel="stylesheet" href="Resources/css/default.css"/>
         <link type="text/css" rel="stylesheet" href="Resources/css/tooltipster.css"/>
 
-
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>  
         <script type="text/javascript" src="Resources/js/jquery.tooltipster.min.js"></script>
-
         <script type="text/javascript" src="Resources/js/html5shiv.min.js"></script>
         <script type="text/javascript" src="Resources/js/respond.min.js"></script>
-
         <script type="text/javascript" src="Resources/js/jquery.poptrox.min.js"></script>
         <script type="text/javascript" src="Resources/lib/hash.js"></script>
         <script type="text/javascript" src="Resources/lib/turn.min.js"></script>
@@ -73,7 +70,6 @@
             html5rocks.webdb.open = function () {
                 var dbSize = 5 * 1024 * 1024; // 5MB
                 html5rocks.webdb.db = openDatabase("Todo", "1", "Todo manager", dbSize);
-                //              alert("open");
             };
 
             html5rocks.webdb.onError = function (tx, e) {
@@ -81,35 +77,26 @@
             };
 
             html5rocks.webdb.onSuccess = function (tx, r) {
-                // re-render the data.
-                // loadTodoItems is defined in Step 4a
-                //               alert("inserted");
-                //    html5rocks.webdb.getAllTodoItems(loadTodoItems);
+
             };
             html5rocks.webdb.createTable = function () {
                 var db = html5rocks.webdb.db;
                 db.transaction(function (tx) {
-                    //          tx.executeSql("Drop table  cart");
                     tx.executeSql("CREATE TABLE IF NOT EXISTS " +
                             "cart(bookid INTEGER PRIMARY KEY,divText TEXT)", []);
                 });
             };
             html5rocks.webdb.addTodo = function (divId) {
                 divsHashmap();
-                //     alert("da5al add todo func");
-
                 var db = html5rocks.webdb.db;
                 db.transaction(function (tx) {
                     var text = hashmap[bookDivId];
-                    //             alert(text);
                     tx.executeSql("INSERT INTO cart(bookid,divText) VALUES (?,?)",
                             [bookDivId, text],
                             html5rocks.webdb.onSuccess,
                             html5rocks.webdb.onError);
                 });
             };
-
-            //    html5rocks.webdb.deleteTodo(")
 
             function allowDrop(ev) {
                 ev.preventDefault();
@@ -142,7 +129,7 @@
                 rowOutput = "<table> <tr>"
                 for (var i = 0; i < rs.rows.length; i++) {
                     rowOutput += "<td>" + renderTodo(rs.rows.item(i)) + "</td>";
-                    if (i % 5 == 0 && i != 0) {
+                    if (i % 5 === 0 && i !== 0) {
                         rowOutput += "<tr>";
                     }
                 }
@@ -151,8 +138,6 @@
                     totalCost = totalCost + parseInt(bookcost);
                 }
                 var costIs = "  <h4 class='text-danger'>Total Cost = " + totalCost + "$</h4>";
-
-
 
                 rowOutput += " </tr> </table> <br><br> " + costIs + "<input  type=submit value='Buy Now' >";
                 todoItems.innerHTML = rowOutput;
@@ -189,10 +174,7 @@
                 todoItems.innerHTML = rowOutput;
             }
             function renderTodo(row) {
-                //                     alert("qqqmyid"+row.bookid );
-
                 var bookcost = document.getElementById(row.bookid).getAttribute('cost');
-                // alert(bookcost);
                 return row.divText +
                         "cost = " + bookcost + "<br> [<a href='javascript:void(0);' onclick=\'html5rocks.webdb.deleteTodo(" + row.bookid + ");\'>Delete</a>]<br>";
             }
@@ -397,7 +379,7 @@
 
     <body onload="init()">  
 
-        <!--Srart section tool box   settings to choose color-->
+        <!-- start section tool box   settings to choose color-->
         <section class="option-box">
             <div class="color-option">
                 <h4>color-option</h4>
@@ -638,12 +620,6 @@
                     </div>
                 </div>
 
-
-
-
-
-
-
                 <div class="bookshelf" id="viewcart"  style="display: none" onmouseover ="hideCart()">
                     <h1><span>Your Cart</span></h1>
                     <P class="lead">These  are  all The Books  you Added to the Cart</P>
@@ -761,27 +737,15 @@
                         <li data-target="#carousel_testimonials" data-slide-to="2"></li>
                         <li data-target="#carousel_testimonials" data-slide-to="3"></li>
                     </ol>
-
-
-
                     <!-- Controls -->
-
-
                 </div>
-
                 <!--End slideshow-->
-
             </div>
-
-
-
         </section>
         <!--End Testimonials Section -->
 
 
         <!--Start  Section price-->
-
-
         <section class="price_table text-center">
             <div class="container">
                 <h1><b>Most Viewed Books </b></h1>
@@ -831,320 +795,258 @@
                             <div class="preview"> <a href="Resources\Work\samples\1-java\index.html" data-poptrox="iframe,950x515" class="btn btn-primary"> preview </a> </div>
                         </div>
                     </div>
-                    </section>
-                    <!--End Section price-->
+                </div>
+            </div>
 
+        </section>
+        <!--End Section price-->
 
+        <!--Start Section our team-->
+        <section class="our_team text-center">
+            <div class="team">
 
+                <div class="container">
+                    <h1>Our Team</h1>
+                    <div class="row">
+                        <div class="col-lg-2 col-sm-6">
+                            <div class="person wow pulse" data-wow-duration="2s" data-wow-offset="400">
+                                <img  class="img-circle" src="Resources/images/ahmad.jpg" width="150" height="200">
+                                <h3>Ahmed<br> Nazer</h3>
 
-
-
-
-
-
-
-                    <!--Start Section our team-->
-                    <section class="our_team text-center">
-                        <div class="team">
-
-                            <div class="container">
-                                <h1>Our Team</h1>
-                                <div class="row">
-                                    <div class="col-lg-2 col-sm-6">
-                                        <div class="person wow pulse" data-wow-duration="2s" data-wow-offset="400">
-                                            <img  class="img-circle" src="Resources/images/ahmad.jpg" width="150" height="200">
-                                            <h3>Ahmed<br> Nazer</h3>
-
-                                            <a href="https://www.facebook.com/eng.ahmedali2015"><i class="fa fa-facebook fa-lg"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-sm-6">
-                                        <div class="person wow pulse" data-wow-duration="2s" data-wow-offset="400">
-                                            <img  class="img-circle" src="Resources/images/ayaM.jpg" width="150" height="220">
-                                            <h3>Aya Ashraf</h3>
-
-                                            <a href="https://www.facebook.com/aya.mohamed.ashraf"><i class="fa fa-facebook fa-lg"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-sm-6">
-                                        <div class="person wow pulse" data-wow-duration="2s" data-wow-offset="400">
-                                            <img class="img-circle" src="Resources/images/hend.jpg" width="150" height="200">
-                                            <h3>Hend Muhammad</h3>
-
-                                            <a href="https://www.facebook.com/hend.muhammadrizq/"><i class="fa fa-facebook fa-lg"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-sm-6">
-                                        <div class="person wow pulse" data-wow-duration="2s" data-wow-offset="400">
-                                            <img class="img-circle" src="Resources/images/wagdi.jpg" width="150" height="220">
-                                            <h3>Ahmed<br> Wagdy</h3>
-
-                                            <a href="https://www.facebook.com/ahmedwagdi99"><i class="fa fa-facebook fa-lg"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-2 col-sm-6">
-                                        <div class="person wow pulse" data-wow-duration="2s" data-wow-offset="400">
-                                            <img  class="img-circle" src="Resources/images/aya.jpg" width="150" height="200">
-                                            <h3>Aya radwan</h3>
-
-                                            <a href="https://www.facebook.com/aya.radwan.52"><i class="fa fa-facebook fa-lg"></i></a>
-                                        </div>
-                                    </div>
-
-
-
-                                </div>
+                                <a href="https://www.facebook.com/eng.ahmedali2015"><i class="fa fa-facebook fa-lg"></i></a>
                             </div>
                         </div>
-                    </section>
-                    <!--End Section our team-->
+                        <div class="col-lg-2 col-sm-6">
+                            <div class="person wow pulse" data-wow-duration="2s" data-wow-offset="400">
+                                <img  class="img-circle" src="Resources/images/ayaM.jpg" width="150" height="220">
+                                <h3>Aya Ashraf</h3>
 
-
-
-
-                    <!--Start Section  Subscribe-->
-                    <section class="subscribe text-center">
-
-                        <div class="container">
-                            <h1>Keep in Touch</h1>
-                            <p class="lead">Subscribe to our latest books  ... don't worry about spam we hate it Too.</p>
-                            <form class="form-inline">
-                                <input class="form-control input-lg" type="text" placeholder="Write Your Email">
-                                <button class="btn btn-danger btn-lg"><i class="fa fa-edit fa-lg" ></i>Subscribe</button>
-                            </form>
-                        </div>
-
-                    </section>
-                    <!--End Section  Subscribe-->
-
-
-
-                    <section class="our text-center">
-                        <div class="t">
-
-                            <div class="container">
-                                <h1>Statstics</h1>
-                                <div class="row">
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="stats">
-                                            <i class="fa fa-users fa-5x"></i>
-                                            <br><br>
-                                            <p>100</p>
-                                            <br><br>
-                                            <span>Total Users</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="stats">
-                                            <i class="fa fa-comments fa-5x"></i>
-                                            <br><br>
-                                            <p>7</p>
-                                            <br><br>
-                                            <span>Active Users</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="stats">       <i class="fa fa-suitcase fa-5x"></i>
-                                            <br><br>
-                                            <p>300$</p>
-                                            <br><br>
-                                            <span>Avg Cost of Book </span>                                           
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3 col-sm-6">
-                                        <div class="stats">
-                                            <i class="fa fa-support fa-5x"></i>
-                                            <br><br>
-                                            <p>30</p>
-                                            <br><br>
-                                            <span>Our Rank</span>
-
-                                        </div>
-                                    </div>
-
-
-                                </div>
-
+                                <a href="https://www.facebook.com/aya.mohamed.ashraf"><i class="fa fa-facebook fa-lg"></i></a>
                             </div>
                         </div>
-                    </section>
+                        <div class="col-lg-2 col-sm-6">
+                            <div class="person wow pulse" data-wow-duration="2s" data-wow-offset="400">
+                                <img class="img-circle" src="Resources/images/hend.jpg" width="150" height="200">
+                                <h3>Hend Muhammad</h3>
 
-                    <!--End Section Statistics-->
-
-
-
-
-
-
-
-
-
-
-                    <!--satrt of section our skills -->
-                    <section class="our-skills" >
-                        <div class ="container">
-                            <div class="row">
-                                <!--start progress skill-->
-                                <div class="col-md-5">
-                                    <div class="skills-progress">
-                                        <h3>Rates of our Categories </h3>
-                                        <div class="progress">
-                                            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%"> Fashion Books
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%"> Technology Books
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:90%">Children Books
-                                            </div>
-                                        </div>
-                                        <div class="progress">
-                                            <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width:95%"> Audio Books
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <!--end progress skills-->
-
-                                <!--start team info-->
-                                <div class="col-md-6 col-md-offest-1" id="aboutdiv">
-                                    <div class="skilss-info"  >
-                                        <h3 >About Library </h3>
-                                        <p class="lead"> 
-                                            We believe in access for all. <br>
-                                            We will be efficient and effective in all we do to provide quality service . <br>
-                                            We will be innovative and timely in our response to technology and the information needs of our community. <br>
-                                            We will work in partnership with other organizations to further the Library's mission.</p>
-                                    </div>
-                                </div>
-                                <!--end team info-->
-
+                                <a href="https://www.facebook.com/hend.muhammadrizq/"><i class="fa fa-facebook fa-lg"></i></a>
                             </div>
                         </div>
-                    </section>
+                        <div class="col-lg-2 col-sm-6">
+                            <div class="person wow pulse" data-wow-duration="2s" data-wow-offset="400">
+                                <img class="img-circle" src="Resources/images/wagdi.jpg" width="150" height="220">
+                                <h3>Ahmed<br> Wagdy</h3>
 
+                                <a href="https://www.facebook.com/ahmedwagdi99"><i class="fa fa-facebook fa-lg"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-6">
+                            <div class="person wow pulse" data-wow-duration="2s" data-wow-offset="400">
+                                <img  class="img-circle" src="Resources/images/aya.jpg" width="150" height="200">
+                                <h3>Aya radwan</h3>
 
-                    <!--end of section our skills-->
+                                <a href="https://www.facebook.com/aya.radwan.52"><i class="fa fa-facebook fa-lg"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--End Section our team-->
 
-                    <!--start Section Contact Us-->
-                    <section class="contact-us text-center">
-                        <div class="fields">
-                            <div class="container">
-                                <div class="row">
-                                    <i class="fa fa--headphones fa-5x"></i>
-                                    <h1>Tell Us What You Fell</h1>
-                                    <p class="lead">Feel Free To Contact Us Anytime</p>
+        <!--Start Section  Subscribe-->
+        <section class="subscribe text-center">
 
+            <div class="container">
+                <h1>Keep in Touch</h1>
+                <p class="lead">Subscribe to our latest books  ... don't worry about spam we hate it Too.</p>
+                <form class="form-inline">
+                    <input class="form-control input-lg" type="text" placeholder="Write Your Email">
+                    <button class="btn btn-danger btn-lg"><i class="fa fa-edit fa-lg" ></i>Subscribe</button>
+                </form>
+            </div>
 
+        </section>
+        <!--End Section  Subscribe-->
 
-                                    <!--start contact form-->
+        <section class="our text-center">
+            <div class="t">
 
-                                    <form role="form">
-                                        <div class="col-md-6 wow bounceInLeft" data-wow-duration="1s" data-wow-offset="300">
-                                            <div class="form-group">
-                                                <input type="text" class="form-control input-lg" placeholder="User-name">
-                                            </div>
+                <div class="container">
+                    <h1>Statstics</h1>
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="stats">
+                                <i class="fa fa-users fa-5x"></i>
+                                <br><br>
+                                <p>100</p>
+                                <br><br>
+                                <span>Total Users</span>
+                            </div>
+                        </div>
 
+                        <div class="col-md-3 col-sm-6">
+                            <div class="stats">
+                                <i class="fa fa-comments fa-5x"></i>
+                                <br><br>
+                                <p>7</p>
+                                <br><br>
+                                <span>Active Users</span>
+                            </div>
+                        </div>
 
-                                            <div class="form-group">
-                                                <input type="text" class="form-control input-lg" placeholder="Email">
-                                            </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="stats">       <i class="fa fa-suitcase fa-5x"></i>
+                                <br><br>
+                                <p>300$</p>
+                                <br><br>
+                                <span>Avg Cost of Book </span>                                           
+                            </div>
+                        </div>
 
+                        <div class="col-md-3 col-sm-6">
+                            <div class="stats">
+                                <i class="fa fa-support fa-5x"></i>
+                                <br><br>
+                                <p>30</p>
+                                <br><br>
+                                <span>Our Rank</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--End Section Statistics-->
 
-                                            <div class="form-group">
-                                                <input type="text" class="form-control input-lg" placeholder="Phone">
-                                            </div>
-
-                                        </div>
-                                        <div class="col-md-6 wow bounceInRigt" data-wow-duration="1s" data-wow-offset="300">
-                                            <div class="form-group">
-                                                <textarea class="form-control input-lg" placeholder="Enter Your Message"></textarea>
-                                            </div>
-                                            <a href="mailto:name1@rapidtables.com?cc=name2@rapidtables.com&bcc=name3@rapidtables.com&amp;subject=The%20subject%20of%20the%20email&amp;body=The%20body%20of%20the%20email">
-                                                <button type="button" class="btn btn-danger btn-lg btn-block">Contact Us</button></a>
-                                        </div>
-                                    </form>
-                                    <!--end contact form-->
+        <!--satrt of section our skills -->
+        <section class="our-skills" >
+            <div class ="container">
+                <div class="row">
+                    <!--start progress skill-->
+                    <div class="col-md-5">
+                        <div class="skills-progress">
+                            <h3>Rates of our Categories </h3>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%"> Fashion Books
+                                </div>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%"> Technology Books
+                                </div>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:90%">Children Books
+                                </div>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width:95%"> Audio Books
                                 </div>
                             </div>
 
                         </div>
+                    </div>
+                    <!--end progress skills-->
 
-                    </section>
+                    <!--start team info-->
+                    <div class="col-md-6 col-md-offest-1" id="aboutdiv">
+                        <div class="skilss-info"  >
+                            <h3 >About Library </h3>
+                            <p class="lead"> 
+                                We believe in access for all. <br>
+                                We will be efficient and effective in all we do to provide quality service . <br>
+                                We will be innovative and timely in our response to technology and the information needs of our community. <br>
+                                We will work in partnership with other organizations to further the Library's mission.</p>
+                        </div>
+                    </div>
+                    <!--end team info-->
+                </div>
+            </div>
+        </section>
+        <!--end of section our skills-->
 
-                    <!--end  Section Contact Us-->
+        <!--start Section Contact Us-->
+        <section class="contact-us text-center">
+            <div class="fields">
+                <div class="container">
+                    <div class="row">
+                        <i class="fa fa--headphones fa-5x"></i>
+                        <h1>Tell Us What You Fell</h1>
+                        <p class="lead">Feel Free To Contact Us Anytime</p>
 
-
-
-
-
-
-
-
-
-
-
-
-                    <section class="footer">
-                        <div class="container">
-
-                            <div class="row">
-
-
-                                <div class="col-lg-4 col-md-6">
-
-
-                                    <ul class="list-unstyled social-list">
-
-                                        <li><img src="Resources/images/social-bookmark/1.png"></li>
-                                        <li><img src="Resources/images/social-bookmark/2.png"></li>
-                                        <li><img src="Resources/images/social-bookmark/3.png"></li>
-                                        <li><img src="Resources/images/social-bookmark/4.png"></li>
-                                        <li><img src="Resources/images/social-bookmark/5.png"></li>
-                                        <li><img src="Resources/images/social-bookmark/6.png"></li>
-                                    </ul>
-
-
+                        <!--start contact form-->
+                        <form role="form">
+                            <div class="col-md-6 wow bounceInLeft" data-wow-duration="1s" data-wow-offset="300">
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-lg" placeholder="User-name">
                                 </div>
 
 
-
-                                </section>
-                                <!--end Section Ultimate Footer-->
-
-                                <!--start The Loading Screen-->
-
-
-                                <section class="loading-overlay">
-
-                                    <div class="spinner">
-                                        <div class="double-bounce1"></div>
-                                        <div class="double-bounce2"></div>
-                                    </div>
-
-
-                                </section>
-                                <!--end The Loading Screen-->
-
-                                <!--start scroll to top-->
-                                <div id="scroll-top">
-                                    <i class="fa fa-chevron-up fa-3x"></i>
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-lg" placeholder="Email">
                                 </div>
-                                <!--end scroll to top-->
 
-                                <script src="Resources/js/bootstrap.min.js"></script>
-                                <script src="Resources/js/plugin.js"></script>
-                                <script src="Resources/js/wow.min.js"></script>
 
-                                <script>
-                            new WOW().init();
-                                </script>
-                                </body>
-                                </html>
+                                <div class="form-group">
+                                    <input type="text" class="form-control input-lg" placeholder="Phone">
+                                </div>
 
+                            </div>
+                            <div class="col-md-6 wow bounceInRigt" data-wow-duration="1s" data-wow-offset="300">
+                                <div class="form-group">
+                                    <textarea class="form-control input-lg" placeholder="Enter Your Message"></textarea>
+                                </div>
+                                <a href="mailto:name1@rapidtables.com?cc=name2@rapidtables.com&bcc=name3@rapidtables.com&amp;subject=The%20subject%20of%20the%20email&amp;body=The%20body%20of%20the%20email">
+                                    <button type="button" class="btn btn-danger btn-lg btn-block">Contact Us</button></a>
+                            </div>
+                        </form>
+                        <!--end contact form-->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--end  Section Contact Us-->
+
+        <section class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <ul class="list-unstyled social-list">
+                            <li><img src="Resources/images/social-bookmark/1.png"></li>
+                            <li><img src="Resources/images/social-bookmark/2.png"></li>
+                            <li><img src="Resources/images/social-bookmark/3.png"></li>
+                            <li><img src="Resources/images/social-bookmark/4.png"></li>
+                            <li><img src="Resources/images/social-bookmark/5.png"></li>
+                            <li><img src="Resources/images/social-bookmark/6.png"></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--end Section Ultimate Footer-->
+
+        <!--start The Loading Screen-->
+        <section class="loading-overlay">
+
+            <div class="spinner">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+            </div>
+        </section>
+        <!--end The Loading Screen-->
+
+        <!--start scroll to top-->
+        <div id="scroll-top">
+            <i class="fa fa-chevron-up fa-3x"></i>
+        </div>
+        <!--end scroll to top-->
+
+        <script src="Resources/js/bootstrap.min.js"></script>
+        <script src="Resources/js/plugin.js"></script>
+        <script src="Resources/js/wow.min.js"></script>
+
+        <script>
+                        new WOW().init();
+        </script>
+    </body>
+</html>
