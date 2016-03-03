@@ -1,0 +1,112 @@
+.maindiv {
+margin:5px auto;
+width:980px;
+height:800px; /*bekbr elmash */
+
+
+font-family:'Droid Serif',serif;
+font-size:14px
+}
+.title {
+width:500px;
+height:70px;
+text-shadow:2px 2px 2px #cfcfcf;
+font-size:16px;
+text-align:center
+}
+.form_div {
+width:70%;
+float:left;
+
+
+}
+form {
+width:300px;
+border:1px dashed #E41B17;
+padding:0px 30px 40px;
+margin-left:300px;
+margin-top: -130px;/* benzl eh form*/
+
+background-color:#f0f8ff;
+/*hhhhhhhhhhhhhhhhhhhhhh*/
+}
+
+
+
+textarea {
+width:100%;
+height:60px;
+border-radius:2px;
+box-shadow:0 0 1px 2px #E41B17;
+margin-top:10px;
+padding:7px;
+border:none
+}
+.input {
+width:100%;
+height:30px;
+border-radius:2px;
+box-shadow:0 0 1px 2px #E41B17;
+margin-top:10px;
+padding:7px;
+border:none;
+margin-bottom:20px
+}
+.submit {
+color:#fff;
+border-radius:3px;
+background:#E41B17;
+padding:5px;
+margin-top:40px;
+border:none;
+width:100%;
+height:30px;
+box-shadow:0 0 1px 2px #E41B17;
+font-size:18px
+}
+p {
+color:red;
+text-align:center
+}
+span {
+text-align:center;
+
+}
+select {
+width:100%;
+height:30px;
+border-radius:2px;
+box-shadow:0 0 1px 2px #E41B17;
+margin-top:10px;
+padding:7px;
+border:none;
+margin-bottom:20px
+}/*jjjjjjhhhhhhhhhhhhhhhhh*/
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    width: 50%;
+    height: 100%;
+    border-collapse: collapse;
+   margin-left: 300px;
+}
+
+#customers td, #customers th {
+    font-size: 1em;
+    border: 1px solid #E41B17;
+    padding: 3px 7px 2px 7px;
+    
+}
+
+#customers th {
+    font-size: 1.1em;
+    text-align: left;
+    padding-top: 5px;
+    padding-bottom: 4px;
+    background-color: #E41B17;
+    color: #ffffff;/*da loan el kalam*/
+}
+
+#customers tr.alt td {
+    color: #000000;/*da loan el kalam el 2  4 6*/
+    background-color: #EAF2D3;
+}

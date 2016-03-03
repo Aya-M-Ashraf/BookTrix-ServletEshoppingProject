@@ -1,0 +1,62 @@
+/*start about us*/
+
+.breadcrumb-holder{
+	
+	background-color: #F5F5F5;
+}
+
+.breadcrumb{
+padding-top: 20px;
+padding-bottom: 20px;
+	/*padding: 10px 0;*/
+	margin: 0;
+
+
+}
+.about-us{
+	padding: 70px 0;
+}
+.about-us h1 {
+	font-family: 'Raleway',sans-serif;
+	letter-spacing: -3px;
+	font-size: 62px
+
+}
+.about-us hr {
+	width: 70%;
+}
+
+
+.about-features{
+	padding: 0 0 70px;
+}
+
+.about-features h3
+{
+
+	font-family: 'Raleway',sans-serif;
+	letter-spacing: -1px;
+}
+.about-features p{
+
+	margin-bottom: 20px;
+}
+.about-admin{
+background-color: #EEE;
+padding-top: 40px;
+
+}
+.about-admin h2{
+font-family: 'Raleway',sans-serif;
+
+}
+.about-admin .lead{
+
+	line-height: 1.8
+}
+.about-admin .btn-primary{
+background-color: #333;
+	border-color: #333;
+	}
+
+/*end about us*/

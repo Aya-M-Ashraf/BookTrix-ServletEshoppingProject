@@ -1,14 +1,1150 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+        <link rel="stylesheet" href="Resources/css/bootstrap.css"> 
+        <link rel="stylesheet" href="Resources/css/font-awesome.min.css">   
+        <link rel="stylesheet" href="Resources/css/style.css" >
+        <link rel="stylesheet" href="Resources/css/media.css" >
+        <link rel="stylesheet" href="Resources/css/defult-theme.css" >
+        <link rel="stylesheet" href='Resources/css/hover.css'>
+        <link rel="stylesheet" href='Resources/css/animate.css'>
+        <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700'>
+        <link type="text/css" rel="stylesheet" href="Resources/css/jquery.ui.css"/>
+        <link type="text/css" rel="stylesheet" href="Resources/css/default.css"/>
+        <link type="text/css" rel="stylesheet" href="Resources/css/tooltipster.css"/>
+
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>  
+        <script type="text/javascript" src="Resources/js/jquery.tooltipster.min.js"></script>
+
+        <script type="text/javascript" src="Resources/js/html5shiv.min.js"></script>
+        <script type="text/javascript" src="Resources/js/respond.min.js"></script>
+
+        <script type="text/javascript" src="Resources/js/jquery.poptrox.min.js"></script>
+        <script type="text/javascript" src="Resources/lib/hash.js"></script>
+        <script type="text/javascript" src="Resources/lib/turn.min.js"></script>
+        <script type="text/javascript" src="Resources/lib/zoom.min.js"></script>
+        <script type="text/javascript" src="Resources/lib/bookshelf.js"></script>
+
+        <style>
+            body { font-family: sans-serif; font-size: 12pt; color: #444; line-height: 1.5em; } 
+            h1 { font-size: 1.5em; } 
+            #wrapper { max-width: 800px; margin: 0 auto; text-align: center; } 
+        </style>
+        <style>
+            input[type=text] {padding:5px; border:2px solid #ccc; -webkit-border-radius: 5px;border-radius: 5px;}
+            input[type=text]:focus {border-color:#333;}
+            input[type=password] {padding:5px; border:2px solid #ccc; -webkit-border-radius: 5px;border-radius: 5px;}
+            input[type=password]:focus {border-color:#333;}
+            input[type=submit] {padding: 15px 32px; background:#ccc; border:0 none;cursor:pointer;-webkit-border-radius: 5px;border-radius: 5px; }
+            table {border-collapse: collapse;width: 100%;}
+            th, td {padding: 8px;}
+            tr:nth-child(even){background-color: #f2f2f2}
+            th {background-color: #a73f2d; color: white;}
+        </style>
+        <script>
+            $(function () {
+
+                var foo = $('.gallery');
+                foo.poptrox({
+                    usePopupCaption: true
+                });
+
+                var preview = $('.preview');
+                preview.poptrox({
+                    usePopupCaption: true
+                });
+            });
+        </script>
+        <script>
+            var hashmap = {};
+            var shelfHashmapVar = {};
+
+            var html5rocks = {};
+            html5rocks.webdb = {};
+
+            html5rocks.webdb.db = null;
+
+            html5rocks.webdb.open = function () {
+                var dbSize = 5 * 1024 * 1024; // 5MB
+                html5rocks.webdb.db = openDatabase("Todo", "1", "Todo manager", dbSize);
+                //              alert("open");
+            };
+
+            html5rocks.webdb.onError = function (tx, e) {
+                //            alert("There has been an error: " + e.message);
+            };
+
+            html5rocks.webdb.onSuccess = function (tx, r) {
+                // re-render the data.
+                // loadTodoItems is defined in Step 4a
+                //               alert("inserted");
+                //    html5rocks.webdb.getAllTodoItems(loadTodoItems);
+            };
+            html5rocks.webdb.createTable = function () {
+                var db = html5rocks.webdb.db;
+                db.transaction(function (tx) {
+                    //          tx.executeSql("Drop table  cart");
+                    tx.executeSql("CREATE TABLE IF NOT EXISTS " +
+                            "cart(bookid INTEGER PRIMARY KEY,divText TEXT)", []);
+                });
+            };
+            html5rocks.webdb.addTodo = function (divId) {
+                divsHashmap();
+                //     alert("da5al add todo func");
+
+                var db = html5rocks.webdb.db;
+                db.transaction(function (tx) {
+                    var text = hashmap[bookDivId];
+                    //             alert(text);
+                    tx.executeSql("INSERT INTO cart(bookid,divText) VALUES (?,?)",
+                            [bookDivId, text],
+                            html5rocks.webdb.onSuccess,
+                            html5rocks.webdb.onError);
+                });
+            };
+
+            //    html5rocks.webdb.deleteTodo(")
+
+            function allowDrop(ev) {
+                ev.preventDefault();
+            }
+            var bookDivId;
+            function drag(ev) {
+                ev.dataTransfer.setData("text", ev.target.id);
+                bookDivId = ev.target.id;
+            }
+
+            function drop(ev) {
+                ev.preventDefault();
+                var data = ev.dataTransfer.getData("text");
+                html5rocks.webdb.addTodo(bookDivId);
+                html5rocks.webdb.getAllTodoItems(loadTodoItems);
+            }
+
+            function showAllCart() {
+                $("#viewcart").show();
+                $("#allbooks").hide();
+                $("#techbooks").hide();
+                $("#fashionbooks").hide();
+                html5rocks.webdb.getAllTodoItems(loadAllTodoItems);
+            }
+            function loadAllTodoItems(tx, rs) {
+                var rowOutput = "";
+                var bookcost = 0;
+                var totalCost = 0;
+                var todoItems = document.getElementById("allcart");
+                rowOutput = "<table> <tr>"
+                for (var i = 0; i < rs.rows.length; i++) {
+                    rowOutput += "<td>" + renderTodo(rs.rows.item(i)) + "</td>";
+                    if (i % 5 == 0 && i != 0) {
+                        rowOutput += "<tr>";
+                    }
+                }
+                for (var i = 0; i < rs.rows.length; i++) {
+                    bookcost = document.getElementById(rs.rows.item(i).bookid).getAttribute('cost');
+                    totalCost = totalCost + parseInt(bookcost);
+                }
+                var costIs = "  <h4 class='text-danger'>Total Cost = " + totalCost + "$</h4>";
+
+
+
+                rowOutput += " </tr> </table> <br><br> " + costIs + "<input  type=submit value='Buy Now' >";
+                todoItems.innerHTML = rowOutput;
+            }
+
+            html5rocks.webdb.getAllTodoItems = function (renderFunc) {
+                var db = html5rocks.webdb.db;
+                db.transaction(function (tx) {
+                    tx.executeSql("SELECT * FROM cart", [], renderFunc,
+                            html5rocks.webdb.onError);
+                });
+            };
+            function loadTodoItems(tx, rs) {
+                var rowOutput = "";
+                var bookcost = 0;
+                var totalCost = 0;
+
+                var todoItems = document.getElementById("mycart");
+
+                for (var i = 0; i < rs.rows.length; i++) {
+                    bookcost = document.getElementById(rs.rows.item(i).bookid).getAttribute('cost');
+                    totalCost = totalCost + parseInt(bookcost);
+                }
+                var costIs = "  <h4 class='text-danger'>Total Cost = " + totalCost + "$</h4>";
+                if (totalCost != 0)
+                    rowOutput += costIs;
+                for (var i = rs.rows.length - 1; i > -1; i--) {
+                    rowOutput += renderTodo(rs.rows.item(i));
+                    if ((rs.rows.length - i + 1) > 3) {
+                        break;
+                    }
+                }
+
+                todoItems.innerHTML = rowOutput;
+            }
+            function renderTodo(row) {
+                //                     alert("qqqmyid"+row.bookid );
+
+                var bookcost = document.getElementById(row.bookid).getAttribute('cost');
+                // alert(bookcost);
+                return row.divText +
+                        "cost = " + bookcost + "<br> [<a href='javascript:void(0);' onclick=\'html5rocks.webdb.deleteTodo(" + row.bookid + ");\'>Delete</a>]<br>";
+            }
+            html5rocks.webdb.deleteTodo = function (id) {
+                var db = html5rocks.webdb.db;
+                db.transaction(function (tx) {
+                    var x = document.getElementById(id).getAttribute('cost');
+                    tx.executeSql("DELETE FROM cart WHERE bookid =?", [id],
+                            html5rocks.webdb.onSuccess,
+                            html5rocks.webdb.onError);
+                });
+                html5rocks.webdb.getAllTodoItems(loadTodoItems);
+                html5rocks.webdb.getAllTodoItems(loadAllTodoItems);
+
+            };
+
+            function divsHashmap() {
+
+                hashmap[1] = '<div id = "1" cost =520 class="gallery" > <div class="sample thumb1"></div> </a></div>';
+                hashmap[2] = '<div id = "2" cost =350 class="gallery" > <div class="sample thumb2"></div> </a></div>';
+                hashmap[3] = '<div id = "3" cost =500 class="gallery" > <div class="sample thumb3"></div> </a></div>';
+                hashmap[4] = '<div id = "4" cost =100 class="gallery" > <div class="sample thumb4"></div> </a></div>';
+                hashmap[5] = '<div id = "5" cost =400 class="gallery"> <div class="sample thumb5"></div> </a></div>';
+                hashmap[6] = '<div id = "6" cost =460 class="gallery"> <div class="sample thumb6"></div> </a></div>';
+                hashmap[7] = '<div id = "7" cost =900 class="gallery"> <div class="sample thumb7"></div> </a></div>';
+                hashmap[8] = '<div id = "8" cost =480 class="gallery"> <div class="sample thumb8"></div> </a></div>';
+                hashmap[9] = '<div id = "9" cost =280 class="gallery"> <div class="sample thumb9"></div> </a></div>';
+                hashmap[10] = '<div id = "10" cost =520 class="gallery" > <div class="sample thumb10"></div> </a></div>';
+                hashmap[11] = '<div id = "11" cost =350 class="gallery" > <div class="sample thumb11"></div> </a></div>';
+                hashmap[12] = '<div id = "12" cost =500 class="gallery" > <div class="sample thumb12"></div> </a></div>';
+                hashmap[13] = '<div id = "13" cost =100 class="gallery" > <div class="sample thumb13"></div> </a></div>';
+                hashmap[14] = '<div id = "14" cost =400 class="gallery"> <div class="sample thumb14"></div> </a></div>';
+                hashmap[15] = '<div id = "15" cost =460 class="gallery"> <div class="sample thumb15"></div> </a></div>';
+                hashmap[16] = '<div id = "16" cost =900 class="gallery"> <div class="sample thumb16"></div> </a></div>';
+                hashmap[17] = '<div id = "17" cost =480 class="gallery"> <div class="sample thumb17"></div> </a></div>';
+                hashmap[18] = '<div id = "18" cost =280 class="gallery"> <div class="sample thumb18"></div> </a></div>';
+                hashmap[19] = '<div id = "19" cost =480 class="gallery"> <div class="sample thumb19"></div> </a></div>';
+                hashmap[20] = '<div id = "20" cost =280 class="gallery"> <div class="sample thumb20"></div> </a></div>';
+
+
+            }
+
+            function init() {
+                html5rocks.webdb.open();
+                html5rocks.webdb.createTable();
+                html5rocks.webdb.getAllTodoItems(loadTodoItems);
+            }
+
+            $(document).ready(function () {
+
+                $('#1').tooltipster({
+                    content: $('<span><img src="Resources/pics/book1.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#2').tooltipster({
+                    content: $('<span><img src="Resources/pics/book2.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#3').tooltipster({
+                    content: $('<span><img src="Resources/pics/book3.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#4').tooltipster({
+                    content: $('<span><img src="Resources/pics/book4.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#5').tooltipster({
+                    content: $('<span><img src="Resources/pics/book5.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#6').tooltipster({
+                    content: $('<span><img src="Resources/pics/book6.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#7').tooltipster({
+                    content: $('<span><img src="Resources/pics/book7.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#8').tooltipster({
+                    content: $('<span><img src="Resources/pics/book8.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#9').tooltipster({
+                    content: $('<span><img src="Resources/pics/book9.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+
+                $('#10').tooltipster({
+                    content: $('<span><img src="Resources/pics/book10.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#11').tooltipster({
+                    content: $('<span><img src="Resources/pics/book11.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#12').tooltipster({
+                    content: $('<span><img src="Resources/pics/book12.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#13').tooltipster({
+                    content: $('<span><img src="Resources/pics/book13.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#14').tooltipster({
+                    content: $('<span><img src="Resources/pics/book14.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#15').tooltipster({
+                    content: $('<span><img src="Resources/pics/book15.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+
+                $('#shopping-cart').tooltipster({
+                    content: $('<span id="tooltip">Click Here To Show Your Cart</span>')
+                });
+
+                $('#tooltip3').tooltipster({
+                    content: $('<span><img src="Resources/audio/dracula.jpg"/><br> <strong>Dracula<br>Auther: Bram Stoker</strong></span>')
+                });
+                $('#tooltip4').tooltipster({
+                    content: $('<span><img src="Resources/audio/broken.jpg"/><br> <strong>The Broken Circle<br>Auther: Cheryl Potter</strong></span>')
+                });
+                $('#tooltip5').tooltipster({
+                    content: $('<span><img src="Resources/audio/living.jpg"/><br> <strong>Living On Air<br>Auther: Joe Cipriano</strong></span>')
+                });
+            });
+        </script>
+        <script>
+            function allbooksfun() {
+                $("#allbooks").show();
+                $("#techbooks").hide();
+                $("#fashionbooks").hide();
+            }
+            function techbooksfun() {
+                $("#allbooks").hide();
+                $("#techbooks").show();
+                $("#fashionbooks").hide();
+            }
+            function fashionbooksfun() {
+                $("#allbooks").hide();
+                $("#techbooks").hide();
+                $("#fashionbooks").show();
+            }
+            function showCart() {
+                $("#mycart").slideToggle(1000);
+            }
+        </script>
+        <script>
+            function allbooksfun() {
+                $("#allbooks").show();
+                $("#techbooks").hide();
+                $("#fashionbooks").hide();
+                $("#childrenbooks").hide();
+                $("#audiobooks").hide();
+                $("#viewcart").hide();
+
+            }
+            function techbooksfun() {
+                $("#allbooks").hide();
+                $("#techbooks").show();
+                $("#fashionbooks").hide();
+                $("#childrenbooks").hide();
+                $("#audiobooks").hide();
+                $("#viewcart").hide();
+
+            }
+            function fashionbooksfun() {
+                $("#allbooks").hide();
+                $("#techbooks").hide();
+                $("#fashionbooks").show();
+                $("#childrenbooks").hide();
+                $("#audiobooks").hide();
+                $("#viewcart").hide();
+            }
+            function childrenbooksfun() {
+                $("#allbooks").hide();
+                $("#techbooks").hide();
+                $("#fashionbooks").hide();
+                $("#childrenbooks").show();
+                $("#audiobooks").hide();
+                $("#viewcart").hide();
+
+            }
+            function audiobooksfun() {
+                $("#allbooks").hide();
+                $("#techbooks").hide();
+                $("#fashionbooks").hide();
+                $("#childrenbooks").hide();
+                $("#audiobooks").show();
+                $("#viewcart").hide();
+
+            }
+
+
+            function showCart() {
+                $("#mycart").show(1000);
+            }
+            function hideCart() {
+                $("#mycart").hide(1000);
+            }
+
+        </script>
+
+        <script>
+            function myMusic() {
+                if (document.getElementById('playMusic').paused) {
+                    document.getElementById('playMusic').play();
+                    document.getElementById('music-button').innerHTML = "<img src=\"Resources/pics/images.jpg\"  height=\"35\" width=\"35\"/>";
+                }
+                else {
+                    document.getElementById('playMusic').pause();
+                    document.getElementById('music-button').innerHTML = "<img src=\"Resources/pics/Picture1.png\"  height=\"35\" width=\"35\"/>";
+                }
+            }
+        </script>
     </head>
-    <body>
-        <div>TODO write content</div>
-        <p>wagdi edit</p>
-        <p> Ahmed's Edit</p>
-        <p>Aya's Edit</p>
-    </body>
-</html>
+
+    <body onload="init()">  
+
+        <!--Srart section tool box   settings to choose color-->
+        <section class="option-box">
+            <div class="color-option">
+                <h4>color-option</h4>
+                <ul class="list-unstyled">
+                    <li data-value="Resources/css/defult-theme.css"></li>
+                    <li data-value="Resources/css/perple-theme.css"></li>
+                    <li data-value="Resources/css/blue-theme.css"></li>
+                    <li data-value="Resources/css/yellow-theme.css"></li>
+                </ul>
+            </div>
+            <i class="fa fa-gear fa-3x gear-check"></i>
+        </section>
+        <!--end section tool box-->
+
+
+        <!--menu form-->
+        <nav class=" navbar navbar-inverse  navbar-fixed-top" role="navigation" >
+            <div class="container">
+
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#ournavbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand hvr-pop" href="#">Book <span>TriX</span></a>
+
+<!--                    <button id="music-button" onclick="myMusic();">
+                        <img id="i" src="Resources/pics/images.jpg" height="35" width="35"></button>
+                    <audio id="playMusic" autoplay>
+                        <source src="Resources/audio/Karaindrou Eleni- Eternity and a day.mp3">
+                    </audio>-->
+
+                </div>
+                <div class="collapse navbar-collapse" id="ournavbar">
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li ><a href="login.html">Login</a></li>
+                        <li ><a href="signUp.html">Sign UP</a></li>
+                        <li class="active"><a href="index.html">Home<span class="sr-only">(current)</span></a></li>
+                        <li><a href="#aboutdiv">About</a></li>
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories<span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#allbooks" onclick="allbooksfun()">All Books</a></li>
+                                <li><a href="#techbooks" onclick="techbooksfun()">Technology</a></li>
+                                <li><a href="#fashionbooks" onclick="fashionbooksfun()">Fashion</a></li>
+                                <li><a href="#childrenbooks" onclick="childrenbooksfun()">Children</a></li>
+                                <li><a href="#audiobooks" onclick="audiobooksfun()">Audio</a></li>
+
+                            </ul>
+                        </li>
+                        <li ><a  href="#viewcart" onclick="showAllCart();">Cart</a></li>
+
+                    </ul>
+                    <form class="navbar-form navbar-left" role="search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+
+                </div><!-- /.navbar-collapse -->
+            </div><!-- /.container-fluid -->
+        </nav>
+
+
+        <!---start slideshow-->
+        <div id="myslide" class="carousel slide" data-ride="carousel">
+            <!-- Indicators de el -->
+            <ol class="carousel-indicators">
+                <li data-target="#myslide" data-slide-to="0" class="active"></li>
+                <li data-target="#myslide" data-slide-to="1"></li>
+                <li data-target="#myslide" data-slide-to="2"></li>
+                <li data-target="#myslide" data-slide-to="3"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->  
+            <div class="carousel-inner">
+
+                <div class="item active" >
+                    <img src="Resources/pics/11.jpg" alt="PIC 1">
+                    <div class="carousel-caption">
+                        ...
+                    </div>
+                </div>
+
+                <div class="item">
+                    <img src="Resources/pics/22.jpg" alt="PIC 2">
+                    <div class="carousel-caption">
+
+                    </div>
+                </div>
+
+                <div class="item">
+                    <img src="Resources/pics/33.jpg" alt="PIC 3">
+                    <div class="carousel-caption">      
+                    </div>
+                </div>
+
+                <div class="item">
+                    <img src="Resources/pics/22.jpg" alt="PIC 4" >
+                    <div class="carousel-caption">
+                        ...
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Controls -->
+            <a class="left carousel-control" href="#myslide" role="button" data-slide="prev">
+
+                <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+
+            <a class="right carousel-control" href="#myslide " role="button" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+
+        <!--End slideshow-->
+
+        <!--start about section-->
+        <!--meet our new news-->
+
+        <section  class="about text-center wow bounceIn"  data-wow-duration="0.5s" data-wow-offset="300" >
+            <div class="container" style="margin-bottom: 95px;">
+
+                <div class="bookshelf" id="allbooks" onmouseover ="hideCart()">
+                    <div class="shelf">
+                        <div class="row-1">
+                            <div class="loc" id="shelf1"> 
+                                <div id = "1"  draggable="true" ondragstart="drag(event)" cost =520 class="gallery" > <a href="Resources\Work\samples\1-java\index.html" data-poptrox="iframe,950x515"> <div id="steve" class="sample thumb1"></div> </a></div>
+                                <div id = "2"  draggable="true" ondragstart="drag(event)" cost =350 class="gallery" > <a href="Resources\Work\samples\2-steve-jobs\index.html" data-poptrox="iframe,950x515"> <div id="steve" class="sample thumb2"></div> </a></div>
+                                <div id = "3"  draggable="true" ondragstart="drag(event)" cost =500 class="gallery" > <a href="Resources\Work\samples\3-code-complete\index.html" data-poptrox="iframe,950x515"> <div id="code" class="sample thumb3"></div> </a></div>
+                                <div id = "4"  draggable="true" ondragstart="drag(event)" cost =100 class="gallery" > <a href="Resources\Work\samples\4-html\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb4"></div> </a></div>
+                                <div id = "5"  draggable="true" ondragstart="drag(event)" cost =400 class="gallery" > <a href="Resources\Work\samples\5-compilers\index.html" data-poptrox="iframe,950x515"> <div id="steve" class="sample thumb5"></div> </a></div>
+                            </div>   
+                        </div>
+                        <br><br><br><br>
+                        <div class="row-1">
+                            <div class="loc" id="shelf2">
+                                <div id = "6"  draggable="true" ondragstart="drag(event)" cost =460 class="gallery"> <a href="Resources\Work\samples\6-magazine\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb6"></div> </a></div>
+                                <div id = "7"  draggable="true" ondragstart="drag(event)" cost =900 class="gallery" > <a href="Resources\Work\samples\7-winter-guide\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb7"></div> </a></div>
+                                <div id = "8"  draggable="true" ondragstart="drag(event)" cost =480 class="gallery"> <a href="Resources\Work\samples\8-life-magazine\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb8"></div> </a></div>
+                                <div id = "9"  draggable="true" ondragstart="drag(event)" cost =280 class="gallery"> <a href="Resources\Work\samples\9-sport\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb9"></div> </a></div>
+                                <div id = "10"  draggable="true" ondragstart="drag(event)" cost =520 class="gallery"> <a href="Resources\Work\samples\10-food\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb10"></div> </a></div>
+                            </div>   
+                        </div>
+                        <br><br><br><br>
+                        <div class="row-1">
+                            <div class="loc">
+                                <div id = "11"  draggable="true" ondragstart="drag(event)" cost =350 class="gallery"> <a href="Resources\Work\samples\11-tee-story\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb11"></div> </a></div>
+                                <div id = "12"  draggable="true" ondragstart="drag(event)" cost =500 class="gallery"> <a href="Resources\Work\samples\12-hot-dogs\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb12"></div> </a></div>
+                                <div id = "13"  draggable="true" ondragstart="drag(event)" cost =100 class="gallery"> <a href="Resources\Work\samples\13-poptrpica\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb13"></div> </a></div>
+                                <div id = "14"  draggable="true" ondragstart="drag(event)" cost =400 class="gallery"> <a href="Resources\Work\samples\14-short-story\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb14"></div> </a></div>
+                                <div id = "15"  draggable="true" ondragstart="drag(event)" cost =460 class="gallery"> <a href="Resources\Work\samples\15-ABC\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb15"></div> </a></div>
+
+                            </div>   
+                        </div>
+                        <br><br><br><br>
+                        <div class="row-1">
+                            <div class="loc">
+                                <div id = "16"  draggable="true" ondragstart="drag(event)" cost =900 class="gallery"> <a href="Resources\audio\dracula.html" data-poptrox="iframe,350x80"> <div id="tooltip3" class="sample thumb16"></div> </a></div>
+                                <div id = "17"  draggable="true" ondragstart="drag(event)" cost =480 class="gallery"> <a href="Resources\audio\broken.html" data-poptrox="iframe,350x80"> <div id="tooltip4" class="sample thumb17"></div> </a></div>
+                                <div id = "18"  draggable="true" ondragstart="drag(event)" cost =280 class="gallery"> <a href="Resources\audio\living.html" data-poptrox="iframe,350x80"> <div id="tooltip5" class="sample thumb18"></div> </a></div>
+                                <div id = "19"  draggable="true" ondragstart="drag(event)" cost =480 class="gallery"> <a href="Resources\audio\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb19"></div> </a></div>
+                                <div id = "20"  draggable="true" ondragstart="drag(event)" cost =280 class="gallery"> <a href="Resources\audio\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb20"></div> </a></div>
+                            </div>   
+                        </div>
+                    </div>
+
+                </div>
+                <div class="bookshelf" id="fashionbooks"  style="display: none" onmouseover ="hideCart()">
+                    <h1><span>Fashion</span></h1>
+                    <P class="lead">Book samples</P>
+                    <div class="shelf" >
+                        <div class="row-1">
+                            <div class="loc" >
+                                <div id = "6"  draggable="true" ondragstart="drag(event)" cost =460 class="gallery"> <a href="Resources\Work\samples\6-magazine\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb6"></div> </a></div>
+                                <div id = "7"  draggable="true" ondragstart="drag(event)" cost =900 class="gallery" > <a href="Resources\Work\samples\7-winter-guide\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb7"></div> </a></div>
+                                <div id = "8"  draggable="true" ondragstart="drag(event)" cost =480 class="gallery"> <a href="Resources\Work\samples\8-life-magazine\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb8"></div> </a></div>
+                                <div id = "9"  draggable="true" ondragstart="drag(event)" cost =280 class="gallery"> <a href="Resources\Work\samples\9-sport\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb9"></div> </a></div>
+                                <div id = "10"  draggable="true" ondragstart="drag(event)" cost =520 class="gallery"> <a href="Resources\Work\samples\10-food\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb10"></div> </a></div>
+
+                            </div>   
+                        </div>      
+                    </div>
+                </div>
+                <div class="bookshelf" id="techbooks"  style="display: none" onmouseover ="hideCart()">
+                    <h1><span>Technology Books</span></h1>
+                    <P class="lead">Book samples</P>
+                    <div class="shelf" >
+                        <div class="row-1">
+                            <div class="loc" >
+                                <div id = "1"  draggable="true" ondragstart="drag(event)" cost =520 class="gallery" > <a href="Resources\Work\samples\1-java\index.html" data-poptrox="iframe,950x515"> <div id="steve" class="sample thumb1"></div> </a></div>
+                                <div id = "2"  draggable="true" ondragstart="drag(event)" cost =350 class="gallery" > <a href="Resources\Work\samples\2-steve-jobs\index.html" data-poptrox="iframe,950x515"> <div id="steve" class="sample thumb2"></div> </a></div>
+                                <div id = "3"  draggable="true" ondragstart="drag(event)" cost =500 class="gallery" > <a href="Resources\Work\samples\3-code-complete\index.html" data-poptrox="iframe,950x515"> <div id="code" class="sample thumb3"></div> </a></div>
+                                <div id = "4"  draggable="true" ondragstart="drag(event)" cost =100 class="gallery" > <a href="Resources\Work\samples\4-html\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb4"></div> </a></div>
+                                <div id = "5"  draggable="true" ondragstart="drag(event)" cost =400 class="gallery" > <a href="Resources\Work\samples\5-compilers\index.html" data-poptrox="iframe,950x515"> <div id="steve" class="sample thumb5"></div> </a></div>
+                            </div>   
+                        </div>      
+                    </div>
+                </div>
+
+                <div class="bookshelf" id="childrenbooks"  style="display: none" onmouseover ="hideCart()">
+                    <h1><span>Children Books</span></h1>
+                    <P class="lead">Book samples</P>
+                    <div class="shelf" >
+                        <div class="row-1">
+                            <div class="loc" >
+                                <div id = "11"  draggable="true" ondragstart="drag(event)" cost =350 class="gallery"> <a href="Resources\Work\samples\11-tee-story\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb11"></div> </a></div>
+                                <div id = "12"  draggable="true" ondragstart="drag(event)" cost =500 class="gallery"> <a href="Resources\Work\samples\12-hot-dogs\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb12"></div> </a></div>
+                                <div id = "13"  draggable="true" ondragstart="drag(event)" cost =100 class="gallery"> <a href="Resources\Work\samples\13-poptrpica\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb13"></div> </a></div>
+                                <div id = "14"  draggable="true" ondragstart="drag(event)" cost =400 class="gallery"> <a href="Resources\Work\samples\14-short-story\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb14"></div> </a></div>
+                                <div id = "15"  draggable="true" ondragstart="drag(event)" cost =460 class="gallery"> <a href="Resources\Work\samples\15-ABC\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb15"></div> </a></div>
+                            </div>   
+                        </div>      
+                    </div>
+                </div>
+                <div class="bookshelf" id="audiobooks"  style="display: none" onmouseover ="hideCart()">
+                    <h1><span>Audio Books</span></h1>
+                    <P class="lead">Book samples</P>
+                    <div class="shelf" >
+                        <div class="row-1">
+                            <div class="loc" >
+                                <div id = "16"  draggable="true" ondragstart="drag(event)" cost =900 class="gallery"> <a href="Resources\audio\dracula.html" data-poptrox="iframe,350x80"> <div id="tooltip3" class="sample thumb16"></div> </a></div>
+                                <div id = "17"  draggable="true" ondragstart="drag(event)" cost =480 class="gallery"> <a href="Resources\audio\broken.html" data-poptrox="iframe,350x80"> <div id="tooltip4" class="sample thumb17"></div> </a></div>
+                                <div id = "18"  draggable="true" ondragstart="drag(event)" cost =280 class="gallery"> <a href="Resources\audio\living.html" data-poptrox="iframe,350x80"> <div id="tooltip5" class="sample thumb18"></div> </a></div>
+                                <div id = "19"  draggable="true" ondragstart="drag(event)" cost =480 class="gallery"> <a href="Resources\audio\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb19"></div> </a></div>
+                                <div id = "20"  draggable="true" ondragstart="drag(event)" cost =280 class="gallery"> <a href="Resources\audio\index.html" data-poptrox="iframe,950x515"> <div class="sample thumb20"></div> </a></div>
+                            </div>   
+                        </div>      
+                    </div>
+                </div>
+
+
+
+
+
+
+
+                <div class="bookshelf" id="viewcart"  style="display: none" onmouseover ="hideCart()">
+                    <h1><span>Your Cart</span></h1>
+                    <P class="lead">These  are  all The Books  you Added to the Cart</P>
+                    <div class="shelf" id="allcart" >
+
+                    </div>
+                    <br><br><br><br><br><br><br><br><br><br>
+
+                </div>
+                <div class="bookshelf" style="float: right;" onclick="showCart()" >
+                    <img id="shopping-cart" onclick="showAllCart()" onmouseover="showCart()" src="Resources/pics/cart.png" ondragover="allowDrop(event)" ondrop="drop(event)" style="width:90px;height:90px;" /> <br>
+                    <p class="navbar-brand hvr-pop">Recently added items</p><br>
+                    <div  id="mycart"  ondragover="allowDrop(event)" ondrop="drop(event)" style="padding-top:190px; display: none; width: 220px;height: 780px; background-color: blanchedalmond; float: right; border-radius: 25px; background-image: url('Resources/pics/cart.jpg');background-repeat: no-repeat;">
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section class="features text-center">
+            <div class="container">
+                <h1>Features</h1>
+                <div class="row">
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="feat hvr-grow-rotate wow bounceInLeft" data-wow-duration="0.5s" data-wow-offset="200" >
+                            <span class="glyphicon glyphicon-ok"></span>
+                            <h4>Respnsive</h4>
+                            <p>
+                                You can drag and drop  your favorite books and buy it .
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                        <div class="feat hvr-grow-rotate wow bounceInUp" data-wow-duration="0.5s" data-wow-offset="200" >
+                            <span class="glyphicon glyphicon-search"></span>
+                            <h4>View the Book</h4>
+                            <p>
+                                Take a look  on  the Book before you buy .
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="feat hvr-grow-rotate wow bounceInDown" data-wow-duration="0.5s" data-wow-offset="200" >
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            <h4>Categories</h4>
+                            <p>
+                                Books are divided into categories Choose Your favorite  and Enjoy.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="feat hvr-grow-rotate wow bounceInRight" data-wow-duration="0.5s" data-wow-offset="200" >
+                            <span class="glyphicon glyphicon-ok"></span>
+                            <h4>Audio Books</h4>
+                            <p>
+                                We have Audio books You  can try To listen to it.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><!--da kda the end of section features-->
+        <!--Start Testimonials Section -->
+
+        <section class="testimonials text-center wow flipInY" data-wow-duration="1s" data-wow-offset="400">
+
+            <div class="container">
+
+                <h1>Literary Quotes</h1>
+
+
+                <!---start  Testimonials slideshow-->
+                <div id="carousel_testimonials" class="carousel slide" data-ride="carousel" 
+                     >
+                    <!-- Indicators de el -->
+
+                    <!-- Wrapper for slides -->
+                    <div class="carousel-inner">
+
+                        <div class="item active" >
+                            <p class="lead"> 
+                                If you only read the books that everyone else is reading,<br>
+                                you can only think what everyone else is thinking.
+
+                            </p>
+                            <span>Haruki Murakami</span>
+                        </div>
+                        <div class="item">
+                            <p class="lead"> 
+                                There are many little ways to enlarge your child’s world. Love of books is the best of all.
+                            </p>
+                            <span>Jacqueline Kennedy Onassis</span>
+                        </div>
+                        <div class="item">
+                            <p class="lead"> 
+                                A book is the only place in which you can examine a fragile thought without breaking it.
+                            </p>
+                            <span>Edward P. Morgan</span>
+                        </div>
+                        <div class="item">
+                            <p class="lead"> 
+                                If one cannot enjoy reading a book over and over again, there is no use in reading it at all.
+                            </p>
+                            <span>Oscar Wilde</span>
+                        </div>
+
+                    </div>
+
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel_testimonials" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel_testimonials" data-slide-to="1"></li>
+                        <li data-target="#carousel_testimonials" data-slide-to="2"></li>
+                        <li data-target="#carousel_testimonials" data-slide-to="3"></li>
+                    </ol>
+
+
+
+                    <!-- Controls -->
+
+
+                </div>
+
+                <!--End slideshow-->
+
+            </div>
+
+
+
+        </section>
+        <!--End Testimonials Section -->
+
+
+        <!--Start  Section price-->
+
+
+        <section class="price_table text-center">
+            <div class="container">
+                <h1><b>Most Viewed Books </b></h1>
+                <div class="row">
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="price_box wow fadeInUp" data-wow-duration="2s" data-wow-offset="400">
+                            <h2 class="text-primary">About Steve Jobs</h2>
+                            <p class="center-block">400$</p>
+                            <ul class="list-unstyled">
+                                <li><img src="Resources/pics/book2.jpg"></li>
+                                <li>Author: </li>
+                            </ul>
+                            <div class="preview"> <a href="Work\samples\2-steve-jobs\index.html" data-poptrox="iframe,950x515" class="btn btn-primary"> preview </a> </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="price_box wow fadeInDown" data-wow-duration="2s" data-wow-offset="400">
+                            <h2 class="text-success">Tess's Tree</h2>
+                            <p class="center-block">280$</p>
+                            <ul class="list-unstyled">
+                                <li><img src="Resources/pics/book11.jpg"></li>
+                                <li>Author: Mark Adams</li>
+
+                            </ul>
+                            <div class="preview"> <a href="Work\samples\11-tee-story\index.html" data-poptrox="iframe,950x515" class="btn btn-primary"> preview </a> </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="price_box wow fadeInUp" data-wow-duration="2s" data-wow-offset="400">
+                            <h2 class="text-info">Foodies</h2>
+                            <p class="center-block">310$</p>
+                            <ul class="list-unstyled">
+                                <li><img src="Resources/pics/book10.jpg"></li>
+                                <li>Author: Maria  </li>
+                            </ul>
+                            <div class="preview"> <a href="Resources\Work\samples\10-food\index.html" data-poptrox="iframe,950x515" class="btn btn-primary"> preview </a> </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-sm-6 col-xs-12">
+                        <div class="price_box wow fadeInDown" data-wow-duration="2s" data-wow-offset="400" >
+                            <h2 class="text-danger">Java Beans</h2>
+                            <p class="center-block">260$</p>
+                            <ul class="list-unstyled">
+                                <li><img src="Resources/pics/book1.jpg"></li>
+                                <li>Author: James </li>
+                            </ul>
+                            <div class="preview"> <a href="Resources\Work\samples\1-java\index.html" data-poptrox="iframe,950x515" class="btn btn-primary"> preview </a> </div>
+                        </div>
+                    </div>
+                    </section>
+                    <!--End Section price-->
+
+
+
+
+
+
+
+
+
+
+                    <!--Start Section our team-->
+                    <section class="our_team text-center">
+                        <div class="team">
+
+                            <div class="container">
+                                <h1>Our Team</h1>
+                                <div class="row">
+                                    <div class="col-lg-2 col-sm-6">
+                                        <div class="person wow pulse" data-wow-duration="2s" data-wow-offset="400">
+                                            <img  class="img-circle" src="Resources/images/ahmad.jpg" width="150" height="200">
+                                            <h3>Ahmed<br> Nazer</h3>
+
+                                            <a href="https://www.facebook.com/eng.ahmedali2015"><i class="fa fa-facebook fa-lg"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-6">
+                                        <div class="person wow pulse" data-wow-duration="2s" data-wow-offset="400">
+                                            <img  class="img-circle" src="Resources/images/ayaM.jpg" width="150" height="220">
+                                            <h3>Aya Ashraf</h3>
+
+                                            <a href="https://www.facebook.com/aya.mohamed.ashraf"><i class="fa fa-facebook fa-lg"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-6">
+                                        <div class="person wow pulse" data-wow-duration="2s" data-wow-offset="400">
+                                            <img class="img-circle" src="Resources/images/hend.jpg" width="150" height="200">
+                                            <h3>Hend Muhammad</h3>
+
+                                            <a href="https://www.facebook.com/hend.muhammadrizq/"><i class="fa fa-facebook fa-lg"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-6">
+                                        <div class="person wow pulse" data-wow-duration="2s" data-wow-offset="400">
+                                            <img class="img-circle" src="Resources/images/wagdi.jpg" width="150" height="220">
+                                            <h3>Ahmed<br> Wagdy</h3>
+
+                                            <a href="https://www.facebook.com/ahmedwagdi99"><i class="fa fa-facebook fa-lg"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-2 col-sm-6">
+                                        <div class="person wow pulse" data-wow-duration="2s" data-wow-offset="400">
+                                            <img  class="img-circle" src="Resources/images/aya.jpg" width="150" height="200">
+                                            <h3>Aya radwan</h3>
+
+                                            <a href="https://www.facebook.com/aya.radwan.52"><i class="fa fa-facebook fa-lg"></i></a>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--End Section our team-->
+
+
+
+
+                    <!--Start Section  Subscribe-->
+                    <section class="subscribe text-center">
+
+                        <div class="container">
+                            <h1>Keep in Touch</h1>
+                            <p class="lead">Subscribe to our latest books  ... don't worry about spam we hate it Too.</p>
+                            <form class="form-inline">
+                                <input class="form-control input-lg" type="text" placeholder="Write Your Email">
+                                <button class="btn btn-danger btn-lg"><i class="fa fa-edit fa-lg" ></i>Subscribe</button>
+                            </form>
+                        </div>
+
+                    </section>
+                    <!--End Section  Subscribe-->
+
+
+
+                    <section class="our text-center">
+                        <div class="t">
+
+                            <div class="container">
+                                <h1>Statstics</h1>
+                                <div class="row">
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="stats">
+                                            <i class="fa fa-users fa-5x"></i>
+                                            <br><br>
+                                            <p>100</p>
+                                            <br><br>
+                                            <span>Total Users</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="stats">
+                                            <i class="fa fa-comments fa-5x"></i>
+                                            <br><br>
+                                            <p>7</p>
+                                            <br><br>
+                                            <span>Active Users</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="stats">       <i class="fa fa-suitcase fa-5x"></i>
+                                            <br><br>
+                                            <p>300$</p>
+                                            <br><br>
+                                            <span>Avg Cost of Book </span>                                           
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3 col-sm-6">
+                                        <div class="stats">
+                                            <i class="fa fa-support fa-5x"></i>
+                                            <br><br>
+                                            <p>30</p>
+                                            <br><br>
+                                            <span>Our Rank</span>
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </section>
+
+                    <!--End Section Statistics-->
+
+
+
+
+
+
+
+
+
+
+                    <!--satrt of section our skills -->
+                    <section class="our-skills" >
+                        <div class ="container">
+                            <div class="row">
+                                <!--start progress skill-->
+                                <div class="col-md-5">
+                                    <div class="skills-progress">
+                                        <h3>Rates of our Categories </h3>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width:80%"> Fashion Books
+                                            </div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width:70%"> Technology Books
+                                            </div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-warning progress-bar-striped active" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width:90%">Children Books
+                                            </div>
+                                        </div>
+                                        <div class="progress">
+                                            <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width:95%"> Audio Books
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!--end progress skills-->
+
+                                <!--start team info-->
+                                <div class="col-md-6 col-md-offest-1" id="aboutdiv">
+                                    <div class="skilss-info"  >
+                                        <h3 >About Library </h3>
+                                        <p class="lead"> 
+                                            We believe in access for all. <br>
+                                            We will be efficient and effective in all we do to provide quality service . <br>
+                                            We will be innovative and timely in our response to technology and the information needs of our community. <br>
+                                            We will work in partnership with other organizations to further the Library's mission.</p>
+                                    </div>
+                                </div>
+                                <!--end team info-->
+
+                            </div>
+                        </div>
+                    </section>
+
+
+                    <!--end of section our skills-->
+
+                    <!--start Section Contact Us-->
+                    <section class="contact-us text-center">
+                        <div class="fields">
+                            <div class="container">
+                                <div class="row">
+                                    <i class="fa fa--headphones fa-5x"></i>
+                                    <h1>Tell Us What You Fell</h1>
+                                    <p class="lead">Feel Free To Contact Us Anytime</p>
+
+
+
+                                    <!--start contact form-->
+
+                                    <form role="form">
+                                        <div class="col-md-6 wow bounceInLeft" data-wow-duration="1s" data-wow-offset="300">
+                                            <div class="form-group">
+                                                <input type="text" class="form-control input-lg" placeholder="User-name">
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <input type="text" class="form-control input-lg" placeholder="Email">
+                                            </div>
+
+
+                                            <div class="form-group">
+                                                <input type="text" class="form-control input-lg" placeholder="Phone">
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6 wow bounceInRigt" data-wow-duration="1s" data-wow-offset="300">
+                                            <div class="form-group">
+                                                <textarea class="form-control input-lg" placeholder="Enter Your Message"></textarea>
+                                            </div>
+                                            <a href="mailto:name1@rapidtables.com?cc=name2@rapidtables.com&bcc=name3@rapidtables.com&amp;subject=The%20subject%20of%20the%20email&amp;body=The%20body%20of%20the%20email">
+                                                <button type="button" class="btn btn-danger btn-lg btn-block">Contact Us</button></a>
+                                        </div>
+                                    </form>
+                                    <!--end contact form-->
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                    <!--end  Section Contact Us-->
+
+
+
+
+
+
+
+
+
+
+
+
+                    <section class="footer">
+                        <div class="container">
+
+                            <div class="row">
+
+
+                                <div class="col-lg-4 col-md-6">
+
+
+                                    <ul class="list-unstyled social-list">
+
+                                        <li><img src="Resources/images/social-bookmark/1.png"></li>
+                                        <li><img src="Resources/images/social-bookmark/2.png"></li>
+                                        <li><img src="Resources/images/social-bookmark/3.png"></li>
+                                        <li><img src="Resources/images/social-bookmark/4.png"></li>
+                                        <li><img src="Resources/images/social-bookmark/5.png"></li>
+                                        <li><img src="Resources/images/social-bookmark/6.png"></li>
+                                    </ul>
+
+
+                                </div>
+
+
+
+                                </section>
+                                <!--end Section Ultimate Footer-->
+
+                                <!--start The Loading Screen-->
+
+
+                                <section class="loading-overlay">
+
+                                    <div class="spinner">
+                                        <div class="double-bounce1"></div>
+                                        <div class="double-bounce2"></div>
+                                    </div>
+
+
+                                </section>
+                                <!--end The Loading Screen-->
+
+                                <!--start scroll to top-->
+                                <div id="scroll-top">
+                                    <i class="fa fa-chevron-up fa-3x"></i>
+                                </div>
+                                <!--end scroll to top-->
+
+                                <script src="Resources/js/bootstrap.min.js"></script>
+                                <script src="Resources/js/plugin.js"></script>
+                                <script src="Resources/js/wow.min.js"></script>
+
+                                <script>
+                            new WOW().init();
+                                </script>
+                                </body>
+                                </html>
+

@@ -1,0 +1,263 @@
+
+.bookshelf-row{
+	display:none;
+}
+
+
+.bookshelf{
+	-webkit-transition:all 1s;
+	-moz-transition:all 1s;
+	-o-transition:all 1s;
+	-ms-transition:all 1s;
+	transition:all 1s;
+}
+
+
+.preview .bookshelf{
+	opacity:0;
+
+	-webkit-transform: translate3d(-100px, 0, 0) scale3d(0.5, 0.5, 1);
+	-moz-transform: translate3d(-100px, 0, 0) scale3d(0.5, 0.5, 1);
+	-o-transform: translate3d(-100px, 0, 0) scale3d(0.5, 0.5, 1);
+	-ms-transform: translate3d(-100px, 0, 0) scale3d(0.5, 0.5, 1);
+	transform: translate3d(-100px, 0, 0) scale3d(0.5, 0.5, 1);
+}
+
+.bookshelf{
+	float:left;
+	margin-top:40px;
+}
+.cart{
+	float:right;
+	margin-top:140px;
+}
+
+.bookshelf .shelf{
+	/*background:url(../pics/bookshelf.gif);
+	background-size:100%;*/
+	width:800px;
+	height:100px;
+}
+
+.bookshelf .shelf .row-1{
+	position:relative;
+	width:800px;
+	height:100px;
+	margin-left:33px;
+	margin-right:33px;
+}
+
+.bookshelf .shelf .row-1:after,
+.bookshelf .shelf .row-2:after{
+	background:url(../pics/wall-bookshelf.png);
+	background-size:100%;
+	background-repeat: no-repeat;
+	background-position:bottom;
+	width:800px;
+	height:220px;
+	display:block;
+	content:"";
+/*	margin-left:-38px;
+        margin-right:-38px;*/
+}
+
+
+.bookshelf .shelf .loc{
+	position:relative;
+	bottom:0;
+	width:100%;
+}
+
+.bookshelf .shelf .loc > div{
+	width:20%;
+	height:100%;
+	float:left;
+	text-align:center;
+	position:relative;
+}
+
+.bookshelf .sample,
+.bookshelf-row .sample{
+	margin:auto;
+	position: relative;
+	z-index:1;
+
+	-webkit-box-shadow:2px 2px 5px rgba(0,0,0,0.6);
+	-moz-box-shadow:2px 2px 5px rgba(0,0,0,0.6);
+	-ms-box-shadow:2px 2px 5px rgba(0,0,0,0.6);
+	-o-box-shadow:2px 2px 5px rgba(0,0,0,0.6);
+	box-shadow:2px 2px 5px rgba(0,0,0,0.6);
+
+	-webkit-transition:-webkit-transform 0.1s;
+	-webkit-transform:translate(0, 0);
+	-moz-transition:-moz-transform 0.1s;
+	-moz-transform:translate(0, 0);
+	-ms-transition:-ms-transform 0.1s;
+	-ms-transform:translate(0, 0);
+	-o-transition:-o-transform 0.1s;
+	-o-transform:translate(0, 0);
+	transition:transform 0.1s;
+	transform:translate(0, 0);
+}
+
+.sample .loader{
+	position:absolute;
+	width:32px;
+	height:32px;
+	top:50%;
+	left:50%;
+}
+
+.sample .loader i{
+	background:white url(../pics/loader.gif) 4px 4px no-repeat;
+	position:relative;
+	top:-16px;
+	left:-16px;
+	width:32px;
+	height:32px;
+	display:block;
+
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	-ms-border-radius:10px;
+	-o-border-radius:10px;
+	border-radius:10px;
+}
+
+.bookshelf .shelf .hover,
+.bookshelf-row .hover,
+.bookshelf .shelf .loading{
+	z-index:2;
+	cursor:none;
+	background-color:white;
+	-webkit-transform: scale3d(1.1, 1.1, 1) translate3d(0, -5px, 0);
+	-moz-transform: scale3d(1.1, 1.1, 1) translate3d(0, -5px, 0);
+	-ms-transform: scale3d(1.1, 1.1, 1) translate3d(0, -5px, 0);
+	-o-transform: scale3d(1.1, 1.1, 1) translate3d(0, -5px, 0);
+	transform: scale3d(1.1, 1.1, 1) translate3d(0, -5px, 0);
+}
+
+.bookshelf .thumb1,
+.bookshelf-row .thumb1{
+	background-image:url(../pics/book1.jpg);
+	width:95px;
+	height:117px;
+}
+
+.bookshelf .thumb2,
+.bookshelf-row .thumb2{
+	background-image:url(../pics/book2.jpg);
+	width:95px;
+	height:117px;
+}
+
+.bookshelf .thumb3,
+.bookshelf-row .thumb3{
+	background-image:url(../pics/book3.jpg);
+	width:95px;
+	height:117px;
+}
+
+.bookshelf .thumb4,
+.bookshelf-row .thumb4{
+	background-image:url(../pics/book4.jpg);
+	width:95px;
+	height:117px;
+}
+
+.bookshelf .thumb5,
+.bookshelf-row .thumb5{
+	background-image:url(../pics/book5.jpg);
+	width:95px;
+	height:117px;
+}
+
+.bookshelf .thumb6,
+.bookshelf-row .thumb6{
+	background-image:url(../pics/book6.jpg);
+	width:95px;
+	height:117px;
+}
+
+.bookshelf .thumb7,
+.bookshelf-row .thumb7{
+	background-image:url(../pics/book7.jpg);
+	width:95px;
+	height:117px;
+}
+
+.bookshelf .thumb8,
+.bookshelf-row .thumb8{
+	background-image:url(../pics/book8.jpg);
+	width:95px;
+	height:117px;
+}
+
+.bookshelf .thumb9,
+.bookshelf-row .thumb9{
+	background-image:url(../pics/book9.jpg);
+	width:95px;
+	height:117px;
+}
+
+.bookshelf .thumb10,
+.bookshelf-row .thumb10{
+	background-image:url(../pics/book10.jpg);
+	width:95px;
+	height:117px;
+}
+
+
+.bookshelf .thumb11,
+.bookshelf-row .thumb11{
+	background-image:url(../pics/book11.jpg);
+	width:95px;
+	height:117px;
+}
+.bookshelf .thumb12,
+.bookshelf-row .thumb12{
+	background-image:url(../pics/book12.jpg);
+	width:95px;
+	height:117px;
+}
+
+.bookshelf .thumb13,
+.bookshelf-row .thumb13{
+	background-image:url(../pics/book13.jpg);
+	width:95px;
+	height:117px;
+}
+
+.bookshelf .thumb14,
+.bookshelf-row .thumb14{
+	background-image:url(../pics/book14.jpg);
+	width:95px;
+	height:117px;
+}
+
+.bookshelf .thumb15,
+.bookshelf-row .thumb15{
+	background-image:url(../pics/book15.jpg);
+	width:95px;
+	height:117px;
+}
+
+.bookshelf .thumb16,
+.bookshelf-row .thumb16{
+	background-image:url(../audio/dracula_1.jpg);
+	width:95px;
+	height:117px;
+}
+.bookshelf .thumb17,
+.bookshelf-row .thumb17{
+	background-image:url(../audio/broken_1.jpg);
+	width:95px;
+	height:117px;
+}
+.bookshelf .thumb18,
+.bookshelf-row .thumb18{
+	background-image:url(../audio/living_1.jpg);
+	width:95px;
+	height:117px;
+}
+

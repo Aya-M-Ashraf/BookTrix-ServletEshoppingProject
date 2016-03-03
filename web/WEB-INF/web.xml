@@ -4,9 +4,17 @@
         <servlet-name>AdminHome</servlet-name>
         <servlet-class>AdminServlets.AdminHome</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewUserProfile</servlet-name>
+        <servlet-class>CommonServlets.ViewUserProfile</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminHome</servlet-name>
         <url-pattern>/AdminHome</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewUserProfile</servlet-name>
+        <url-pattern>/ViewUserProfile</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
