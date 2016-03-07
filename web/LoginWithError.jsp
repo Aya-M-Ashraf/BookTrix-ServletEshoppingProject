@@ -130,7 +130,7 @@
 
 		</form><!-- form -->
 
-                <div id="login_result"></div>
+                <div id="login_result"><font color="red"><b>login faild</div>
 
             </section>
         </div>

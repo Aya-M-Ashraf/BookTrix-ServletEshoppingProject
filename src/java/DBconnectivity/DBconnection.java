@@ -15,7 +15,7 @@ public class DBconnection {
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/mydb", "root", "root");
+            connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/bookstore", "root", "root");
         } catch (SQLException ex) {
             ex.printStackTrace();
 
