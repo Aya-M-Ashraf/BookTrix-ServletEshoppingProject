@@ -24,32 +24,17 @@ public class ViewBooks extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Book b1 = new Book(1, "name", "book1.jpg");
-        Book b2 = new Book(1, "name", "book2.jpg");
-        Book b3 = new Book(1, "name", "book3.jpg");
-        Book b4 = new Book(1, "name", "book4.jpg");
-        Book b5 = new Book(1, "name", "book7.jpg");
-        Book b6 = new Book(1, "name", "book3.jpg");
-        Book b7 = new Book(1, "name", "book1.jpg");
-        Book b8 = new Book(1, "name", "book3.jpg");
+        Book b1 = new Book();
+        Book b2 = new Book();
+
+        b1.setId(1);
+        b2.setId(2);
+        b1.setImg("book1.jpg");
+        b2.setImg("book2.jpg");
 
         ArrayList<Book> allbooks = new ArrayList<>();
         allbooks.add(b1);
         allbooks.add(b2);
-        allbooks.add(b3);
-        allbooks.add(b4);
-        allbooks.add(b5);
-        allbooks.add(b6);
-        allbooks.add(b7);
-        allbooks.add(b8);
-        allbooks.add(new Book(1, "sad", "book10.jpg"));
-        allbooks.add(new Book(1, "sad", "book10.jpg"));
-        allbooks.add(new Book(1, "sad", "book10.jpg"));
-        allbooks.add(new Book(1, "sad", "book10.jpg"));
-        allbooks.add(new Book(1, "sad", "book10.jpg"));
-        allbooks.add(new Book(1, "sad", "book10.jpg"));
-        allbooks.add(new Book(1, "sad", "book10.jpg"));
-        allbooks.add(new Book(1, "sad", "book10.jpg"));
 
         HttpSession session = request.getSession(true);
         session.setAttribute("book", allbooks);
