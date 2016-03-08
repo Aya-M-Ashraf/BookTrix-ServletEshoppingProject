@@ -8,6 +8,14 @@
         <servlet-name>ViewUserProfile</servlet-name>
         <servlet-class>CommonServlets.ViewUserProfile</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddProduct</servlet-name>
+        <servlet-class>AdminServlets.AddProduct</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewBooks</servlet-name>
+        <servlet-class>AdminServlets.ViewBooks</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminHome</servlet-name>
         <url-pattern>/AdminHome</url-pattern>
@@ -15,6 +23,14 @@
     <servlet-mapping>
         <servlet-name>ViewUserProfile</servlet-name>
         <url-pattern>/ViewUserProfile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProduct</servlet-name>
+        <url-pattern>/AddProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewBooks</servlet-name>
+        <url-pattern>/ViewBooks</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
