@@ -217,6 +217,7 @@
                 html5rocks.webdb.open();
                 html5rocks.webdb.createTable();
                 html5rocks.webdb.getAllTodoItems(loadTodoItems);
+                $("#allbooks").load("ViewBooks.jsp");
             }
 
             $(document).ready(function () {
@@ -337,7 +338,7 @@
                 $("#audiobooks").hide();
                 $("#viewcart").hide();
                 $("#addproduct").show();
-                $("#addproduct").load("AddBookForm.html");
+//                $("#addproduct").load("AddBookForm.html");
 
 
 
@@ -377,6 +378,7 @@
 
 
                 <div  id="allbooks"  onmouseover ="hideCart()">
+                   
                     <jsp:include page="ViewBooks.jsp"></jsp:include>
                     </div>
 
