@@ -9,15 +9,11 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Ahmed Ashraf
- */
 public class ManipulateDB {
 
     Connection connection;
 
-    public ManipulateDB() throws ClassNotFoundException {
+    public ManipulateDB(){
         DBconnection DBConnection = new DBconnection();
         connection = DBConnection.getConnection();
     }
@@ -119,7 +115,7 @@ public class ManipulateDB {
         }
         return book;
     }
-    
+
     public Cart selectCartById(int cartId) {
         Cart cart = new Cart();
         try {
@@ -153,23 +149,11 @@ public class ManipulateDB {
         }
         return cart;
     }
-    
-    public boolean insertUser(User user){
-         try {
-            Statement statement = connection.createStatement();
-            String st = "insert into user values('"+user.getEmail()+"','"+ user.getUserName()+"','"+user.getPassword()+"',"+user.getCreditLimit()+",'"+user.getJob()+"','"+user.getAddress()+"','"+user.getProfilePicUrl()+"','"+user.getRole()+"')";
-            statement.executeUpdate(st);
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
-    }
-    
-    public boolean insertBook(Book book){
+
+    public boolean insertUser(User user) {
         try {
             Statement statement = connection.createStatement();
-            String st = "insert into book values("+book.getBookId()+",'"+ book.getBookName()+"',"+book.getQuantity()+",'"+book.getAuthor()+"',"+book.getCategory().getId()+","+book.getPrice()+",'"+book.getImg()+"','"+book.getDescription()+"')";
+            String st = "insert into user values('" + user.getEmail() + "','" + user.getUserName() + "','" + user.getPassword() + "'," + user.getCreditLimit() + ",'" + user.getJob() + "','" + user.getAddress() + "','" + user.getProfilePicUrl() + "','" + user.getRole() + "')";
             statement.executeUpdate(st);
             return true;
         } catch (SQLException ex) {
@@ -177,11 +161,11 @@ public class ManipulateDB {
             return false;
         }
     }
-    
-    public boolean insertCategory(Category category){
+
+    public boolean insertBook(Book book) {
         try {
             Statement statement = connection.createStatement();
-            String st = "insert into category values("+category.getId()+",'"+ category.getName()+"')";
+            String st = "insert into book values(" + book.getBookId() + ",'" + book.getBookName() + "'," + book.getQuantity() + ",'" + book.getAuthor() + "'," + book.getCategory().getId() + "," + book.getPrice() + ",'" + book.getImg() + "','" + book.getDescription() + "')";
             statement.executeUpdate(st);
             return true;
         } catch (SQLException ex) {
@@ -189,11 +173,11 @@ public class ManipulateDB {
             return false;
         }
     }
-    
-    public boolean insertCart(Cart cart){
+
+    public boolean insertCategory(Category category) {
         try {
             Statement statement = connection.createStatement();
-            String st = "insert into cart values('"+cart.getUser().getEmail()+"','"+cart.getCreationDate()+"',"+cart.getQuantity()+","+cart.getPurchased()+","+cart.getCartId()+")";
+            String st = "insert into category values(" + category.getId() + ",'" + category.getName() + "')";
             statement.executeUpdate(st);
             return true;
         } catch (SQLException ex) {
@@ -201,4 +185,41 @@ public class ManipulateDB {
             return false;
         }
     }
+
+    public boolean insertCart(Cart cart) {
+        try {
+            Statement statement = connection.createStatement();
+            String st = "insert into cart values('" + cart.getUser().getEmail() + "','" + cart.getCreationDate() + "'," + cart.getQuantity() + "," + cart.getPurchased() + "," + cart.getCartId() + ")";
+            statement.executeUpdate(st);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    public String selectRoleFromUser(String userName, String password) {
+        String role = null;
+        try {
+            Statement statement = connection.createStatement();
+            String queryString = "select role from user where user_name='" + userName + "'" + "and password='" + password + "'";
+            ResultSet rs = statement.executeQuery(queryString);
+            while (rs.next()) {
+                role = rs.getString(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+            role = "not found";
+        }
+        return role;
+    }
+
+    public void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }
