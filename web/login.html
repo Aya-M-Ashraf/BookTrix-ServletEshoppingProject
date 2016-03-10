@@ -20,9 +20,9 @@
         <script src="Resources/js/respond.min.js"></script>
         <script src="Resources/js/signUp.js"></script>
         <script type="text/javascript">
-                    var html5rocks = {};
-                    html5rocks.webdb = {};
-                    html5rocks.webdb.db = null;
+            var html5rocks = {};
+            html5rocks.webdb = {};
+            html5rocks.webdb.db = null;
             html5rocks.webdb.onError = function (tx, e) {
                 alert("There has been an error: " + e.message);
             };
@@ -31,22 +31,22 @@
                 // re-render the data.
                 // loadTodoItems is defined in Step 4a
                 alert("success");
-               // html5rocks.webdb.getAllTodoItems(loadTodoItems);
+                // html5rocks.webdb.getAllTodoItems(loadTodoItems);
             };
 
-                html5rocks.webdb.open = function () {
+            html5rocks.webdb.open = function () {
                 var dbSize = 5 * 1024 * 1024; // 5MB
                 html5rocks.webdb.db = openDatabase("DB", "1", "Project", dbSize);
 //                alert("open");
             };
 
-              html5rocks.webdb.login = function (renderFunc) {
+            html5rocks.webdb.login = function (renderFunc) {
                 var db = html5rocks.webdb.db;
-                email=getEmail();
-                password=getPassword();
+                email = getEmail();
+                password = getPassword();
                 db.transaction(function (tx) {
-                    tx.executeSql("SELECT email FROM user where email=? and password=?", [email,password], 
-                        html5rocks.webdb.onSuccess,
+                    tx.executeSql("SELECT email FROM user where email=? and password=?", [email, password],
+                            html5rocks.webdb.onSuccess,
                             html5rocks.webdb.onError);
                 });
             };
@@ -101,7 +101,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active"><a href="login.html">Login<span class="sr-only"></span></a></li>
                         <li ><a href="signUp.html">Sign UP</a></li>
-                        
+
                         <li ><a href="index.html">Home</a></li>
                         <li><a href="index.html">About</a></li>
                         <li>
@@ -126,95 +126,95 @@
                         </div>
                         <button type="submit" class="btn btn-default" >Submit</button>
                     </form>
-                   
+
                 </div><!-- /.navbar-collapse -->
             </div><!-- /.container-fluid -->
         </nav>
-<div class="container">
-      <br>
+        <div class="container">
             <br>
             <br>
-            
-    <section id="content">
-        <form action="loginCheckServlet" method="POST">
-            <h1>Login..</h1>
+            <br>
+
+            <section id="content">
+                <form action="loginCheckServlet" method="POST">
+                    <h1>Login..</h1>
 
 
-            <div>
-                <input type="text" placeholder="text" required="" id="email"  name="email"/>
-            </div>
-            <div>
-                <input type="password" placeholder="Password" required="" id="password"  name="password"/>
-            </div>
-
-            <div>
-                <input type="submit" value="Login" onclick="html5rocks.webdb.login()" />
-                <a href="#">Lost your password?</a>
-                <a href="signUp.html">Register</a>
-            </div>
-        </form><!-- form -->
-        <div id="login_result"></div>
-
- </section>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-\
-                    <!--end Section Ultimate Footer-->
-
-                    <!--start The Loading Screen-->
-
-
-                    <section class="loading-overlay">
-
-                        <div class="spinner">
-                            <div class="double-bounce1"></div>
-                            <div class="double-bounce2"></div>
-                        </div>
-
-
-                    </section>
-
-
-                    <!--end The Loading Screen-->
-
-
-
-
-
-
-
-
-                    <!--start scroll to top-->
-
-
-                    <div id="scroll-top">
-                        <i class="fa fa-chevron-up fa-3x"></i>
+                    <div>
+                        <input type="text" placeholder="text" required="" id="email"  name="email"/>
+                    </div>
+                    <div>
+                        <input type="password" placeholder="Password" required="" id="password"  name="password"/>
                     </div>
 
-                    <!--end scroll to top-->
-<!--                    <script src="js/jquery-1.11.1.js"></script>-->
-                    <script src="Resources/js/bootstrap.min.js"></script>
-                    <script src="Resources/js/plugin.js"></script>
-                    <script src="Resources/js/wow.min.js"></script>
+                    <div>
+                        <input type="submit" value="Login" onclick="html5rocks.webdb.login()" />
+                        <a href="#">Lost your password?</a>
+                        <a href="signUp.html">Register</a>
+                    </div>
+                </form><!-- form -->
+                <div id="login_result"></div>
 
-                    <script>
-                        new WOW().init();
-                    </script>
-                    </body>
-                    </html>
+            </section>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!--end Section Ultimate Footer-->
+
+        <!--start The Loading Screen-->
+
+
+        <section class="loading-overlay">
+
+            <div class="spinner">
+                <div class="double-bounce1"></div>
+                <div class="double-bounce2"></div>
+            </div>
+
+
+        </section>
+
+
+        <!--end The Loading Screen-->
+
+
+
+
+
+
+
+
+        <!--start scroll to top-->
+
+
+        <div id="scroll-top">
+            <i class="fa fa-chevron-up fa-3x"></i>
+        </div>
+
+        <!--end scroll to top-->
+        <!--                    <script src="js/jquery-1.11.1.js"></script>-->
+        <script src="Resources/js/bootstrap.min.js"></script>
+        <script src="Resources/js/plugin.js"></script>
+        <script src="Resources/js/wow.min.js"></script>
+
+        <script>
+                            new WOW().init();
+        </script>
+    </body>
+</html>
 

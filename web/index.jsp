@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-
-
         <link rel="stylesheet" href="Resources/css/bootstrap.css"> 
         <link rel="stylesheet" href="Resources/css/font-awesome.min.css">   
         <link rel="stylesheet" href="Resources/css/style.css" >
@@ -23,6 +21,10 @@
         <script type="text/javascript" src="Resources/lib/turn.min.js"></script>
         <script type="text/javascript" src="Resources/lib/zoom.min.js"></script>
         <script type="text/javascript" src="Resources/lib/bookshelf.js"></script>
+        <script src="Resources/js/bootstrap.min.js"></script>
+        <script src="Resources/js/plugin.js"></script>
+        <script src="Resources/js/wow.min.js"></script>
+        <script>new WOW().init();</script>
 
         <style>
             body { font-family: sans-serif; font-size: 12pt; color: #444; line-height: 1.5em; } 
@@ -217,57 +219,10 @@
                 html5rocks.webdb.open();
                 html5rocks.webdb.createTable();
                 html5rocks.webdb.getAllTodoItems(loadTodoItems);
-                $("#allbooks").load("ViewBooks.jsp");
+                
             }
 
             $(document).ready(function () {
-
-                $('#1').tooltipster({
-                    content: $('<span><img src="Resources/pics/book1.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#2').tooltipster({
-                    content: $('<span><img src="Resources/pics/book2.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#3').tooltipster({
-                    content: $('<span><img src="Resources/pics/book3.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#4').tooltipster({
-                    content: $('<span><img src="Resources/pics/book4.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#5').tooltipster({
-                    content: $('<span><img src="Resources/pics/book5.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#6').tooltipster({
-                    content: $('<span><img src="Resources/pics/book6.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#7').tooltipster({
-                    content: $('<span><img src="Resources/pics/book7.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#8').tooltipster({
-                    content: $('<span><img src="Resources/pics/book8.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#9').tooltipster({
-                    content: $('<span><img src="Resources/pics/book9.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-
-                $('#10').tooltipster({
-                    content: $('<span><img src="Resources/pics/book10.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#11').tooltipster({
-                    content: $('<span><img src="Resources/pics/book11.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#12').tooltipster({
-                    content: $('<span><img src="Resources/pics/book12.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#13').tooltipster({
-                    content: $('<span><img src="Resources/pics/book13.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#14').tooltipster({
-                    content: $('<span><img src="Resources/pics/book14.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#15').tooltipster({
-                    content: $('<span><img src="Resources/pics/book15.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
 
                 $('#shopping-cart').tooltipster({
                     content: $('<span id="tooltip">Click Here To Show Your Cart</span>')
@@ -284,7 +239,7 @@
                 });
             });
         </script>
-        
+
         <script>
             function allbooksfun() {
                 $("#allbooks").show();
@@ -370,28 +325,23 @@
 
     <body onload="init()">  
 
+        <jsp:include page="htmls/StartOfThePage.html"></jsp:include>
 
-        <jsp:include page="StartOfThePage.html"></jsp:include>
+            <section  class="about text-center wow bounceIn"  data-wow-duration="0.5s" data-wow-offset="300" >
+                <div class="container" style="margin-bottom: 95px;">
 
-        <section  class="about text-center wow bounceIn"  data-wow-duration="0.5s" data-wow-offset="300" >
-            <div class="container" style="margin-bottom: 95px;">
+                    <div  id="allbooks"  onmouseover ="hideCart()">
 
-
-                <div  id="allbooks"  onmouseover ="hideCart()">
-                   
-                    <jsp:include page="ViewBooks.jsp"></jsp:include>
+                    <jsp:include page="jsps/ViewBooks.jsp"></jsp:include>
                     </div>
-
 
                     <div class="bookshelf" id="viewcart"  style="display: none" onmouseover ="hideCart()">
                         <h1><span>Your Cart</span></h1>
                         <P class="lead">These  are  all The Books  you Added to the Cart</P>
-                        <div class="shelf" id="allcart" >
-
-                        </div>
+                        <div class="shelf" id="allcart" ></div>
                         <br><br><br><br><br><br><br><br><br><br>
-
-                    </div>
+                    </div>                  
+                    
                     <div class="bookshelf" style="float: right;" onclick="showCart()" >
                         <img id="shopping-cart" onclick="showAllCart()" onmouseover="showCart()" src="Resources/pics/cart.png" ondragover="allowDrop(event)" ondrop="drop(event)" style="width:90px;height:90px;" /> <br>
                         <p class="navbar-brand hvr-pop">Recently added items</p><br>
@@ -402,15 +352,6 @@
                 </div>
             </section>
 
-        <jsp:include page="RestOfThePage.html"></jsp:include>
-        <!--end scroll to top-->
-
-        <script src="Resources/js/bootstrap.min.js"></script>
-        <script src="Resources/js/plugin.js"></script>
-        <script src="Resources/js/wow.min.js"></script>
-
-        <script>
-                            new WOW().init();
-        </script>
+        <jsp:include page="htmls/RestOfThePage.html"></jsp:include>    
     </body>
 </html>

@@ -7,9 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
-<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -17,7 +16,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-     <link rel="stylesheet" href="Resources/css/style1.css">
+        <link rel="stylesheet" href="Resources/css/style1.css">
         <link rel="stylesheet" href="Resources/css/bootstrap.css"> 
         <link rel="stylesheet" href="Resources/css/font-awesome.min.css">   
         <link rel="stylesheet" href="Resources/css/style.css" >
@@ -39,15 +38,40 @@
         <script type="text/javascript" src="Resources/lib/turn.min.js"></script>
         <script type="text/javascript" src="Resources/lib/zoom.min.js"></script>
         <script type="text/javascript" src="Resources/lib/bookshelf.js"></script>
-        <script>
-       
-              
-        </script>
+        <script src="Resources/js/bootstrap.min.js"></script>
+        <script src="Resources/js/plugin.js"></script>
+        <script src="Resources/js/wow.min.js"></script>
+        <script>new WOW().init();</script>
     </head>
-    <body>
-        <jsp:useBean id="book" class="Beans.Book" /> 
-        <h1><c:out value="${sessionScope.book.id}" /></h1>
-        <h1>Hello World!</h1>
-    </body> 
+
+    <body  > 
+        <jsp:include page="htmls/StartOfThePage.html"></jsp:include>
+
+            <div class="container">
+
+                <section id="content">
+                    <form  action="Login" method="post">
+                        <h1>Login Form</h1>
+                        <div>
+                            <input type="text" placeholder="Username" required="" id="userName"  name="userName"/>
+                        </div>
+                        <div>
+                            <input type="password" placeholder="Password" required="" id="password"  name="password"/>
+                        </div>
+                        <div>
+                            <input type="submit" value="Login" />
+                            <div><input id="remember" name="remember" type="checkbox" value="rememberme"><span style="color:#FF1F1F">Remember me </span> </div>
+                            <a href="">Register</a>
+                        </div>
+                    </form>
+                <c:if test = "${error=='1'}">
+                    <div><font color="red"><b>login failed</div>
+                    </c:if>
+            </section>
+        </div>
+
+
+        <jsp:include page="htmls/RestOfThePage.html"></jsp:include>   
+    </body>
 </html>
 

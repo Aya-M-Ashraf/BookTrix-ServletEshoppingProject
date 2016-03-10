@@ -38,6 +38,53 @@
             $(document).ready(function () {
                 $.post("ViewBooks");
 
+                $('#1').tooltipster({
+                    content: $('<span><img src="Resources/pics/book1.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#2').tooltipster({
+                    content: $('<span><img src="Resources/pics/book2.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#3').tooltipster({
+                    content: $('<span><img src="Resources/pics/book3.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#4').tooltipster({
+                    content: $('<span><img src="Resources/pics/book4.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#5').tooltipster({
+                    content: $('<span><img src="Resources/pics/book5.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#6').tooltipster({
+                    content: $('<span><img src="Resources/pics/book6.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#7').tooltipster({
+                    content: $('<span><img src="Resources/pics/book7.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#8').tooltipster({
+                    content: $('<span><img src="Resources/pics/book8.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#9').tooltipster({
+                    content: $('<span><img src="Resources/pics/book9.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+
+                $('#10').tooltipster({
+                    content: $('<span><img src="Resources/pics/book10.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#11').tooltipster({
+                    content: $('<span><img src="Resources/pics/book11.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#12').tooltipster({
+                    content: $('<span><img src="Resources/pics/book12.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#13').tooltipster({
+                    content: $('<span><img src="Resources/pics/book13.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#14').tooltipster({
+                    content: $('<span><img src="Resources/pics/book14.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+                $('#15').tooltipster({
+                    content: $('<span><img src="Resources/pics/book15.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
+                });
+
             });
         </script>
 
@@ -72,7 +119,7 @@
                     </c:if>
 
                 </c:forEach>
-            </div>        
-
+            </div>
+        </div>
     </body> 
 </html>
