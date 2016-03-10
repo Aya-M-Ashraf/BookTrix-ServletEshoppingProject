@@ -4,25 +4,26 @@ import java.io.Serializable;
 
 
 public class Book implements Serializable{
-    private int id;
+    private int bookId;
+    private String bookName;
     private int quantity;
-    private int price;
-    private String name;
     private String author;
-    private String img;
     private Category category;
+    private int price;
+    private String img;
+    private String description;
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
     public Book() {
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
+   
     public int getQuantity() {
         return quantity;
     }
@@ -37,14 +38,6 @@ public class Book implements Serializable{
 
     public void setPrice(int price) {
         this.price = price;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getAuthor() {
@@ -70,6 +63,22 @@ public class Book implements Serializable{
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
+
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
+    }
+
+    public String getBookName() {
+        return bookName;
+    }
+
+    public void setBookName(String bookName) {
+        this.bookName = bookName;
     }
   
     

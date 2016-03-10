@@ -27,8 +27,8 @@ public class ViewBooks extends HttpServlet {
         Book b1 = new Book();
         Book b2 = new Book();
 
-        b1.setId(1);
-        b2.setId(2);
+        b1.setBookId(1);
+        b2.setBookId(2);
         b1.setImg("book1.jpg");
         b2.setImg("book2.jpg");
 
