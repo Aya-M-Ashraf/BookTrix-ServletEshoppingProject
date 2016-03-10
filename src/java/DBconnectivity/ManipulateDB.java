@@ -9,15 +9,11 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Ahmed Ashraf
- */
 public class ManipulateDB {
 
     Connection connection;
 
-    public ManipulateDB() throws ClassNotFoundException {
+    public ManipulateDB(){
         DBconnection DBConnection = new DBconnection();
         connection = DBConnection.getConnection();
     }
@@ -202,19 +198,28 @@ public class ManipulateDB {
         }
     }
 
-    public boolean checkUserNameExistence(String userName) {
-        boolean userFound = false;
+    public String selectRoleFromUser(String userName, String password) {
+        String role = null;
         try {
             Statement statement = connection.createStatement();
-            String queryString = "select * from user where userName='" + userName + "'";
-            ResultSet resultSet = statement.executeQuery(queryString);
-            while(resultSet.next()){
-                userFound=true;
+            String queryString = "select role from user where user_name='" + userName + "'" + "and password='" + password + "'";
+            ResultSet rs = statement.executeQuery(queryString);
+            while (rs.next()) {
+                role = rs.getString(1);
             }
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-            userFound=false;
+            role = "not found";
         }
-        return userFound;
+        return role;
     }
+
+    public void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
 }

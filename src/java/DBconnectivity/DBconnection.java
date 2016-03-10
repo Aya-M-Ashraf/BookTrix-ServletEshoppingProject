@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  */
 public class DBconnection {
      private Connection connection;
-    public DBconnection() throws ClassNotFoundException {
+    public DBconnection(){
    
         
         try {
@@ -21,17 +21,13 @@ public class DBconnection {
         } catch (SQLException ex) {
             ex.printStackTrace();
 
-        }
+        } catch (ClassNotFoundException ex) {
+             Logger.getLogger(DBconnection.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }
     
     public Connection getConnection(){
         return connection;
     }
-     public void closeConnection(){
-         try {
-             connection.close();
-         } catch (SQLException ex) {
-             Logger.getLogger(DBconnection.class.getName()).log(Level.SEVERE, null, ex);
-         }
-     }
+     
 }

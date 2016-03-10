@@ -8,9 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.*;
-import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @WebServlet(name = "Login", urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
@@ -35,40 +32,27 @@ public class Login extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        try {
-            String userName = request.getParameter("userName");
-            String password = request.getParameter("password");
-            String[] values = request.getParameterValues("remember");
 
-            Cookie[] cookies = null;
-            cookies = request.getCookies();
-            controlservlet = new ControlServlet();
-            String result = controlservlet.checkLogin(userName, password);
+        String userName = request.getParameter("userName");
+        String password = request.getParameter("password");
+        String[] values = request.getParameterValues("remember");
 
-            HttpSession session = request.getSession(true);
+        Cookie[] cookies = null;
+        cookies = request.getCookies();
+        controlservlet = new ControlServlet();
+        String result = controlservlet.checkLogin(userName, password);
 
-            if (result.equals("admin")) {
+        HttpSession session = request.getSession(true);
 
-                session.setAttribute("role", "admin");
-                session.setAttribute("userName", userName);
-                if (values != null) {
-                    Cookie nameCookie = new Cookie("userName", userName);
-                    nameCookie.setMaxAge(60 * 60 * 24);
-                    Cookie roleCookie = new Cookie("role", "admin");
-                    roleCookie.setMaxAge(60 * 60 * 24);
+        if (result.equals("admin")) {
 
-                    response.addCookie(nameCookie);
-                    response.addCookie(roleCookie);
-                }
-                response.sendRedirect("AdminHome.jsp");
-            } else if (result.equals("user")) {
-                session.setAttribute("role", "user");
-                session.setAttribute("userName", userName);
-                if (values != null) {
-                    Cookie nameCookie = new Cookie("userName", userName);
-                    nameCookie.setMaxAge(60 * 60 * 24);
-                    Cookie roleCookie = new Cookie("role", "user");
-                    roleCookie.setMaxAge(60 * 60 * 24);
+            session.setAttribute("role", "admin");
+            session.setAttribute("userName", userName);
+            if (values != null) {
+                Cookie nameCookie = new Cookie("userName", userName);
+                nameCookie.setMaxAge(60 * 60 * 24);
+                Cookie roleCookie = new Cookie("role", "admin");
+                roleCookie.setMaxAge(60 * 60 * 24);
 
                     response.addCookie(nameCookie);
                     response.addCookie(roleCookie);
@@ -78,9 +62,24 @@ public class Login extends HttpServlet {
                 session.setAttribute("error","1");
                 response.sendRedirect("jsps/Login.jsp");
             }
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            response.sendRedirect("AdminHome.jsp");
+        } else if (result.equals("user")) {
+            session.setAttribute("role", "user");
+            session.setAttribute("userName", userName);
+            if (values != null) {
+                Cookie nameCookie = new Cookie("userName", userName);
+                nameCookie.setMaxAge(60 * 60 * 24);
+                Cookie roleCookie = new Cookie("role", "user");
+                roleCookie.setMaxAge(60 * 60 * 24);
 
+                response.addCookie(nameCookie);
+                response.addCookie(roleCookie);
+            }
+            response.sendRedirect("UserHome.jsp");
+        } else {
+            session.setAttribute("error", "1");
+            response.sendRedirect("Login.jsp");
+        }
     }
+
 }
