@@ -119,7 +119,7 @@ public class ManipulateDB {
         }
         return book;
     }
-    
+
     public Cart selectCartById(int cartId) {
         Cart cart = new Cart();
         try {
@@ -153,11 +153,11 @@ public class ManipulateDB {
         }
         return cart;
     }
-    
-    public boolean insertUser(User user){
-         try {
+
+    public boolean insertUser(User user) {
+        try {
             Statement statement = connection.createStatement();
-            String st = "insert into user values('"+user.getEmail()+"','"+ user.getUserName()+"','"+user.getPassword()+"',"+user.getCreditLimit()+",'"+user.getJob()+"','"+user.getAddress()+"','"+user.getProfilePicUrl()+"','"+user.getRole()+"')";
+            String st = "insert into user values('" + user.getEmail() + "','" + user.getUserName() + "','" + user.getPassword() + "'," + user.getCreditLimit() + ",'" + user.getJob() + "','" + user.getAddress() + "','" + user.getProfilePicUrl() + "','" + user.getRole() + "')";
             statement.executeUpdate(st);
             return true;
         } catch (SQLException ex) {
@@ -165,11 +165,11 @@ public class ManipulateDB {
             return false;
         }
     }
-    
-    public boolean insertBook(Book book){
+
+    public boolean insertBook(Book book) {
         try {
             Statement statement = connection.createStatement();
-            String st = "insert into book values("+book.getBookId()+",'"+ book.getBookName()+"',"+book.getQuantity()+",'"+book.getAuthor()+"',"+book.getCategory().getId()+","+book.getPrice()+",'"+book.getImg()+"','"+book.getDescription()+"')";
+            String st = "insert into book values(" + book.getBookId() + ",'" + book.getBookName() + "'," + book.getQuantity() + ",'" + book.getAuthor() + "'," + book.getCategory().getId() + "," + book.getPrice() + ",'" + book.getImg() + "','" + book.getDescription() + "')";
             statement.executeUpdate(st);
             return true;
         } catch (SQLException ex) {
@@ -177,11 +177,11 @@ public class ManipulateDB {
             return false;
         }
     }
-    
-    public boolean insertCategory(Category category){
+
+    public boolean insertCategory(Category category) {
         try {
             Statement statement = connection.createStatement();
-            String st = "insert into category values("+category.getId()+",'"+ category.getName()+"')";
+            String st = "insert into category values(" + category.getId() + ",'" + category.getName() + "')";
             statement.executeUpdate(st);
             return true;
         } catch (SQLException ex) {
@@ -189,16 +189,32 @@ public class ManipulateDB {
             return false;
         }
     }
-    
-    public boolean insertCart(Cart cart){
+
+    public boolean insertCart(Cart cart) {
         try {
             Statement statement = connection.createStatement();
-            String st = "insert into cart values('"+cart.getUser().getEmail()+"','"+cart.getCreationDate()+"',"+cart.getQuantity()+","+cart.getPurchased()+","+cart.getCartId()+")";
+            String st = "insert into cart values('" + cart.getUser().getEmail() + "','" + cart.getCreationDate() + "'," + cart.getQuantity() + "," + cart.getPurchased() + "," + cart.getCartId() + ")";
             statement.executeUpdate(st);
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
             return false;
         }
+    }
+
+    public boolean checkUserNameExistence(String userName) {
+        boolean userFound = false;
+        try {
+            Statement statement = connection.createStatement();
+            String queryString = "select * from user where userName='" + userName + "'";
+            ResultSet resultSet = statement.executeQuery(queryString);
+            while(resultSet.next()){
+                userFound=true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+            userFound=false;
+        }
+        return userFound;
     }
 }

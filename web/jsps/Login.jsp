@@ -70,7 +70,6 @@
             </section>
         </div>
 
-
         <jsp:include page="htmls/RestOfThePage.html"></jsp:include>   
     </body>
 </html>

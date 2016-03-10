@@ -76,7 +76,7 @@ public class Login extends HttpServlet {
                 response.sendRedirect("UserHome.jsp");
             } else {
                 session.setAttribute("error","1");
-                response.sendRedirect("Login.jsp");
+                response.sendRedirect("jsps/Login.jsp");
             }
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);

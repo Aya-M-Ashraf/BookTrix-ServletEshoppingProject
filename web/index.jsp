@@ -219,7 +219,7 @@
                 html5rocks.webdb.open();
                 html5rocks.webdb.createTable();
                 html5rocks.webdb.getAllTodoItems(loadTodoItems);
-                
+
             }
 
             $(document).ready(function () {
@@ -294,11 +294,7 @@
                 $("#viewcart").hide();
                 $("#addproduct").show();
 //                $("#addproduct").load("AddBookForm.html");
-
-
-
             }
-
 
             function showCart() {
                 $("#mycart").show(1000);
@@ -325,7 +321,7 @@
 
     <body onload="init()">  
 
-        <jsp:include page="htmls/StartOfThePage.html"></jsp:include>
+        <jsp:include page="htmls/StartOfTheMainPage.html"></jsp:include>
 
             <section  class="about text-center wow bounceIn"  data-wow-duration="0.5s" data-wow-offset="300" >
                 <div class="container" style="margin-bottom: 95px;">
@@ -341,7 +337,7 @@
                         <div class="shelf" id="allcart" ></div>
                         <br><br><br><br><br><br><br><br><br><br>
                     </div>                  
-                    
+
                     <div class="bookshelf" style="float: right;" onclick="showCart()" >
                         <img id="shopping-cart" onclick="showAllCart()" onmouseover="showCart()" src="Resources/pics/cart.png" ondragover="allowDrop(event)" ondrop="drop(event)" style="width:90px;height:90px;" /> <br>
                         <p class="navbar-brand hvr-pop">Recently added items</p><br>

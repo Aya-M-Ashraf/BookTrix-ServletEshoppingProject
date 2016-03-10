@@ -10,7 +10,7 @@
       
     </head>
     <c:if test="${userName==null}">
-        <c:redirect url="Login.jsp"></c:redirect>
+        <c:redirect url="jsps/Login.jsp"></c:redirect>
     </c:if>
 
     <c:if test="${role=='user'}">
