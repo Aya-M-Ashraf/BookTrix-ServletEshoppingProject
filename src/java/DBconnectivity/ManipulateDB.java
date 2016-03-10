@@ -213,6 +213,22 @@ public class ManipulateDB {
         }
         return role;
     }
+    
+    public boolean checkUserNameExistence(String userName){
+        boolean userNameFound=false;
+        try {
+            Statement statement = connection.createStatement();
+            String queryString = "select * from user where user_name = '"+userName+"'";
+                ResultSet rs = statement.executeQuery(queryString);
+            while (rs.next()) {
+                userNameFound =true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+            userNameFound = false;
+        }
+        return userNameFound;
+    }
 
     public void closeConnection() {
         try {

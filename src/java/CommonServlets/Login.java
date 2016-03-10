@@ -54,13 +54,8 @@ public class Login extends HttpServlet {
                 Cookie roleCookie = new Cookie("role", "admin");
                 roleCookie.setMaxAge(60 * 60 * 24);
 
-                    response.addCookie(nameCookie);
-                    response.addCookie(roleCookie);
-                }
-                response.sendRedirect("UserHome.jsp");
-            } else {
-                session.setAttribute("error","1");
-                response.sendRedirect("jsps/Login.jsp");
+                response.addCookie(nameCookie);
+                response.addCookie(roleCookie);
             }
             response.sendRedirect("AdminHome.jsp");
         } else if (result.equals("user")) {
@@ -78,7 +73,7 @@ public class Login extends HttpServlet {
             response.sendRedirect("UserHome.jsp");
         } else {
             session.setAttribute("error", "1");
-            response.sendRedirect("Login.jsp");
+            response.sendRedirect("jsps/Login.jsp");
         }
     }
 

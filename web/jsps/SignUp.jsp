@@ -53,7 +53,7 @@
             function checkUserName() {
                 signUpReq.onreadystatechange = handleNameVerfication;
                 var name = document.getElementById("userName").value;
-                signUpReq.open("GET", "SignUp?userName=" + name, true);
+                signUpReq.open("GET", "SignUp?type=userName&userName=" + name, true);
                 signUpReq.send();
             }
 
