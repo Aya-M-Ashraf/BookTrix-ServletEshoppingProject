@@ -100,13 +100,13 @@
                     <fmt:parseNumber var="i" type="number" value="${stat.index}" ></fmt:parseNumber>
                     <!--${i}-->
 
-                    <!--<h1><c:out value="${myBook.id}" /></h1>-->
+                    <!--<h1><c:out value="${myBook.bookId}" /></h1>-->
                     <c:if test="${i%5 ==0}">
                         <div class="row-1">
                             <div class="loc" id="shelf1"> 
                             </c:if>
                             <c:url var="myUrl" value="/Resources/pics/${myBook.img}"  context="/BookTrix"/>
-                            <div id = "${myBook.id}"  draggable="true" ondragstart="drag(event)" cost =520 class="gallery" > 
+                            <div id = "${myBook.bookId}"  draggable="true" ondragstart="drag(event)" cost =520 class="gallery" > 
                                 <a href="Resources\Work\samples\1-java\index.html" data-poptrox="iframe,950x515"> 
                                     <div  class="sample thumb1" style="background-image:url(${myUrl});width:95px; height:117px;"  ></div> 
                                 </a>  
@@ -117,7 +117,6 @@
                         </div>
                         <br><br><br><br>
                     </c:if>
-
                 </c:forEach>
             </div>
         </div>
