@@ -321,14 +321,14 @@
 
     <body onload="init()">  
 
-        <jsp:include page="htmls/StartOfTheMainPage.html"></jsp:include>
+        <jsp:include page="htmls/StartOfMainPage.html"></jsp:include>
 
             <section  class="about text-center wow bounceIn"  data-wow-duration="0.5s" data-wow-offset="300" >
                 <div class="container" style="margin-bottom: 95px;">
 
                     <div  id="allbooks"  onmouseover ="hideCart()">
 
-                    <jsp:include page="jsps/ViewBooks.jsp"></jsp:include>
+                    <jsp:include page="/jsps/ViewBooks.jsp"></jsp:include>
                     </div>
 
                     <div class="bookshelf" id="viewcart"  style="display: none" onmouseover ="hideCart()">
@@ -348,6 +348,6 @@
                 </div>
             </section>
 
-        <jsp:include page="htmls/RestOfThePage.html"></jsp:include>    
+        <jsp:include page="htmls/RestOfMainPage.html"></jsp:include>    
     </body>
 </html>
