@@ -328,7 +328,7 @@
 
                     <div  id="allbooks"  onmouseover ="hideCart()">
 
-                    <jsp:include page="/jsps/ViewBooks.jsp"></jsp:include>
+                    <jsp:include page="jsps/ViewBooks.jsp"></jsp:include>
                     </div>
 
                     <div class="bookshelf" id="viewcart"  style="display: none" onmouseover ="hideCart()">
