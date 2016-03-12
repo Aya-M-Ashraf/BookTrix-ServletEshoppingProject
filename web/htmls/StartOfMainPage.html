@@ -3,6 +3,18 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: "GetCategories",
+                    type: 'Post',
+                    async: false,
+                    data: {}
+                });
+            });
+            
+        </script>
     </head>
     <body>
         <!-- start section tool box   settings to choose color-->
@@ -51,17 +63,16 @@
                         <li><a href="#aboutdiv">About</a></li>
                         <li>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories<span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#allbooks" onclick="allbooksfun()">All Books</a></li>
-                                <li><a href="#techbooks" onclick="techbooksfun()">Technology</a></li>
-                                <li><a href="#fashionbooks" onclick="fashionbooksfun()">Fashion</a></li>
-                                <li><a href="#childrenbooks" onclick="childrenbooksfun()">Children</a></li>
-                                <li><a href="#audiobooks" onclick="audiobooksfun()">Audio</a></li>
-                            </ul>
+<!--                            <ul class="dropdown-menu" role="menu">
+                               
+                                                                <li><a href="#allbooks" onclick="allbooksfun()">All Books</a></li>
+                                                                <li><a href="#techbooks" onclick="techbooksfun()">Technology</a></li>
+                                                                <li><a href="#fashionbooks" onclick="fashionbooksfun()">Fashion</a></li>
+                                                                <li><a href="#childrenbooks" onclick="childrenbooksfun()">Children</a></li>
+                                                                <li><a href="#audiobooks" onclick="audiobooksfun()">Audio</a></li>
+                            </ul>-->
                         </li>
-                        <li>
-                            <a href="#addbook" onclick="showAddBook()">Add Book</a>
-                        </li>
+
                     </ul>
                     <form class="navbar-form navbar-left" role="search">
                         <div class="form-group">
