@@ -16,4 +16,8 @@ public class ControlServlet {
     public boolean doesUserNameExist(String userName){
         return manipulateDB.checkUserNameExistence(userName);
     }
+    
+    public boolean doesEmailExist(String email){
+        return manipulateDB.checkEmailExistence(email);
+    }
 }
