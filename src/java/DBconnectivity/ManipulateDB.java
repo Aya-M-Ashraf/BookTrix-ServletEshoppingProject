@@ -287,6 +287,22 @@ public class ManipulateDB {
         }
         return userNameFound;
     }
+    
+    public boolean checkEmailExistence(String email){
+        boolean emailFound=false;
+        try {
+            Statement statement = connection.createStatement();
+            String queryString = "select * from user where email = '"+email+"'";
+                ResultSet rs = statement.executeQuery(queryString);
+            while (rs.next()) {
+                emailFound =true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+            emailFound = false;
+        }
+        return emailFound;
+    }
 
     public void closeConnection() {
         try {
@@ -341,5 +357,16 @@ public class ManipulateDB {
 
         }
         return books;
+    }
+    public boolean editUserData(User user){
+        try {
+            Statement statement1 = connection.createStatement();
+            String queryString1 = "update user set password='"+user.getPassword()+"',credit_Limit="+user.getCreditLimit()+",job='"+user.getJob()+"',address='"+user.getAddress()+"',photo='"+user.getProfilePicUrl()+"' where email='"+user.getEmail()+"'";
+            statement1.executeUpdate(queryString1);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
     }
 }

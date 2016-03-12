@@ -2,6 +2,7 @@ package controllers;
 
 import Beans.Book;
 import Beans.Cart;
+import Beans.User;
 import DBconnectivity.ManipulateDB;
 import java.sql.Date;
 import java.util.Vector;
@@ -41,5 +42,13 @@ public class ControlServlet {
     public Vector<Book> getAllBooksInCart(String userName) {
         int cartId = manipulateDB.selectPendingCartIdFromCart(userName);
         return manipulateDB.selectBooksFromCart(cartId);
+    }
+    
+     public boolean doesEmailExist(String email){
+        return manipulateDB.checkEmailExistence(email);
+    } 
+     
+    public boolean editUserDate(User user){
+        return manipulateDB.editUserData(user);
     }
 }

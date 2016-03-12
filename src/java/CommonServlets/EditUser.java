@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package CommonServlets;
 
 import AdminServlets.AddProduct;
@@ -19,56 +24,28 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-public class SignUp extends HttpServlet {
-
+/**
+ *
+ * @author lenovo
+ */
+public class EditUser extends HttpServlet {
     ControlServlet controlServlet;
-
     @Override
-    public void init() {
+    public void init(){
         controlServlet = new ControlServlet();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        String type = request.getParameter("type");
-        System.out.println(type);
-        switch (type) {
-            case "mail": {
-                String email = request.getParameter("email");
-                boolean emailFound = controlServlet.doesEmailExist(email);
-                System.out.println(emailFound);
-                if (emailFound) {
-                    out.println("This email alraedy exists");
-                    System.out.println("email exists");
-                } else {
-                    out.println("valid");
-                    System.out.println("email doesn't exists");
-                }
-            }
-            break;
-            case "userName": {
-                String userName = request.getParameter("userName");
-                boolean userNameFound = controlServlet.doesUserNameExist(userName);
-                if (userNameFound) {
-                    out.println("This user name alraedy exists");
-                } else {
-                    out.println("valid");
-                }
-
-            }
-            break;
-
-        }
-
+    
     }
 
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String email = null, userName = null, job = null, address = null, password = null, img = null, role = null;
+             String email = null, userName = null, job = null, address = null, password = null, img = null, role = null;
         double creditLimit = 0;
 
         try {
@@ -86,6 +63,7 @@ public class SignUp extends HttpServlet {
 //processFormField(item);
                     String name = item.getFieldName();
                     String value = item.getString();
+
 
                     if (name.equalsIgnoreCase("email")) {
                         email = value;
@@ -112,14 +90,17 @@ public class SignUp extends HttpServlet {
             }
 
             User u = new User(email, userName, password, creditLimit, job, address, img, role);
-            ManipulateDB m = new ManipulateDB();
-            m.insertUser(u);
-
+            controlServlet.editUserDate(u);
             response.sendRedirect("ViewAllUsers.jsp");
 
         } catch (Exception ex) {
             Logger.getLogger(AddProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+  
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
 }
