@@ -226,6 +226,12 @@
             }
 
             $(document).ready(function () {
+                 $.ajax({
+                    url: "ViewBooks",
+                    type: 'Post',
+                    async: false,
+                    data: {}
+                });
 
                 $('#shopping-cart').tooltipster({
                     content: $('<span id="tooltip">Click Here To Show Your Cart</span>')
@@ -310,7 +316,7 @@
 
                     <div  id="allbooks"  onmouseover ="hideCart()">
 
-                    <jsp:include page="jsps/ViewBooks.jsp"></jsp:include>
+                    <jsp:include page="ViewBooks.jsp"></jsp:include>
                     </div>
 
                     <div class="bookshelf" id="viewcart"  style="display: none" onmouseover ="hideCart()">

@@ -93,7 +93,7 @@ public class AddProduct extends HttpServlet {
             System.out.println(b);
             m.insertBook(b);
 
-            response.sendRedirect("jsps/ViewBooks.jsp");
+            response.sendRedirect("ViewBooks.jsp");
 
         } catch (Exception ex) {
             Logger.getLogger(AddProduct.class.getName()).log(Level.SEVERE, null, ex);

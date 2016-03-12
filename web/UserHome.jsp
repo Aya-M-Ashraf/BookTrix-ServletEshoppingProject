@@ -361,7 +361,7 @@
 
 
                     <div  id="allbooks" style="float: left;" onmouseover ="hideCart()"> 
-                    <jsp:include page="jsps/ViewBooks.jsp"></jsp:include>
+                    <jsp:include page="ViewBooks.jsp"></jsp:include>
                     </div>
 
                 </div>
