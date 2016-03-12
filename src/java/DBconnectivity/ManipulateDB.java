@@ -326,4 +326,15 @@ public class ManipulateDB {
         }
         return cartId;
     }
+    public boolean editUserData(User user){
+        try {
+            Statement statement1 = connection.createStatement();
+            String queryString1 = "update user set password='"+user.getPassword()+"',credit_Limit="+user.getCreditLimit()+",job='"+user.getJob()+"',address='"+user.getAddress()+"',photo='"+user.getProfilePicUrl()+"' where email='"+user.getEmail()+"'";
+            statement1.executeUpdate(queryString1);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
 }

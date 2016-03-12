@@ -1,6 +1,7 @@
 package controllers;
 
 import Beans.Cart;
+import Beans.User;
 import DBconnectivity.ManipulateDB;
 import java.util.Date;
 
@@ -33,5 +34,9 @@ public class ControlServlet {
     
      public boolean doesEmailExist(String email){
         return manipulateDB.checkEmailExistence(email);
-    }   
+    } 
+     
+    public boolean editUserDate(User user){
+        return manipulateDB.editUserData(user);
+    }
 }
