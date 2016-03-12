@@ -32,13 +32,16 @@
             #wrapper { max-width: 800px; margin: 0 auto; text-align: center; } 
         </style>
         <style>
-            input[type=text] {padding:5px; border:2px solid #ccc; -webkit-border-radius: 5px;border-radius: 5px;}
+            input{padding:5px; border:2px solid #ccc; -webkit-border-radius: 5px;border-radius: 5px;}
+            input[type=number ] {padding:5px; border:2px solid #ccc; -webkit-border-radius: 5px;border-radius: 5px;}
             input[type=text]:focus {border-color:#333;}
             input[type=password] {padding:5px; border:2px solid #ccc; -webkit-border-radius: 5px;border-radius: 5px;}
             input[type=password]:focus {border-color:#333;}
             input[type=submit] {padding: 15px 32px; background:#ccc; border:0 none;cursor:pointer;-webkit-border-radius: 5px;border-radius: 5px; }
+            /*            input[type=file] {padding: 10px 20px; background:#ccc; border:0 none;cursor:pointer;-webkit-border-radius: 5px;border-radius: 5px; }*/
+            select{padding:5px; border:2px solid #ccc; -webkit-border-radius: 5px;border-radius: 5px;}
             table {border-collapse: collapse;width: 100%;}
-            th, td {padding: 8px;}
+            th, td {padding: 8px; background-color: #f2f2f2}
             tr:nth-child(even){background-color: #f2f2f2}
             th {background-color: #a73f2d; color: white;}
         </style>
@@ -223,6 +226,12 @@
             }
 
             $(document).ready(function () {
+                 $.ajax({
+                    url: "ViewBooks",
+                    type: 'Post',
+                    async: false,
+                    data: {}
+                });
 
                 $('#shopping-cart').tooltipster({
                     content: $('<span id="tooltip">Click Here To Show Your Cart</span>')
@@ -241,61 +250,41 @@
         </script>
 
         <script>
-            function allbooksfun() {
-                $("#allbooks").show();
+            function hideallfun() {
+                $("#allbooks").hide();
                 $("#techbooks").hide();
                 $("#fashionbooks").hide();
                 $("#childrenbooks").hide();
                 $("#audiobooks").hide();
                 $("#viewcart").hide();
+                $("#addbook").hide();
 
+            }
+            function allbooksfun() {
+                hideallfun();
+                $("#allbooks").show();
             }
             function techbooksfun() {
-                $("#allbooks").hide();
+                hideallfun();
                 $("#techbooks").show();
-                $("#fashionbooks").hide();
-                $("#childrenbooks").hide();
-                $("#audiobooks").hide();
-                $("#viewcart").hide();
-
             }
             function fashionbooksfun() {
-                $("#allbooks").hide();
-                $("#techbooks").hide();
+                hideallfun();
                 $("#fashionbooks").show();
-                $("#childrenbooks").hide();
-                $("#audiobooks").hide();
-                $("#viewcart").hide();
             }
             function childrenbooksfun() {
-                $("#allbooks").hide();
-                $("#techbooks").hide();
-                $("#fashionbooks").hide();
+                hideallfun();
                 $("#childrenbooks").show();
-                $("#audiobooks").hide();
-                $("#viewcart").hide();
-
             }
             function audiobooksfun() {
-                $("#allbooks").hide();
-                $("#techbooks").hide();
-                $("#fashionbooks").hide();
-                $("#childrenbooks").hide();
+                hideallfun();
                 $("#audiobooks").show();
-                $("#viewcart").hide();
-
             }
-            function showAddProduct() {
-                $("#allbooks").hide();
-                $("#techbooks").hide();
-                $("#fashionbooks").hide();
-                $("#childrenbooks").hide();
-                $("#audiobooks").hide();
-                $("#viewcart").hide();
-                $("#addproduct").show();
-//                $("#addproduct").load("AddBookForm.html");
+            function showAddBook() {
+                hideallfun();
+                alert("asdasd");
+                $("#addbook").show();
             }
-
             function showCart() {
                 $("#mycart").show(1000);
             }
@@ -304,7 +293,6 @@
             }
 
         </script>
-
         <script>
             function myMusic() {
                 if (document.getElementById('playMusic').paused) {
@@ -328,7 +316,7 @@
 
                     <div  id="allbooks"  onmouseover ="hideCart()">
 
-                    <jsp:include page="jsps/ViewBooks.jsp"></jsp:include>
+                    <jsp:include page="ViewBooks.jsp"></jsp:include>
                     </div>
 
                     <div class="bookshelf" id="viewcart"  style="display: none" onmouseover ="hideCart()">
@@ -347,6 +335,9 @@
 
                 </div>
             </section>
+            <div id="addbook" style="display: none" onmouseover ="hideCart()">
+            <jsp:include page="AddBookForm.jsp"></jsp:include>
+            </div>
 
         <jsp:include page="htmls/RestOfMainPage.html"></jsp:include>    
     </body>
