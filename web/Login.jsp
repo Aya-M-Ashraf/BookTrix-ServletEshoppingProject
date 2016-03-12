@@ -64,7 +64,7 @@
                     </form>
                 <c:if test = "${error=='1'}">
                     <div><font color="red"><b>login failed</div>
-                    </c:if>
+                </c:if>
             </section>
         </div>
 

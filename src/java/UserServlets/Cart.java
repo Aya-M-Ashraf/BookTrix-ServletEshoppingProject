@@ -41,8 +41,6 @@ public class Cart extends HttpServlet {
 
             String userName = request.getParameter("userName");
             String bookId = request.getParameter("bookId");
-            System.out.println(userName);
-            System.out.println(bookId);
             if (controller.addBookToCart(userName, Integer.parseInt(bookId))) {
                 out.print("your book has been added! :) ");
             } else {

@@ -20,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
@@ -29,23 +30,24 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  * @author lenovo
  */
 public class EditUser extends HttpServlet {
+
     ControlServlet controlServlet;
+
     @Override
-    public void init(){
+    public void init() {
         controlServlet = new ControlServlet();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-    
+
     }
 
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-             String email = null, userName = null, job = null, address = null, password = null, img = null, role = null;
+        String email = null, userName = null, job = null, address = null, password = null, img = null, role = null;
         double creditLimit = 0;
 
         try {
@@ -64,7 +66,6 @@ public class EditUser extends HttpServlet {
                     String name = item.getFieldName();
                     String value = item.getString();
 
-
                     if (name.equalsIgnoreCase("email")) {
                         email = value;
                     } else if (name.equalsIgnoreCase("userName")) {
@@ -80,10 +81,9 @@ public class EditUser extends HttpServlet {
                         password = value;
                     }
                 } else {
-                    if (!item.isFormField()) {
-
-                        System.out.println(new File(AddProduct.class.getClassLoader().getResource("").getPath().substring(0, AddProduct.class.getClassLoader().getResource("").getPath().length() - 16) + "/Resources/users_pics/" + item.getName()));
-                        item.write(new File(AddProduct.class.getClassLoader().getResource("").getPath().substring(0, AddProduct.class.getClassLoader().getResource("").getPath().length() - 16) + "/Resources/users_pics/" + item.getName()));
+                    if (!item.isFormField() && !item.getName().equals("")) {
+                        System.out.println(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 16) + "/Resources/users_pics/" + item.getName()));
+                        item.write(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 16) + "/Resources/users_pics/" + item.getName()));
                         img = item.getName();
                     }
                 }
@@ -91,13 +91,15 @@ public class EditUser extends HttpServlet {
 
             User u = new User(email, userName, password, creditLimit, job, address, img, role);
             controlServlet.editUserDate(u);
-            response.sendRedirect("ViewAllUsers.jsp");
+            HttpSession session = request.getSession(true);
+            session.setAttribute("done", "1");
+            response.sendRedirect("UserHome.jsp");
 
         } catch (Exception ex) {
             Logger.getLogger(AddProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-  
+
     @Override
     public String getServletInfo() {
         return "Short description";

@@ -26,13 +26,13 @@ public class ControlServlet {
 
     public boolean addBookToCart(String userName, int bookId) {
         int cartId = manipulateDB.selectPendingCartIdFromCart(userName);
-        System.out.println(cartId);
         if (cartId == -1) {                 //no pending cart for this user is found
             Cart cart = new Cart();
             cart.setCreationDate(new Date(876236576587L));
             cart.setUser(manipulateDB.selectUserByUserName(userName));
             cart.setPending(1);
-            return manipulateDB.insertCart(cart);
+            manipulateDB.insertCart(cart);
+            return manipulateDB.insertBookIntoCart(bookId,manipulateDB.selectPendingCartIdFromCart(userName) );
         } else {
             return manipulateDB.insertBookIntoCart(bookId, cartId);
         }
@@ -50,5 +50,9 @@ public class ControlServlet {
      
     public boolean editUserDate(User user){
         return manipulateDB.editUserData(user);
+    }
+    
+    public User getUser(String userName){
+        return manipulateDB.selectUserByUserName(userName);
     }
 }

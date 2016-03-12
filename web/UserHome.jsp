@@ -110,7 +110,7 @@
             function drag(ev) {
                 ev.dataTransfer.setData("text", ev.target.id);
                 bookDivId = ev.target.id;
-               // alert(bookDivId);
+                // alert(bookDivId);
             }
 
             function drop(ev) {
@@ -120,22 +120,22 @@
                 addToMyCart(bookDivId);
                 html5rocks.webdb.getAllTodoItems(loadTodoItems);
             }
-            
-           /////// to be continued 
+
+            /////// to be continued 
             function ajaxCallBack(responseTxt, statusTxt, xhr) {
-            if (statusTxt === "success") {
-                alert(responseTxt);
+                if (statusTxt === "success") {
+                    alert(responseTxt);
+                }
             }
-        }
-        function addToMyCart(bookId) {
-            $.post("Cart",
-            {
-                "userName": '${userName}' ,
-                "bookId": bookId 
+            function addToMyCart(bookId) {
+                $.post("Cart",
+                        {
+                            "userName": '${userName}',
+                            "bookId": bookId
 //                "Quantity": 
+                        }
+                , ajaxCallBack);
             }
-            , ajaxCallBack);
-        }
             ///// to be continued
 
             function showAllCart() {
@@ -249,7 +249,7 @@
             }
 
             $(document).ready(function () {
-               
+
                 $('#shopping-cart').tooltipster({
                     content: $('<span id="tooltip">Click Here To Show Your Cart</span>')
                 });
@@ -267,61 +267,51 @@
         </script>
 
         <script>
-            function allbooksfun() {
-                $("#allbooks").show();
+            function hideallfun() {
+                $("#allbooks").hide();
                 $("#techbooks").hide();
                 $("#fashionbooks").hide();
                 $("#childrenbooks").hide();
                 $("#audiobooks").hide();
                 $("#viewcart").hide();
-
+                $("#addbook").hide();
+                $("#myProfile").hide();
+                $("#allbooksincart").hide();
+            }
+            function allbooksfun() {
+                hideallfun();
+                $("#allbooks").show();
             }
             function techbooksfun() {
-                $("#allbooks").hide();
+                hideallfun();
                 $("#techbooks").show();
-                $("#fashionbooks").hide();
-                $("#childrenbooks").hide();
-                $("#audiobooks").hide();
-                $("#viewcart").hide();
-
             }
             function fashionbooksfun() {
-                $("#allbooks").hide();
-                $("#techbooks").hide();
+                hideallfun();
                 $("#fashionbooks").show();
-                $("#childrenbooks").hide();
-                $("#audiobooks").hide();
-                $("#viewcart").hide();
             }
             function childrenbooksfun() {
-                $("#allbooks").hide();
-                $("#techbooks").hide();
-                $("#fashionbooks").hide();
+                hideallfun();
                 $("#childrenbooks").show();
-                $("#audiobooks").hide();
-                $("#viewcart").hide();
-
             }
             function audiobooksfun() {
-                $("#allbooks").hide();
-                $("#techbooks").hide();
-                $("#fashionbooks").hide();
-                $("#childrenbooks").hide();
+                hideallfun();
                 $("#audiobooks").show();
-                $("#viewcart").hide();
-
             }
-            function showAddProduct() {
-                $("#allbooks").hide();
-                $("#techbooks").hide();
-                $("#fashionbooks").hide();
-                $("#childrenbooks").hide();
-                $("#audiobooks").hide();
-                $("#viewcart").hide();
-                $("#addproduct").show();
+            function showAddBook() {
+                hideallfun();
+                $("#addbook").show();
             }
-
-
+            function showMyProfile() {
+                hideallfun();
+                $("#myProfile").show();
+                $("#myslide").hide();
+            }
+            function showMyCart() { //coming from DB 
+                hideallfun();
+                $("#allbooks").show();
+                $("#allbooks").load("ViewCart.jsp?userName=${userName}");
+            }
             function showCart() {
                 $("#mycart").show(1000);
             }
@@ -346,7 +336,7 @@
 
 
     </head>
-    
+
     <c:if test="${userName==null}">
         <c:redirect url="Login.jsp"></c:redirect>
     </c:if>
@@ -356,30 +346,16 @@
     </c:if>
 
     <body onload="init()">
-    <center><h3> welcome ${userName} </h3></center> 
+<!--    <center><h3> welcome ${userName} </h3></center> -->
+
         <jsp:include page="htmls/StartOfUserPage.html"></jsp:include>
+
             <section  class="about text-center wow bounceIn"  data-wow-duration="0.5s" data-wow-offset="300" >
-                <div class="container" style="margin-bottom: 95px;display: flex;">
-
-
+                <div class="container" style="margin-bottom: 95px;">
                     <div  id="allbooks" style="float: left;" onmouseover ="hideCart()"> 
-                    <%--<jsp:include page="ViewBooks.jsp"></jsp:include>--%>
-                    <jsp:include page="ViewCart.jsp?userName=${userName}"></jsp:include>
+                    <jsp:include page="ViewBooks.jsp"></jsp:include>
                     </div>
 
-                </div>
-
-                <div class="bookshelf" id="viewcart"  style="display: none" onmouseover ="hideCart()">
-                    <h1><span>Your Cart</span></h1>
-                    <P class="lead">These  are  all The Books  you Added to the Cart</P>
-                   
-                    
-                   
-                    <div class="shelf" id="allcart" >
-                        
-                        
-                    </div>
-                    <br><br><br><br><br><br><br><br><br><br>
                 </div>
 
                 <div class="bookshelf" style="float: right;" onclick="showCart()" >
@@ -387,10 +363,14 @@
                     <p class="navbar-brand hvr-pop">Recently added items</p><br>
                     <div    ondragover="allowDrop(event)" ondrop="drop(event)" style="padding-top:190px; width: 220px;height: 780px; background-color: blanchedalmond; float: right; border-radius: 25px; background-image: url('Resources/pics/cart.jpg');background-repeat: no-repeat;"></div>
                 </div>
-
-
             </section>
 
+            <div id="myProfile"  style="display: none;">
+                <h1><span>Your Profile</span></h1>
+            <jsp:include page="ViewSingleUser.jsp"></jsp:include>
+            </div>
+
         <jsp:include page="htmls/RestOfMainPage.html"></jsp:include> 
+        
     </body>
 </html>
