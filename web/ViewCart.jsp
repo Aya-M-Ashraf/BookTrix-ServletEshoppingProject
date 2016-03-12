@@ -37,10 +37,12 @@
         <script>
             $(document).ready(function () {
                 $.ajax({
-                    url: "ViewBooks",
-                    type: 'Post',
+                    url: "Cart",
+                    type: 'Get',
                     async: false,
-                    data: {}
+                    data: {
+                        "userName" : '${userName}'
+                    }
                 });
 
 
@@ -99,6 +101,7 @@
         <title></title>
     </head>
     <body>
+        <center><h2>${userName}'s Cart</h2></center>
         <div class="bookshelf" id="allbooks" onmouseover ="hideCart()">
             <div class="shelf">
                 <c:forEach items="${sessionScope.book}" var="myBook" varStatus="stat">

@@ -110,12 +110,14 @@
             function drag(ev) {
                 ev.dataTransfer.setData("text", ev.target.id);
                 bookDivId = ev.target.id;
+               // alert(bookDivId);
             }
 
             function drop(ev) {
                 ev.preventDefault();
                 var data = ev.dataTransfer.getData("text");
                 html5rocks.webdb.addTodo(bookDivId);
+                addToMyCart(bookDivId);
                 html5rocks.webdb.getAllTodoItems(loadTodoItems);
             }
             
@@ -128,7 +130,7 @@
         function addToMyCart(bookId) {
             $.post("Cart",
             {
-                "userName": ${userName} ,
+                "userName": '${userName}' ,
                 "bookId": bookId 
 //                "Quantity": 
             }
@@ -247,7 +249,7 @@
             }
 
             $(document).ready(function () {
-
+               
                 $('#shopping-cart').tooltipster({
                     content: $('<span id="tooltip">Click Here To Show Your Cart</span>')
                 });
@@ -344,7 +346,7 @@
 
 
     </head>
-
+    
     <c:if test="${userName==null}">
         <c:redirect url="Login.jsp"></c:redirect>
     </c:if>
@@ -354,14 +356,15 @@
     </c:if>
 
     <body onload="init()">
-    <center><h3> welcome ${userName} </h3></center>
-        <jsp:include page="htmls/StartOfMainPage.html"></jsp:include>
+    <center><h3> welcome ${userName} </h3></center> 
+        <jsp:include page="htmls/StartOfUserPage.html"></jsp:include>
             <section  class="about text-center wow bounceIn"  data-wow-duration="0.5s" data-wow-offset="300" >
                 <div class="container" style="margin-bottom: 95px;display: flex;">
 
 
                     <div  id="allbooks" style="float: left;" onmouseover ="hideCart()"> 
-                    <jsp:include page="ViewBooks.jsp"></jsp:include>
+                    <%--<jsp:include page="ViewBooks.jsp"></jsp:include>--%>
+                    <jsp:include page="ViewCart.jsp?userName=${userName}"></jsp:include>
                     </div>
 
                 </div>
@@ -369,14 +372,20 @@
                 <div class="bookshelf" id="viewcart"  style="display: none" onmouseover ="hideCart()">
                     <h1><span>Your Cart</span></h1>
                     <P class="lead">These  are  all The Books  you Added to the Cart</P>
-                    <div class="shelf" id="allcart" ></div>
+                   
+                    
+                   
+                    <div class="shelf" id="allcart" >
+                        
+                        
+                    </div>
                     <br><br><br><br><br><br><br><br><br><br>
                 </div>
 
                 <div class="bookshelf" style="float: right;" onclick="showCart()" >
                     <img id="shopping-cart" onclick="showAllCart()" onmouseover="showCart()" src="Resources/pics/cart.png" ondragover="allowDrop(event)" ondrop="drop(event)" style="width:90px;height:90px;" /> <br>
                     <p class="navbar-brand hvr-pop">Recently added items</p><br>
-                    <div  id="mycart"  ondragover="allowDrop(event)" ondrop="drop(event)" style="padding-top:190px; display: none; width: 220px;height: 780px; background-color: blanchedalmond; float: right; border-radius: 25px; background-image: url('Resources/pics/cart.jpg');background-repeat: no-repeat;"></div>
+                    <div    ondragover="allowDrop(event)" ondrop="drop(event)" style="padding-top:190px; width: 220px;height: 780px; background-color: blanchedalmond; float: right; border-radius: 25px; background-image: url('Resources/pics/cart.jpg');background-repeat: no-repeat;"></div>
                 </div>
 
 

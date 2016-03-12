@@ -13,7 +13,7 @@ import java.util.Vector;
  * @author lenovo
  */
 public class Cart {
-    private int quantity,purchased,cartId;
+    private int quantity,pending,cartId;
     private Date creationDate;
     private Vector<Book> myBooks;
     private User user;
@@ -26,12 +26,12 @@ public class Cart {
         this.quantity = quantity;
     }
 
-    public int getPurchased() {
-        return purchased;
+    public int getPending() {
+        return pending;
     }
 
-    public void setPurchased(int purchased) {
-        this.purchased = purchased;
+    public void setPending(int pending) {
+        this.pending = pending;
     }
 
     public int getCartId() {

@@ -3,10 +3,7 @@ package AdminServlets;
 import Beans.Book;
 import DBconnectivity.ManipulateDB;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Vector;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,21 +18,11 @@ public class ViewBooks extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Book b1 = new Book();
-        Book b2 = new Book();
-
-        b1.setBookId(1);
-        b2.setBookId(2);
-        b1.setImg("book1.jpg");
-        b2.setImg("book2.jpg");
-
         ManipulateDB m = new ManipulateDB();
         Vector<Book> allbooks = m.selectAllBooks();
 
         HttpSession session = request.getSession(true);
         session.setAttribute("book", allbooks);
-//        RequestDispatcher rd = request.getRequestDispatcher("ViewBooks.jsp");
-//        rd.include(request, response);
     }
 
 }
