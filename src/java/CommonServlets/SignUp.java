@@ -65,8 +65,6 @@ public class SignUp extends HttpServlet {
     }
 
     @Override
-=======
->>>>>>> origin/master
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

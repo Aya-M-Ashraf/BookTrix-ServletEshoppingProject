@@ -33,18 +33,5 @@ public class ControlServlet {
     
      public boolean doesEmailExist(String email){
         return manipulateDB.checkEmailExistence(email);
-    }
-
-    public boolean addBookToCart(String userName,int bookId) {
-       int cartId  = manipulateDB.selectPendingCartIdFromCart(userName);
-       if(cartId==-1){ //no pending cart for this user is found
-       Cart cart = new Cart();
-       cart.setCreationDate(new Date());
-       cart.setUser(manipulateDB.selectUserByUserName(userName));
-       }else{
-//           manipulateDB.insertBookIntoCart(bookId,cartId);
-       } 
-       return false; //to be continued
-    }
-   
+    }   
 }
