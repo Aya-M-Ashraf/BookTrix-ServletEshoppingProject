@@ -108,6 +108,28 @@ public class ManipulateDB {
         }
         return user;
     }
+    
+    public User selectUserByUserName(String userName) {
+        User user = new User();
+        try {
+            Statement statement1 = connection.createStatement();
+            String queryString1 = "select * from user where user_name='" + userName + "'";
+            ResultSet resultSet = statement1.executeQuery(queryString1);
+            while (resultSet.next()) {
+                user.setEmail(resultSet.getString(1));
+                user.setUserName(resultSet.getString(2));
+                user.setPassword(resultSet.getString(3));
+                user.setCreditLimit(resultSet.getDouble(4));
+                user.setJob(resultSet.getString(5));
+                user.setAddress(resultSet.getString(6));
+                user.setProfilePicUrl(resultSet.getString(7));
+                user.setRole(resultSet.getString(8));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
 
     public Book selectBookById(int bookId) {
         Book book = new Book();
@@ -253,10 +275,10 @@ public class ManipulateDB {
         boolean userNameFound=false;
         try {
             Statement statement = connection.createStatement();
-            String queryString = "select * from user where user_name = '"+userName+"'";
-                ResultSet rs = statement.executeQuery(queryString);
+            String queryString = "select * from user where user_name = '" + userName + "'";
+            ResultSet rs = statement.executeQuery(queryString);
             while (rs.next()) {
-                userNameFound =true;
+                userNameFound = true;
             }
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
@@ -273,4 +295,19 @@ public class ManipulateDB {
         }
     }
 
+    public int selectPendingCartIdFromCart(String userName) {
+        int cartId = -1;
+        try {
+            Statement statement1 = connection.createStatement();
+            String queryString1 = "select cart_id from cart where pending= 1 and user_name=" + userName;
+            ResultSet resultSet = statement1.executeQuery(queryString1);
+            if (resultSet.next()) {
+                cartId = resultSet.getInt(1);
+            }
+            return cartId;
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cartId;
+    }
 }
