@@ -13,7 +13,7 @@ public class ManipulateDB {
 
     Connection connection;
 
-    public ManipulateDB(){
+    public ManipulateDB() {
         connection = DBconnection.getConnection();
     }
 
@@ -68,7 +68,8 @@ public class ManipulateDB {
         }
         return allBooks;
     }
-        public Vector<Category> selectAllCategories() {
+
+    public Vector<Category> selectAllCategories() {
         Vector<Category> allCategories = new Vector<>();
         try {
             Statement statement1 = connection.createStatement();
@@ -78,7 +79,7 @@ public class ManipulateDB {
                 Category category = new Category();
                 category.setId(resultSet.getInt(1));
                 category.setName(resultSet.getString(2));
-               
+
                 allCategories.add(category);
             }
         } catch (SQLException ex) {
@@ -108,7 +109,7 @@ public class ManipulateDB {
         }
         return user;
     }
-    
+
     public User selectUserByUserName(String userName) {
         User user = new User();
         try {
@@ -165,7 +166,7 @@ public class ManipulateDB {
             while (resultSet.next()) {
                 cart.setCreationDate(resultSet.getDate(2));
                 cart.setQuantity(resultSet.getInt(3));
-                cart.setPurchased(resultSet.getInt(4));
+                cart.setPending(resultSet.getInt(4));
                 cart.setCartId(resultSet.getInt(5));
                 String userEmail = resultSet.getString(1);
                 Statement statement2 = connection.createStatement();
@@ -229,7 +230,7 @@ public class ManipulateDB {
     public boolean insertCart(Cart cart) {
         try {
             Statement statement = connection.createStatement();
-            String st = "insert into cart values('" + cart.getUser().getEmail() + "','" + cart.getCreationDate() + "'," + cart.getQuantity() + "," + cart.getPurchased() + "," + cart.getCartId() + ")";
+            String st = "insert into cart values('" + cart.getUser().getUserName() + "','" + cart.getCreationDate() + "'," + cart.getQuantity() + "," + cart.getPending() + "," + cart.getCartId() + ")";
             statement.executeUpdate(st);
             return true;
         } catch (SQLException ex) {
@@ -253,12 +254,12 @@ public class ManipulateDB {
         }
         return role;
     }
-    
-     public Category selectCategoryFromName(String categoryName) {
+
+    public Category selectCategoryFromName(String categoryName) {
         Category category = new Category();
         try {
             Statement statement = connection.createStatement();
-            String queryString = "select *  from category where category_name='" + categoryName + "'" ;
+            String queryString = "select *  from category where category_name='" + categoryName + "'";
             ResultSet rs = statement.executeQuery(queryString);
             while (rs.next()) {
                 category.setId(rs.getInt(1));
@@ -266,13 +267,13 @@ public class ManipulateDB {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-           
+
         }
         return category;
     }
-    
-    public boolean checkUserNameExistence(String userName){
-        boolean userNameFound=false;
+
+    public boolean checkUserNameExistence(String userName) {
+        boolean userNameFound = false;
         try {
             Statement statement = connection.createStatement();
             String queryString = "select * from user where user_name = '" + userName + "'";
@@ -296,10 +297,11 @@ public class ManipulateDB {
     }
 
     public int selectPendingCartIdFromCart(String userName) {
-        int cartId = -1;
+
         try {
+            int cartId = -1;
             Statement statement1 = connection.createStatement();
-            String queryString1 = "select cart_id from cart where pending= 1 and user_name=" + userName;
+            String queryString1 = "select cart_id from cart where pending = '1' and user_name= '" + userName + "'";
             ResultSet resultSet = statement1.executeQuery(queryString1);
             if (resultSet.next()) {
                 cartId = resultSet.getInt(1);
@@ -307,7 +309,37 @@ public class ManipulateDB {
             return cartId;
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+            return -1;
         }
-        return cartId;
+    }
+
+    public boolean insertBookIntoCart(int bookId, int cartId) {
+        try {
+            Statement statement = connection.createStatement();
+            String st = "insert into cart_book values('" + cartId + "','" + bookId + "')";
+            statement.executeUpdate(st);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
+    public Vector<Book> selectBooksFromCart(int cartId) {
+        Vector<Book> books = new Vector<>();
+        try {
+            Statement statement1 = connection.createStatement();
+            String queryString1 = "select book_id from cart_book where cart_id= '" + cartId + "'";
+            ResultSet resultSet = statement1.executeQuery(queryString1);
+            while (resultSet.next()) {
+                int bookId = resultSet.getInt(1);
+                books.add(selectBookById(bookId));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return books;
     }
 }
