@@ -340,7 +340,7 @@ public class ManipulateDB {
             return false;
         }
     }
-
+    
     public Vector<Book> selectBooksFromCart(int cartId) {
         Vector<Book> books = new Vector<>();
         try {
@@ -358,6 +358,7 @@ public class ManipulateDB {
         }
         return books;
     }
+    
     public boolean editUserData(User user){
         try {
             Statement statement1 = connection.createStatement();
