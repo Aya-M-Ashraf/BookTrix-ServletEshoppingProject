@@ -14,14 +14,14 @@ public class ManipulateDB {
     Connection connection;
 
     public ManipulateDB(){
-        DBconnection DBConnection = new DBconnection();
-        connection = DBConnection.getConnection();
+        connection = DBconnection.getConnection();
     }
 
     public Vector<User> selectAllUsers() {
         Vector<User> allUsers = new Vector<>();
         try {
             Statement statement = connection.createStatement();
+            System.out.println("asdasdasd");
             String queryString = "select * from user";
             ResultSet resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
@@ -67,6 +67,24 @@ public class ManipulateDB {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return allBooks;
+    }
+        public Vector<Category> selectAllCategories() {
+        Vector<Category> allCategories = new Vector<>();
+        try {
+            Statement statement1 = connection.createStatement();
+            String queryString1 = "select * from category ";
+            ResultSet resultSet = statement1.executeQuery(queryString1);
+            while (resultSet.next()) {
+                Category category = new Category();
+                category.setId(resultSet.getInt(1));
+                category.setName(resultSet.getString(2));
+               
+                allCategories.add(category);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return allCategories;
     }
 
     public User selectUserByEmail(String userEmail) {
@@ -165,7 +183,7 @@ public class ManipulateDB {
     public boolean insertBook(Book book) {
         try {
             Statement statement = connection.createStatement();
-            String st = "insert into book values(" + book.getBookId() + ",'" + book.getBookName() + "'," + book.getQuantity() + ",'" + book.getAuthor() + "'," + book.getCategory().getId() + "," + book.getPrice() + ",'" + book.getImg() + "','" + book.getDescription() + "')";
+            String st = "insert into book (`book_name`, `quantitiy`, `author`, `category_id`, `price`, `img`, `description`) values('" + book.getBookName() + "'," + book.getQuantity() + ",'" + book.getAuthor() + "'," + book.getCategory().getId() + "," + book.getPrice() + ",'" + book.getImg() + "','" + book.getDescription() + "')";
             statement.executeUpdate(st);
             return true;
         } catch (SQLException ex) {
@@ -212,6 +230,23 @@ public class ManipulateDB {
             role = "not found";
         }
         return role;
+    }
+    
+     public Category selectCategoryFromName(String categoryName) {
+        Category category = new Category();
+        try {
+            Statement statement = connection.createStatement();
+            String queryString = "select *  from category where category_name='" + categoryName + "'" ;
+            ResultSet rs = statement.executeQuery(queryString);
+            while (rs.next()) {
+                category.setId(rs.getInt(1));
+                category.setName(rs.getString(2));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+           
+        }
+        return category;
     }
     
     public boolean checkUserNameExistence(String userName){

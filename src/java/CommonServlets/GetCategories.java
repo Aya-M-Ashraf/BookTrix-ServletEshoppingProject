@@ -1,12 +1,16 @@
-package AdminServlets;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package CommonServlets;
 
 import Beans.Book;
+import Beans.Category;
 import DBconnectivity.ManipulateDB;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Vector;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,23 +21,19 @@ import javax.servlet.http.HttpSession;
  *
  * @author Ahmed
  */
-public class ViewBooks extends HttpServlet {
+public class GetCategories extends HttpServlet {
 
-    @Override
+     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Book b1 = new Book();
-        Book b2 = new Book();
+          
 
-        b1.setBookId(1);
-        b2.setBookId(2);
-        b1.setImg("book1.jpg");
-        b2.setImg("book2.jpg");
+        Vector<Category> allcategories = new Vector<>();
+         ManipulateDB m = new ManipulateDB();
+         allcategories=m.selectAllCategories();
 
-        ManipulateDB m = new ManipulateDB();
-        Vector<Book> allbooks = m.selectAllBooks();
-
+         System.out.println(allcategories.size());
         HttpSession session = request.getSession(true);
-        session.setAttribute("book", allbooks);
+        session.setAttribute("allcategories", allcategories);
 //        RequestDispatcher rd = request.getRequestDispatcher("ViewBooks.jsp");
 //        rd.include(request, response);
     }

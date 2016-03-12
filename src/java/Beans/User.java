@@ -1,7 +1,9 @@
 package Beans;
 
+import java.io.Serializable;
 
-public class User {
+
+public class User implements Serializable{
     private String email;
     private String userName;
     private String password;
@@ -14,6 +16,17 @@ public class User {
     public User() {
     }
 
+    public User(String email, String userName, String password, double creditLimit, String job, String address, String profilePicUrl, String role) {
+        this.email = email;
+        this.userName = userName;
+        this.password = password;
+        this.creditLimit = creditLimit;
+        this.job = job;
+        this.address = address;
+        this.profilePicUrl = profilePicUrl;
+        this.role = role;
+    }
+    
     public String getEmail() {
         return email;
     }
