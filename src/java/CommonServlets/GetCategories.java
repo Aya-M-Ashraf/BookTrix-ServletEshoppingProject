@@ -31,7 +31,7 @@ public class GetCategories extends HttpServlet {
          ManipulateDB m = new ManipulateDB();
          allcategories=m.selectAllCategories();
 
-         System.out.println(allcategories.size());
+         System.out.println("size of all categoriess ==>"+allcategories.size());
         HttpSession session = request.getSession(true);
         session.setAttribute("allcategories", allcategories);
 //        RequestDispatcher rd = request.getRequestDispatcher("ViewBooks.jsp");
