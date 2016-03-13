@@ -1,59 +1,8 @@
 <!DOCTYPE html>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>  
-
-<script>
-    $(document).ready(function () {
-        $("#searchText").keyup(function () {
-//            $("#searchResult").load("ViewBooks.jsp");
-//            alert($('#searchText').val());
-            $.ajax({
-                url: "ViewSearchBooks",
-                type: 'Post',
-                async: false,
-                data: {
-                    "searchString": $('#searchText').val()
-                },
-                success: function (data) {
-                    $('#searchResult').load("ViewSearchBooks.jsp");
-                }
-            });
-
-        });
-        $("#searchText").focusin(function () {
-//            alert("focus in");
-            $("#myslide").fadeOut(1000);
-            $("#searchResult").fadeIn(1000);
-            location.href=location.href + "#searchResult";
-        });
-        $("#searchText").focusout(function () {
-            $("#myslide").fadeIn(1000);
-            $("#searchResult").fadeOut(1000);
-
-        });
-        $("#searchResult").mouseover(function () {
-            $("#searchResult").show();
-        })
-    });
-
-
-</script>
-
 <html>
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-        <script>
-            $(document).ready(function () {
-                $.ajax({
-                    url: "GetCategories",
-                    type: 'Post',
-                    async: false,
-                    data: {}
-                });
-            });
-            
-        </script>
     </head>
     <body>
         <!-- start section tool box   settings to choose color-->
@@ -96,28 +45,29 @@
                 <div class="collapse navbar-collapse" id="ournavbar">
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li ><a href="../Login.jsp">Login</a></li>
-                        <li ><a href="../SignUp.jsp">Sign UP</a></li>
+                        <li><a href="#myProfile" onclick="showMyProfile();$('#doneMsg').text('')">My Profile</a></li>
+                        <li><a href="#allbooksincart" onclick="showMyCart()">My Cart</a></li>
                         <li class="active"><a href="../index.html">Home<span class="sr-only">(current)</span></a></li>
                         <li><a href="#aboutdiv">About</a></li>
                         <li>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories<span class="caret"></span></a>
-<!--                            <ul class="dropdown-menu" role="menu">
-                               
-                                                                <li><a href="#allbooks" onclick="allbooksfun()">All Books</a></li>
-                                                                <li><a href="#techbooks" onclick="techbooksfun()">Technology</a></li>
-                                                                <li><a href="#fashionbooks" onclick="fashionbooksfun()">Fashion</a></li>
-                                                                <li><a href="#childrenbooks" onclick="childrenbooksfun()">Children</a></li>
-                                                                <li><a href="#audiobooks" onclick="audiobooksfun()">Audio</a></li>
-                            </ul>-->
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#allbooks" onclick="allbooksfun()">All Books</a></li>
+                                <li><a href="#techbooks" onclick="techbooksfun()">Technology</a></li>
+                                <li><a href="#fashionbooks" onclick="fashionbooksfun()">Fashion</a></li>
+                                <li><a href="#childrenbooks" onclick="childrenbooksfun()">Children</a></li>
+                                <li><a href="#audiobooks" onclick="audiobooksfun()">Audio</a></li>
+                            </ul>
                         </li>
-
+                        <li>
+                            <a href="#addbook" onclick="showAddBook()">Add Book</a>
+                        </li>
                     </ul>
                     <form class="navbar-form navbar-left" role="search">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Search" id="searchText" >
+                            <input type="text" class="form-control" placeholder="Search">
                         </div>
-                        <!--<button type="submit" class="btn btn-default">Submit</button>-->
+                        <button type="submit" class="btn btn-default">Submit</button>
                     </form>
 
                 </div><!-- /.navbar-collapse -->
@@ -125,9 +75,6 @@
         </nav>
 
 
-        <div id="searchResult">
-
-        </div>
         <!---start slideshow-->
         <div id="myslide" class="carousel slide" data-ride="carousel">
             <!-- Indicators de el -->

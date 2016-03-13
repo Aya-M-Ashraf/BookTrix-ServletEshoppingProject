@@ -3,10 +3,7 @@ package AdminServlets;
 import Beans.Book;
 import DBconnectivity.ManipulateDB;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Vector;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +26,6 @@ public class ViewBooks extends HttpServlet {
 
         HttpSession session = request.getSession(true);
         session.setAttribute("book", allbooks);
-//        RequestDispatcher rd = request.getRequestDispatcher("ViewBooks.jsp");
-//        rd.include(request, response);
     }
 
 }

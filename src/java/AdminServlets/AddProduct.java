@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package AdminServlets;
 
 import Beans.Book;
@@ -78,10 +73,8 @@ public class AddProduct extends HttpServlet {
                 } else {
                     if (!item.isFormField()) {
 
-                        System.out.println(request.getContextPath());
-                                
-                        System.out.println(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().length() - 16) + "/Resources/pics/" + item.getName()));
-                        item.write(new File(AddProduct.class.getClassLoader().getResource("").getPath().substring(0, AddProduct.class.getClassLoader().getResource("").getPath().length() - 16) + "/Resources/pics/" + item.getName()));
+                        System.out.println(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 16) + "/Resources/pics/" + item.getName()));
+                        item.write(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 16) + "/Resources/pics/" + item.getName()));
                         img =item.getName();
                     }
                 }

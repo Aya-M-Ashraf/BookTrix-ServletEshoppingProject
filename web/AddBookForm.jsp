@@ -36,6 +36,7 @@
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>  
     </head>
     <body>
         <form action="AddProduct" ENCTYPE="MULTIPART/FORM-DATA" id="addBookForm" method="POST">

@@ -13,6 +13,10 @@ import javax.servlet.http.*;
 public class Login extends HttpServlet {
 
     ControlServlet controlservlet;
+    
+    public void init(){
+        controlservlet = new ControlServlet();
+    }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -39,7 +43,6 @@ public class Login extends HttpServlet {
 
         Cookie[] cookies = null;
         cookies = request.getCookies();
-        controlservlet = new ControlServlet();
         String result = controlservlet.checkLogin(userName, password);
 
         HttpSession session = request.getSession(true);
@@ -61,6 +64,7 @@ public class Login extends HttpServlet {
         } else if (result.equals("user")) {
             session.setAttribute("role", "user");
             session.setAttribute("userName", userName);
+            session.setAttribute("user",controlservlet.getUser(userName));
             if (values != null) {
                 Cookie nameCookie = new Cookie("userName", userName);
                 nameCookie.setMaxAge(60 * 60 * 24);
@@ -73,7 +77,7 @@ public class Login extends HttpServlet {
             response.sendRedirect("UserHome.jsp");
         } else {
             session.setAttribute("error", "1");
-            response.sendRedirect("jsps/Login.jsp");
+            response.sendRedirect("Login.jsp");
         }
     }
 
