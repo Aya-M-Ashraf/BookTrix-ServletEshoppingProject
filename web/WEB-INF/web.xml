@@ -24,6 +24,10 @@
         <servlet-name>GetCategories</servlet-name>
         <servlet-class>CommonServlets.GetCategories</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewSearchBooks</servlet-name>
+        <servlet-class>CommonServlets.ViewSearchBooks</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminHome</servlet-name>
         <url-pattern>/AdminHome</url-pattern>
@@ -47,6 +51,10 @@
     <servlet-mapping>
         <servlet-name>GetCategories</servlet-name>
         <url-pattern>/GetCategories</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewSearchBooks</servlet-name>
+        <url-pattern>/ViewSearchBooks</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

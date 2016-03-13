@@ -21,16 +21,11 @@ public class ViewBooks extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Book b1 = new Book();
-        Book b2 = new Book();
-
-        b1.setBookId(1);
-        b2.setBookId(2);
-        b1.setImg("book1.jpg");
-        b2.setImg("book2.jpg");
-
+       
         ManipulateDB m = new ManipulateDB();
         Vector<Book> allbooks = m.selectAllBooks();
+        
+        System.out.println("iam in view books");
 
         HttpSession session = request.getSession(true);
         session.setAttribute("book", allbooks);

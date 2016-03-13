@@ -13,26 +13,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="Resources/css/bootstrap.css"> 
-        <link rel="stylesheet" href="Resources/css/font-awesome.min.css">   
-        <link rel="stylesheet" href="Resources/css/style.css" >
-        <link rel="stylesheet" href="Resources/css/media.css" >
-        <link rel="stylesheet" href="Resources/css/defult-theme.css" >
-        <link rel="stylesheet" href='Resources/css/hover.css'>
-        <link rel="stylesheet" href='Resources/css/animate.css'>
-        <link rel="stylesheet" href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700'>
-        <link type="text/css" rel="stylesheet" href="Resources/css/jquery.ui.css"/>
-        <link type="text/css" rel="stylesheet" href="Resources/css/default.css"/>
-        <link type="text/css" rel="stylesheet" href="Resources/css/tooltipster.css"/>
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>  
-        <script type="text/javascript" src="Resources/js/jquery.tooltipster.min.js"></script>
-        <script type="text/javascript" src="Resources/js/html5shiv.min.js"></script>
-        <script type="text/javascript" src="Resources/js/respond.min.js"></script>
-        <script type="text/javascript" src="Resources/js/jquery.poptrox.min.js"></script>
-        <script type="text/javascript" src="Resources/lib/hash.js"></script>
-        <script type="text/javascript" src="Resources/lib/turn.min.js"></script>
-        <script type="text/javascript" src="Resources/lib/zoom.min.js"></script>
-        <script type="text/javascript" src="Resources/lib/bookshelf.js"></script>
 
         <script>
             $(document).ready(function () {
@@ -40,57 +21,11 @@
                     url: "ViewBooks",
                     type: 'Post',
                     async: false,
-                    data: {}
+                    data: {},
+                    success: function (data, textStatus, jqXHR) {
+//                        $("#allbooks").load(location.href + " #allbooks");
+                    }
                 });
-
-
-                $('#1').tooltipster({
-                    content: $('<span><img src="Resources/pics/book1.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#2').tooltipster({
-                    content: $('<span><img src="Resources/pics/book2.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#3').tooltipster({
-                    content: $('<span><img src="Resources/pics/book3.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#4').tooltipster({
-                    content: $('<span><img src="Resources/pics/book4.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#5').tooltipster({
-                    content: $('<span><img src="Resources/pics/book5.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#6').tooltipster({
-                    content: $('<span><img src="Resources/pics/book6.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#7').tooltipster({
-                    content: $('<span><img src="Resources/pics/book7.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#8').tooltipster({
-                    content: $('<span><img src="Resources/pics/book8.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#9').tooltipster({
-                    content: $('<span><img src="Resources/pics/book9.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-
-                $('#10').tooltipster({
-                    content: $('<span><img src="Resources/pics/book10.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#11').tooltipster({
-                    content: $('<span><img src="Resources/pics/book11.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#12').tooltipster({
-                    content: $('<span><img src="Resources/pics/book12.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#13').tooltipster({
-                    content: $('<span><img src="Resources/pics/book13.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#14').tooltipster({
-                    content: $('<span><img src="Resources/pics/book14.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#15').tooltipster({
-                    content: $('<span><img src="Resources/pics/book15.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-
             });
         </script>
 

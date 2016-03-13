@@ -16,6 +16,21 @@
     });
 
 </script>
+
+<style>
+    input{padding:5px; border:2px solid #ccc; -webkit-border-radius: 5px;border-radius: 5px;}
+    input[type=number ] {padding:5px; border:2px solid #ccc; -webkit-border-radius: 5px;border-radius: 5px;}
+    input[type=text]:focus {border-color:#333;}
+    input[type=password] {padding:5px; border:2px solid #ccc; -webkit-border-radius: 5px;border-radius: 5px;}
+    input[type=password]:focus {border-color:#333;}
+    input[type=submit] {padding: 15px 32px; background:#ccc; border:0 none;cursor:pointer;-webkit-border-radius: 5px;border-radius: 5px; }
+    /*            input[type=file] {padding: 10px 20px; background:#ccc; border:0 none;cursor:pointer;-webkit-border-radius: 5px;border-radius: 5px; }*/
+    select{padding:5px; border:2px solid #ccc; -webkit-border-radius: 5px;border-radius: 5px;}
+    table {border-collapse: collapse;width: 100%;}
+    th, td {padding: 8px; background-color: #f2f2f2}
+    tr:nth-child(even){background-color: #f2f2f2}
+    th {background-color: #a73f2d; color: white;}
+</style>
 <html>
     <head>
         <title>TODO supply a title</title>
@@ -48,7 +63,7 @@
                         <br>
                     </td>  
                 </tr>
-                 <tr>
+                <tr>
                     <td align="center">
                         <br>
                         <input type="number" name="price" placeholder="Price"style="width: 40%; " required >
