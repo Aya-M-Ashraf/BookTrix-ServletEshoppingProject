@@ -32,7 +32,7 @@ public class ControlServlet {
             cart.setUser(manipulateDB.selectUserByUserName(userName));
             cart.setPending(1);
             manipulateDB.insertCart(cart);
-            return manipulateDB.insertBookIntoCart(bookId,manipulateDB.selectPendingCartIdFromCart(userName) );
+            return manipulateDB.insertBookIntoCart(bookId, manipulateDB.selectPendingCartIdFromCart(userName));
         } else {
             return manipulateDB.insertBookIntoCart(bookId, cartId);
         }
@@ -43,16 +43,20 @@ public class ControlServlet {
         int cartId = manipulateDB.selectPendingCartIdFromCart(userName);
         return manipulateDB.selectBooksFromCart(cartId);
     }
-    
-     public boolean doesEmailExist(String email){
+
+    public boolean doesEmailExist(String email) {
         return manipulateDB.checkEmailExistence(email);
-    } 
-     
-    public boolean editUserDate(User user){
+    }
+
+    public boolean editUserDate(User user) {
         return manipulateDB.editUserData(user);
     }
-    
-    public User getUser(String userName){
+
+    public User getUser(String userName) {
         return manipulateDB.selectUserByUserName(userName);
+    }
+
+    public Vector<Book> getBooksInCategory(String categoryName) {
+        return manipulateDB.selectAllBooksInCategory(categoryName);
     }
 }
