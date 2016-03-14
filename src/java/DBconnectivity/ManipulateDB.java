@@ -460,7 +460,7 @@ public class ManipulateDB {
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
              return false;
-        }
+        }}
     public Vector<Book> selectAllBooksInCategory(String categoryName) {
         Vector<Book> books = new Vector<>();
         try {

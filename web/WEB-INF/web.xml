@@ -64,6 +64,10 @@
         <servlet-name>ViewSingleBook</servlet-name>
         <url-pattern>/ViewSingleBook</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteBookFromCart</servlet-name>
+        <url-pattern>/DeleteBookFromCart</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>

@@ -37,16 +37,26 @@
         <script>
             $(document).ready(function () {
                 $(".removeBookBtn").click(function (event) {
-                    alert(event.target.id);
+//                    alert(event.target.id);
                     $.ajax({
-                        url: "Cart",
-                        type: 'Get',
+                        url: "DeleteBookFromCart",
+                        type: 'Post',
                         async: false,
                         data: {
-                            "userName": '${userName}'
+                            "userName": '${userName}',
+                            "bookId": event.target.id
                         }, success: function (data, textStatus, jqXHR) {
-                            $("#mainBody").load("ViewCart.jsp");
-
+                            $.ajax({
+                                url: "Cart",
+                                type: 'Get',
+                                async: false,
+                                data: {
+                                    "userName": '${userName}'
+                                }, success: function (data, textStatus, jqXHR) {
+                                    $("#resViewCart").load("ViewCart.jsp");
+                                }
+                            }
+                            );
                         }
                     }
                     );
