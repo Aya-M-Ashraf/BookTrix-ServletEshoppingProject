@@ -36,100 +36,100 @@
 
         <script>
             $(document).ready(function () {
-                $.ajax({
-                    url: "Cart",
-                    type: 'Get',
-                    async: false,
-                    data: {
-                        "userName" : '${userName}'
+                $(".removeBookBtn").click(function (event) {
+                    alert(event.target.id);
+                    $.ajax({
+                        url: "Cart",
+                        type: 'Get',
+                        async: false,
+                        data: {
+                            "userName": '${userName}'
+                        }, success: function (data, textStatus, jqXHR) {
+                            $("#mainBody").load("ViewCart.jsp");
+
+                        }
                     }
+                    );
                 });
 
-
-                $('#1').tooltipster({
-                    content: $('<span><img src="Resources/pics/book1.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#2').tooltipster({
-                    content: $('<span><img src="Resources/pics/book2.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#3').tooltipster({
-                    content: $('<span><img src="Resources/pics/book3.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#4').tooltipster({
-                    content: $('<span><img src="Resources/pics/book4.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#5').tooltipster({
-                    content: $('<span><img src="Resources/pics/book5.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#6').tooltipster({
-                    content: $('<span><img src="Resources/pics/book6.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#7').tooltipster({
-                    content: $('<span><img src="Resources/pics/book7.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#8').tooltipster({
-                    content: $('<span><img src="Resources/pics/book8.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#9').tooltipster({
-                    content: $('<span><img src="Resources/pics/book9.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-
-                $('#10').tooltipster({
-                    content: $('<span><img src="Resources/pics/book10.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#11').tooltipster({
-                    content: $('<span><img src="Resources/pics/book11.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#12').tooltipster({
-                    content: $('<span><img src="Resources/pics/book12.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#13').tooltipster({
-                    content: $('<span><img src="Resources/pics/book13.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#14').tooltipster({
-                    content: $('<span><img src="Resources/pics/book14.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
-                $('#15').tooltipster({
-                    content: $('<span><img src="Resources/pics/book15.jpg"/> <strong>This text is in bold case !</strong><br> discription</span>')
-                });
 
             });
         </script>
+
+        <style>
+            input[type=text] {padding:5px; border:2px solid #ccc; -webkit-border-radius: 5px;border-radius: 5px;}
+            input[type=text]:focus {border-color:#333;}
+            input[type=password] {padding:5px; border:2px solid #ccc; -webkit-border-radius: 5px;border-radius: 5px;}
+            input[type=password]:focus {border-color:#333;}
+            input[type=submit],  input[type=button] {padding: 15px 32px; background:#ccc; border:0 none;cursor:pointer;-webkit-border-radius: 5px;border-radius: 5px; }
+            table {border-collapse: collapse;width: 100%;}
+            th, td {padding: 8px;}
+            tr:nth-child(odd){background-color: #f2f2f2}
+            th {background-color: #a73f2d; color: white;}
+        </style>
 
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title></title>
     </head>
-    <body>
-        <center><h2>${userName}'s Cart</h2></center>
-        <div class="bookshelf" id="allbooks" onmouseover ="hideCart()">
-            <div class="shelf">
-                <c:forEach items="${sessionScope.book}" var="myBook" varStatus="stat">
-                    <!--${stat.index}-->
-                    <fmt:parseNumber var="i" type="number" value="${stat.index}" ></fmt:parseNumber>
-                    <!--${i}-->
+    <body id="mainBody">
+    <center><h2>${userName}'s Cart</h2></center>
 
-                    <!--<h1><c:out value="${myBook.bookId}" /></h1>-->
-                    <c:if test="${i%5 ==0}">
-                        <div class="row-1">
-                            <div class="loc" id="shelf1"> 
-                            </c:if>
-                            <c:url var="myUrl" value="/Resources/pics/${myBook.img}"  context="/BookTrix"/>
-                            <div id = "${myBook.bookId}"  draggable="true" ondragstart="drag(event)" cost =520 class="gallery" > 
-                                <a href="Resources\Work\samples\1-java\index.html" data-poptrox="iframe,950x515" id = "${myBook.bookId}"> 
-                                    <div  class="sample thumb1" style="width:95px; height:117px;" id = "${myBook.bookId}">
-                                        <img src="${myUrl}" style="width:95px; height:117px;" id = "${myBook.bookId}">
-                                    </div>  
-                                </a>  
+    <table align="center" style="width: 60%;" >
+        <fmt:parseNumber var="totalCost" type="number" value="0" ></fmt:parseNumber>
 
-                            </div>
-                            <c:if test="${i%5 ==4 and i!=0}">
-                            </div>  
-                        </div>
-                        <br><br><br><br>
-                    </c:if>
-                </c:forEach>
-            </div>
-        </div>
-    </body> 
+
+        <c:forEach items="${sessionScope.book}" var="myBook" varStatus="stat">
+            <fmt:parseNumber var="i" type="number" value="${stat.index}" ></fmt:parseNumber>
+            <c:set var="totalCost" value="${totalCost =totalCost+myBook.price}"></c:set>
+
+
+            <c:url var="myUrl" value="/Resources/pics/${myBook.img}"  context="/BookTrix"/>                       
+
+            <c:if test="${i%5 ==0}">
+                <tr>
+                </c:if>
+                <td>
+                    <table align="center" style="width: 60%;">
+                        <tr>
+                            <td style="background-color: transparent;">
+                                <img src="${myUrl}" style="width:95px; height:117px;" id = "${myBook.bookId}"> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color: transparent;">
+                                <h5>Name : ${myBook.bookName}</h5>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                                <h5 style="color:#a73f2d; ">Price : ${myBook.price} $</h5>
+                            </td> 
+
+                        </tr>
+                        <tr>
+                            <td style="background-color: white;">
+                                <input type="button" value="remove" class="removeBookBtn" id="${myBook.bookId}" >
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+
+                <c:if test="${i%5 ==4 and i!=0}">
+                </tr>
+            </c:if>
+        </c:forEach>
+        <tr>
+            <td colspan="5" align="center" style="background-color: white;">
+                <h1> Total Cost : ${totalCost}</h1>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5" align="center" style="background-color: white;">
+                <input type="button" value="Buy" >
+            </td>
+        </tr>
+    </table>
+</body> 
 </html>

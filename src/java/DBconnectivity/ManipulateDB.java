@@ -70,12 +70,40 @@ public class ManipulateDB {
         return allBooks;
     }
 
+    public Book selectSingleBook(int bookId) {
+        Vector<Book> allBooks = new Vector<>();
+        Book book = new Book();
+
+        try {
+            Statement statement1 = connection.createStatement();
+            String queryString1 = "select b.book_id,b.book_name,b.quantitiy,b.author,b.category_id,b.price,b.img,c.category_name,b.description from book b join category c on b.category_id=c.category_id where b.book_id ='" + bookId + "'";
+            System.out.println(queryString1);
+            ResultSet resultSet = statement1.executeQuery(queryString1);
+            while (resultSet.next()) {
+                book.setBookId(resultSet.getInt(1));
+                book.setBookName(resultSet.getString(2));
+                book.setQuantity(resultSet.getInt(3));
+                book.setAuthor(resultSet.getString(4));
+                book.setPrice(resultSet.getInt(6));
+                book.setImg(resultSet.getString(7));
+                int categoryId = resultSet.getInt(5);
+                String categoryName = resultSet.getString(8);
+                book.setDescription(resultSet.getString(9));
+                Category category = new Category(categoryId, categoryName);
+                book.setCategory(category);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return book;
+    }
+
     public Vector<Book> selectAllBooksWhereNameLike(String bookName) {
         Vector<Book> allBooks = new Vector<>();
         try {
             Statement statement1 = connection.createStatement();
             String queryString1 = "select b.book_id,b.book_name,b.quantitiy,b.author,b.category_id,b.price,b.img,c.category_name,b.description from book b join category c on b.category_id=c.category_id where b.book_name like'%" + bookName + "%'";
-            System.out.println("in select search books "+queryString1);
+            System.out.println("in select search books " + queryString1);
             ResultSet resultSet = statement1.executeQuery(queryString1);
             while (resultSet.next()) {
                 Book book = new Book();
@@ -389,7 +417,7 @@ public class ManipulateDB {
     }
 
     public boolean editUserData(User user) {
-        if (user.getProfilePicUrl()!=null) {
+        if (user.getProfilePicUrl() != null) {
             try {
                 Statement statement1 = connection.createStatement();
                 String queryString1 = "update user set password='" + user.getPassword() + "',credit_Limit=" + user.getCreditLimit() + ",job='" + user.getJob() + "',address='" + user.getAddress() + "',photo='" + user.getProfilePicUrl() + "' where email='" + user.getEmail() + "'";

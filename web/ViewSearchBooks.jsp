@@ -62,6 +62,17 @@
 
                 $(".mybook").click(function (event) {
                     alert(event.target.id);
+                    $.ajax({
+                        url: "ViewSingleBook",
+                        type: 'Post',
+                        async: false,
+                        data: {
+                            "bookid": event.target.id
+                        },
+                        success: function (data) {
+                            $('#allbooks').load("mybook.jsp");
+                        }
+                    });
                 });
             });
         </script>
@@ -70,14 +81,15 @@
     </head>
     <body>
         <div   id="searchResult" >
-            <!--<div class="shelf">-->
+
+            <br><br>
 
             <table align="center" style="width: 60%; height: 50%">
                 <c:forEach items="${sessionScope.searchBooks}" var="myBook" varStatus="stat">
                     <!--${stat.index}-->
                     <fmt:parseNumber var="i" type="number" value="${stat.index}" ></fmt:parseNumber>
                     <c:url var="myUrl" value="/Resources/pics/${myBook.img}"  context="/BookTrix"/>
-                    <tr style="background-color: white;">
+                    <tr style="background-color : transparent;">
                         <td  class="mybook" style="width: 60%; " id="${myBook.bookId}" > 
                             <table id="${myBook.bookId}">
                                 <tr  id="${myBook.bookId}">
@@ -97,41 +109,8 @@
                             </table>                      
                         </td>
                     </tr>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    <%--<c:if test="${i%5 ==0}">--%>
-                    <!--                        <div class="row-1">
-                                                <div class="loc" id="shelf1"> -->
-                    <%--</c:if>--%>
-                    <!--<div id = "${myBook.bookId}"  draggable="true" ondragstart="drag(event)" cost =520 class="gallery" >--> 
-                    <!--                        <a href="Resources\Work\samples\1-java\index.html" data-poptrox="iframe,950x515"> 
-                                                <div  class="sample thumb1" style="width:95px; height:117px;">-->
-                                                    <!--<img src="${myUrl}" style="width:95px; height:117px;">-->
-                    <!--                            </div>  
-                                            </a>  
-                    
-                                        </div>-->
-                    <%--<c:if test="${i%5 ==4 and i!=0}">--%>
-                    <!--                            </div>  
-                                            </div>
-                                            <br><br><br><br>-->
-                    <%--</c:if>--%>
                 </c:forEach>
             </table>
-            <!--</div>-->
         </div>
     </body> 
 </html>

@@ -21,9 +21,8 @@
         });
         $("#searchText").focusin(function () {
 //            alert("focus in");
-            $("#myslide").fadeOut(1000);
+//            $("#myslide").fadeOut(1000);
             $("#searchResult").fadeIn(1000);
-            location.href=location.href + "#searchResult";
         });
         $("#searchText").focusout(function () {
             $("#myslide").fadeIn(1000);
@@ -122,7 +121,7 @@
         </nav>
 
 
-        <div id="searchResult">
+        <div id="searchResult" class="navbar-fixed-top">
 
         </div>
         <!---start slideshow-->
