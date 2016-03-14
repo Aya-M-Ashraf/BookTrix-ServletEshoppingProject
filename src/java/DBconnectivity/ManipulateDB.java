@@ -439,4 +439,56 @@ public class ManipulateDB {
             }
         }
     }
+
+    public boolean deleteBook(String userName, int bookId) {
+        try {
+            Statement statement = connection.createStatement();
+            String query1 = "select cart_id from cart where user_name =  '" + userName + "'";
+            ResultSet resultSet = statement.executeQuery(query1);
+            if (resultSet.next()) {
+                int c_id = resultSet.getInt(1);
+                String query2 = "delete from cart_book where book_id ='" + bookId + "' and cart_id=" + c_id;
+                int result = statement.executeUpdate(query2);
+                
+                if (result == 1) {
+                    return true;
+                } else
+                   return false;
+            }
+            else 
+                return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+             return false;
+        }
+    public Vector<Book> selectAllBooksInCategory(String categoryName) {
+        Vector<Book> books = new Vector<>();
+        try {
+            Statement statement1 = connection.createStatement();
+            String queryString1 = "select category_id from category";
+            ResultSet resultSet1 = statement1.executeQuery(queryString1);
+            while (resultSet1.next()) {
+                int category_id = resultSet1.getInt(1);
+                Category category = new Category(category_id, categoryName);
+                Statement statement = connection.createStatement();
+                String queryString = "select * from book where caregory_id = "+category_id;
+                ResultSet resultSet = statement.executeQuery(queryString);
+                while (resultSet.next()) {
+                    Book book = new Book();
+                    book.setCategory(category);
+                    book.setBookId(resultSet.getInt(1));
+                    book.setBookName(resultSet.getString(2));
+                    book.setQuantity(resultSet.getInt(3));
+                    book.setAuthor(resultSet.getString(4));
+                    book.setPrice(resultSet.getInt(6));
+                    book.setImg(resultSet.getString(7));
+                    book.setDescription(resultSet.getString(8));
+                    books.add(book);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return books;
+    }
 }
