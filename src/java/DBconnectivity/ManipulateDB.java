@@ -75,7 +75,7 @@ public class ManipulateDB {
         try {
             Statement statement1 = connection.createStatement();
             String queryString1 = "select b.book_id,b.book_name,b.quantitiy,b.author,b.category_id,b.price,b.img,c.category_name,b.description from book b join category c on b.category_id=c.category_id where b.book_name like'%" + bookName + "%'";
-            System.out.println("in select search books "+queryString1);
+            System.out.println("in select search books " + queryString1);
             ResultSet resultSet = statement1.executeQuery(queryString1);
             while (resultSet.next()) {
                 Book book = new Book();
@@ -389,7 +389,7 @@ public class ManipulateDB {
     }
 
     public boolean editUserData(User user) {
-        if (user.getProfilePicUrl()!=null) {
+        if (user.getProfilePicUrl() != null) {
             try {
                 Statement statement1 = connection.createStatement();
                 String queryString1 = "update user set password='" + user.getPassword() + "',credit_Limit=" + user.getCreditLimit() + ",job='" + user.getJob() + "',address='" + user.getAddress() + "',photo='" + user.getProfilePicUrl() + "' where email='" + user.getEmail() + "'";
@@ -409,6 +409,29 @@ public class ManipulateDB {
                 Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
                 return false;
             }
+        }
+    }
+
+    public boolean deleteBook(String userName, int bookId) {
+        try {
+            Statement statement = connection.createStatement();
+            String query1 = "select cart_id from cart where user_name =  '" + userName + "'";
+            ResultSet resultSet = statement.executeQuery(query1);
+            if (resultSet.next()) {
+                int c_id = resultSet.getInt(1);
+                String query2 = "delete from cart_book where book_id ='" + bookId + "' and cart_id=" + c_id;
+                int result = statement.executeUpdate(query2);
+                
+                if (result == 1) {
+                    return true;
+                } else
+                   return false;
+            }
+            else 
+                return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+             return false;
         }
     }
 }
