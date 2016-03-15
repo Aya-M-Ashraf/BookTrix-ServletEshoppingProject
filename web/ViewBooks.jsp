@@ -36,7 +36,7 @@
     <body>
         <div class="bookshelf" id="allbooks" onmouseover ="hideCart()">
             <div class="shelf">
-                <c:forEach items="${sessionScope.book}" var="myBook" varStatus="stat">
+                <c:forEach items="${sessionScope.viewAllbooks}" var="myBook" varStatus="stat">
                     <!--${stat.index}-->
                     <fmt:parseNumber var="i" type="number" value="${stat.index}" ></fmt:parseNumber>
                     <!--${i}-->

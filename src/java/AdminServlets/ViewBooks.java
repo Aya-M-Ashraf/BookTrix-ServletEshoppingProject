@@ -25,7 +25,7 @@ public class ViewBooks extends HttpServlet {
         System.out.println("iam in view books");
 
         HttpSession session = request.getSession(true);
-        session.setAttribute("book", allbooks);
+        session.setAttribute("viewAllbooks", allbooks);
     }
 
 }

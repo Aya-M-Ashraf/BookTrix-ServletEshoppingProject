@@ -71,6 +71,7 @@
                         },
                         success: function (data) {
                             $('#allbooks').load("ViewBook.jsp");
+//                            alert("sucess");
                         }
                     });
                 });
