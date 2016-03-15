@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -185,6 +186,7 @@ public class ManipulateDB {
                 }
                 cart.setUser(user);
             }
+           cart.setMyBooks(selectBooksFromCart(cartId));
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -329,10 +331,10 @@ public class ManipulateDB {
         }
     }
 
-    public boolean insertBookIntoCart(int bookId, int cartId) {
+    public boolean insertBookIntoCart(int bookId,int bookQuantity ,int cartId) {
         try {
             Statement statement = connection.createStatement();
-            String st = "insert into cart_book values('" + cartId + "','" + bookId + "')";
+            String st = "insert into cart_book values('" + cartId + "','" + bookId +"','" + bookQuantity + "')";
             statement.executeUpdate(st);
             return true;
         } catch (SQLException ex) {
@@ -340,7 +342,7 @@ public class ManipulateDB {
             return false;
         }
     }
-
+    
     public Vector<Book> selectBooksFromCart(int cartId) {
         Vector<Book> books = new Vector<>();
         try {
@@ -359,7 +361,26 @@ public class ManipulateDB {
         return books;
     }
 
-    public boolean editUserData(User user) {
+    public HashMap<Book,Integer> selectBooksWithQuantitiesFromCart(int cartId) {
+       HashMap<Book,Integer> booksWithQuantity = new HashMap<>();
+        try {
+            Statement statement1 = connection.createStatement();
+            String queryString1 = "select book_quantity, book_id from cart_book where cart_id= '" + cartId + "'";
+            ResultSet resultSet = statement1.executeQuery(queryString1);
+            while (resultSet.next()) {
+                int bookQuantity = resultSet.getInt(1);
+                int bookId = resultSet.getInt(2);
+                booksWithQuantity.put(selectBookById(bookId),bookQuantity);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        return booksWithQuantity;
+    }
+    
+        public boolean editUserData(User user) {
         if (user.getProfilePicUrl()!=null) {
             try {
                 Statement statement1 = connection.createStatement();
@@ -381,5 +402,9 @@ public class ManipulateDB {
                 return false;
             }
         }
+    }
+
+    public void updateCart(Cart cart) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

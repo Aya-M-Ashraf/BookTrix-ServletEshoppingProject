@@ -131,8 +131,8 @@
                 $.post("Cart",
                         {
                             "userName": '${userName}',
-                            "bookId": bookId
-//                "Quantity": 
+                            "bookId": bookId,
+                           "Quantity": "1"
                         }
                 , ajaxCallBack);
             }

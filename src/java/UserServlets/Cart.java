@@ -4,6 +4,7 @@ import Beans.Book;
 import controllers.ControlServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,10 +28,10 @@ public class Cart extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             
             String userName = request.getParameter("userName");
-            Vector<Book> allbooks = controller.getAllBooksInCart(userName);
+            HashMap<Book,Integer> allBooksWithQuantities = controller.getAllBooksInCart(userName);
 
             HttpSession session = request.getSession(true);
-            session.setAttribute("book", allbooks);
+            session.setAttribute("booksWithQuantities", allBooksWithQuantities);
             
         }
     }
@@ -41,7 +42,8 @@ public class Cart extends HttpServlet {
 
             String userName = request.getParameter("userName");
             String bookId = request.getParameter("bookId");
-            if (controller.addBookToCart(userName, Integer.parseInt(bookId))) {
+            String bookQuantity = request.getParameter("Quantity");
+            if (controller.addBookToCart(userName, Integer.parseInt(bookId),Integer.parseInt(bookQuantity))) {
                 out.print("your book has been added! :) ");
             } else {
                 out.print("there is an error");
