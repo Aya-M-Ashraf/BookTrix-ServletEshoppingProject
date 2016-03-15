@@ -89,12 +89,12 @@
         <fmt:parseNumber var="totalCost" type="number" value="0" ></fmt:parseNumber>
 
 
-        <c:forEach items="${sessionScope.book}" var="myBook" varStatus="stat">
+        <c:forEach items="${sessionScope.booksWithQuantities}" var="myBook" varStatus="stat">
             <fmt:parseNumber var="i" type="number" value="${stat.index}" ></fmt:parseNumber>
-            <c:set var="totalCost" value="${totalCost =totalCost+myBook.price}"></c:set>
+            <c:set var="totalCost" value="${totalCost =totalCost+myBook.key.price}"></c:set>
 
 
-            <c:url var="myUrl" value="/Resources/pics/${myBook.img}"  context="/BookTrix"/>                       
+            <c:url var="myUrl" value="/Resources/pics/${myBook.key.img}"  context="/BookTrix"/>                       
 
             <c:if test="${i%5 ==0}">
                 <tr>
@@ -103,23 +103,24 @@
                     <table align="center" style="width: 60%;">
                         <tr>
                             <td style="background-color: transparent;">
-                                <img src="${myUrl}" style="width:95px; height:117px;" id = "${myBook.bookId}"> 
+                                <img src="${myUrl}" style="width:95px; height:117px;" id = "${myBook.key.bookId}"> 
                             </td>
                         </tr>
                         <tr>
                             <td style="background-color: transparent;">
-                                <h5>Name : ${myBook.bookName}</h5>
+                                <h5>Name : ${myBook.key.bookName}</h5>
                             </td> 
                         </tr>
                         <tr>
                             <td>
-                                <h5 style="color:#a73f2d; ">Price : ${myBook.price} $</h5>
+                                <h5 style="color:#a73f2d; ">Price : ${myBook.key.price} $</h5>
+                                 <h5 style="color:#a78f2a; ">Quantity : ${myBook.value} </h5>
                             </td> 
-
+                           
                         </tr>
                         <tr>
                             <td style="background-color: white;">
-                                <input type="button" value="remove" class="removeBookBtn" id="${myBook.bookId}" >
+                                <input type="button" value="remove" class="removeBookBtn" id="${myBook.key.bookId}" >
                             </td>
                         </tr>
                     </table>
