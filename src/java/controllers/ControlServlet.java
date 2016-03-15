@@ -59,6 +59,7 @@ public class ControlServlet {
 
     public Vector<Book> getBooksInCategory(String categoryName) {
         return manipulateDB.selectAllBooksInCategory(categoryName);
+    }
     
     public boolean buyMyCart(String userName){
         double totalCartCost = 0;
