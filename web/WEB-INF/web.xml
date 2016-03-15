@@ -25,8 +25,16 @@
         <servlet-class>CommonServlets.GetCategories</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>EditUser</servlet-name>
-        <servlet-class>CommonServlets.EditUser</servlet-class>
+        <servlet-name>ViewSearchBooks</servlet-name>
+        <servlet-class>CommonServlets.ViewSearchBooks</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewSingleBook</servlet-name>
+        <servlet-class>CommonServlets.ViewSingleBook</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteBookFromCart</servlet-name>
+        <servlet-class>CommonServlets.DeleteBookFromCart</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AdminHome</servlet-name>
@@ -53,12 +61,18 @@
         <url-pattern>/GetCategories</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>EditUser</servlet-name>
-        <url-pattern>/EditUser</url-pattern>
+        <servlet-name>ViewSearchBooks</servlet-name>
+        <url-pattern>/ViewSearchBooks</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewSingleBook</servlet-name>
+        <url-pattern>/ViewSingleBook</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteBookFromCart</servlet-name>
+        <url-pattern>/DeleteBookFromCart</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>30</session-timeout>
     </session-config>
 </web-app>

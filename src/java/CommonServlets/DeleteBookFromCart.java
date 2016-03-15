@@ -8,6 +8,7 @@ package CommonServlets;
 import Beans.Book;
 import Beans.Category;
 import DBconnectivity.ManipulateDB;
+import controllers.ControlServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Vector;
@@ -21,21 +22,22 @@ import javax.servlet.http.HttpSession;
  *
  * @author Ahmed
  */
-public class GetCategories extends HttpServlet {
+public class DeleteBookFromCart extends HttpServlet {
 
-     @Override
+    ControlServlet controller;
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-          
 
-        Vector<Category> allcategories = new Vector<>();
-         ManipulateDB m = new ManipulateDB();
-         allcategories=m.selectAllCategories();
-
-         System.out.println("size of all categoriess ==>"+allcategories.size());
-        HttpSession session = request.getSession(true);
-        session.setAttribute("allcategories", allcategories);
-//        RequestDispatcher rd = request.getRequestDispatcher("ViewBooks.jsp");
-//        rd.include(request, response);
+        System.out.println("-========>" + request.getParameter("userName"));
+        System.out.println("-========>" + request.getParameter("bookId"));
+        String userName = request.getParameter("userName");
+        int bookId = Integer.parseInt(request.getParameter("bookId"));
+        ManipulateDB m = new ManipulateDB();
+        m.deleteBook(userName, bookId);
+//        Vector<Book> allbooks = controller.getAllBooksInCart(userName);
+//        HttpSession session = request.getSession(true);
+//        session.setAttribute("book", allbooks);
     }
 
 }

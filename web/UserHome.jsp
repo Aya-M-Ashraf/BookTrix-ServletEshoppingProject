@@ -36,17 +36,7 @@
             h1 { font-size: 1.5em; } 
             #wrapper { max-width: 800px; margin: 0 auto; text-align: center; } 
         </style>
-        <style>
-            input[type=text] {padding:5px; border:2px solid #ccc; -webkit-border-radius: 5px;border-radius: 5px;}
-            input[type=text]:focus {border-color:#333;}
-            input[type=password] {padding:5px; border:2px solid #ccc; -webkit-border-radius: 5px;border-radius: 5px;}
-            input[type=password]:focus {border-color:#333;}
-            input[type=submit] {padding: 15px 32px; background:#ccc; border:0 none;cursor:pointer;-webkit-border-radius: 5px;border-radius: 5px; }
-            table {border-collapse: collapse;width: 100%;}
-            th, td {padding: 8px;}
-            tr:nth-child(even){background-color: #f2f2f2}
-            th {background-color: #a73f2d; color: white;}
-        </style>
+
 
         <script>
             $(function () {
@@ -307,10 +297,28 @@
                 $("#myProfile").show();
                 $("#myslide").hide();
             }
-            function showMyCart() { //coming from DB 
+            function showMyCart() {//coming from DB 
+               // alert("asdad");
                 hideallfun();
-                $("#allbooks").show();
-                $("#allbooks").load("ViewCart.jsp?userName=${userName}");
+                $("#allbooks").hide();
+                       
+
+
+                $.ajax({
+                    url: "Cart",
+                    type: 'Get',
+                    async: false,
+                    data: {
+                        "userName": '${userName}'
+                    }, success: function (data, textStatus, jqXHR) {
+                        $("#resViewCart").load("ViewCart.jsp");
+                    //    $("#resViewCart").html("<h1>hiii</h1>");
+                    //    alert("asdad");
+
+                    }
+                }
+                );
+
             }
             function showCart() {
                 $("#mycart").show(1000);
@@ -359,7 +367,7 @@
                 </div>
 
                 <div class="bookshelf" style="float: right;" onclick="showCart()" >
-                    <img id="shopping-cart" onclick="showAllCart()" onmouseover="showCart()" src="Resources/pics/cart.png" ondragover="allowDrop(event)" ondrop="drop(event)" style="width:90px;height:90px;" /> <br>
+                    <img id="shopping-cart" onclick="showMyCart()" onmouseover="showCart()" src="Resources/pics/cart.png" ondragover="allowDrop(event)" ondrop="drop(event)" style="width:90px;height:90px;" /> <br>
                     <p class="navbar-brand hvr-pop">Recently added items</p><br>
                     <div    ondragover="allowDrop(event)" ondrop="drop(event)" style="padding-top:190px; width: 220px;height: 780px; background-color: blanchedalmond; float: right; border-radius: 25px; background-image: url('Resources/pics/cart.jpg');background-repeat: no-repeat;"></div>
                 </div>
@@ -369,8 +377,14 @@
                 <h1><span>Your Profile</span></h1>
             <jsp:include page="ViewSingleUser.jsp"></jsp:include>
             </div>
+            <div id="resViewCart">
+                <h1>
+                    hhhhhhhhhhhhhhhhhhhhhhh
+                </h1>
+            </div>
+
 
         <jsp:include page="htmls/RestOfMainPage.html"></jsp:include> 
-        
+
     </body>
 </html>

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : userProfile
-    Created on : Mar 12, 2016, 12:17:28 AM
+    Document   : categoriesList
+    Created on : Mar 12, 2016, 7:16:37 PM
     Author     : lenovo
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,6 +15,11 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+            <c:forEach items="${sessionScope.allcategories}" var="myCategory" varStatus="loop">
+                <li>
+                    <a onclick="" href="#"> ${myCategory.name} </a>
+                </li>
+            </c:forEach>
+        
     </body>
 </html>

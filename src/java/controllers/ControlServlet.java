@@ -44,18 +44,21 @@ public class ControlServlet {
         int cartId = manipulateDB.selectPendingCartIdFromCart(userName);
         return manipulateDB.selectBooksWithQuantitiesFromCart(cartId);
     }
-    
-     public boolean doesEmailExist(String email){
+
+    public boolean doesEmailExist(String email) {
         return manipulateDB.checkEmailExistence(email);
-    } 
-     
-    public boolean editUserDate(User user){
+    }
+
+    public boolean editUserDate(User user) {
         return manipulateDB.editUserData(user);
     }
-    
-    public User getUser(String userName){
+
+    public User getUser(String userName) {
         return manipulateDB.selectUserByUserName(userName);
     }
+
+    public Vector<Book> getBooksInCategory(String categoryName) {
+        return manipulateDB.selectAllBooksInCategory(categoryName);
     
     public boolean buyMyCart(String userName){
         double totalCartCost = 0;

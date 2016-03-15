@@ -18,11 +18,14 @@ public class ViewBooks extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+       
         ManipulateDB m = new ManipulateDB();
         Vector<Book> allbooks = m.selectAllBooks();
+        
+        System.out.println("iam in view books");
 
         HttpSession session = request.getSession(true);
-        session.setAttribute("book", allbooks);
+        session.setAttribute("viewAllbooks", allbooks);
     }
 
 }

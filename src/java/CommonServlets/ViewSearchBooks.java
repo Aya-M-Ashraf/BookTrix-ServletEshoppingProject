@@ -6,11 +6,11 @@
 package CommonServlets;
 
 import Beans.Book;
-import Beans.Category;
 import DBconnectivity.ManipulateDB;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Vector;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,20 +21,21 @@ import javax.servlet.http.HttpSession;
  *
  * @author Ahmed
  */
-public class GetCategories extends HttpServlet {
+public class ViewSearchBooks extends HttpServlet {
 
-     @Override
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-          
 
-        Vector<Category> allcategories = new Vector<>();
-         ManipulateDB m = new ManipulateDB();
-         allcategories=m.selectAllCategories();
+        String searchString = request.getParameter("searchString");
+        
+        ManipulateDB m = new ManipulateDB();
+        Vector<Book> searchBooks = m.selectAllBooksWhereNameLike(searchString);
+//        Vector<Book> searchBooks = m.selectAllBooks();
 
-         System.out.println("size of all categoriess ==>"+allcategories.size());
+        System.out.println("sizes"+searchBooks.size());
         HttpSession session = request.getSession(true);
-        session.setAttribute("allcategories", allcategories);
-//        RequestDispatcher rd = request.getRequestDispatcher("ViewBooks.jsp");
+        session.setAttribute("searchBooks", searchBooks);
+//        RequestDispatcher rd = request.getRequestDispatcher("ViewSearchBooks.jsp");
 //        rd.include(request, response);
     }
 
