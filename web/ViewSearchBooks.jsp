@@ -70,7 +70,7 @@
                             "bookid": event.target.id
                         },
                         success: function (data) {
-                            $('#allbooks').load("mybook.jsp");
+                            $('#allbooks').load("ViewBook.jsp");
                         }
                     });
                 });

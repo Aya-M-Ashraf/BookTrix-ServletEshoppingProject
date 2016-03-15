@@ -32,6 +32,6 @@ public class ViewSingleBook extends HttpServlet {
             System.out.println("iam in select single books");
 
             HttpSession session = request.getSession(true);
-            session.setAttribute("myBook", myBook);
+            session.setAttribute("book", myBook);
         }
     }

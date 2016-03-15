@@ -32,6 +32,10 @@
         <servlet-name>ViewSingleBook</servlet-name>
         <servlet-class>CommonServlets.ViewSingleBook</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteBookFromCart</servlet-name>
+        <servlet-class>CommonServlets.DeleteBookFromCart</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminHome</servlet-name>
         <url-pattern>/AdminHome</url-pattern>

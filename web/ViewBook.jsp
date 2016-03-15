@@ -35,16 +35,6 @@
         <script src="Resources/js/plugin.js"></script>
         <script src="Resources/js/wow.min.js"></script>
         <script>new WOW().init();</script>
-        <script>
-            function checkPassword() {
-                if ($("#password").val() !== $("#password2").val()) {
-                    $("#usernamemsg").text("unmatched password");
-                } else {
-                    $("#usernamemsg").text("");
-                }
-            }
-
-        </script>
         <style >
             table th,td{
                 border-radius: 20px;
