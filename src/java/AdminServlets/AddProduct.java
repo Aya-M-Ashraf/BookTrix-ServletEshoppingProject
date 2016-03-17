@@ -74,6 +74,7 @@ public class AddProduct extends HttpServlet {
                     if (!item.isFormField()) {
 
                         System.out.println(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 16) + "/Resources/pics/" + item.getName()));
+                        String imagesPath = "C:\\serverUpload";
                         item.write(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 16) + "/Resources/pics/" + item.getName()));
                         img =item.getName();
                     }

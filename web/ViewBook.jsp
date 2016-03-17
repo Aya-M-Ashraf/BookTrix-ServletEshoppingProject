@@ -45,15 +45,14 @@
     <body align="center" onload="">
 
 
+        
+        
         <div class="container">
-
-            
-
-                <h1>${sessionScope.book.name}'s Information</h1>
+                <h1>${sessionScope.book.bookName}'s Information</h1>
                 <center> <table border=3px  style=" border-color: #f3f3f3; font-family: cursive; height: 400px; width:600px;"  >
-                    <tr><th align="center" valign="middle">Book Name</th><td>${sessionScope.book.name}</td></tr>
+                    <tr><th align="center" valign="middle">Book Name</th><td>${sessionScope.book.bookName}</td></tr>
                     <tr><th>Book Author</th><td>${sessionScope.book.author} </td></tr>
-                    <tr><th>Cover Image</th><td><img src=${sessionScope.book.img} style="display: inline-block; width: 22%;height: 40%;"></td></tr>
+                    <tr><th>Cover Image</th><td><img src="/BookTrix/Resources/pics/${sessionScope.book.img}" style="display: inline-block; width: 22%;height: 40%;"></td></tr>
                     <tr><th>Available quantity</th><td>${sessionScope.book.quantity} 15</td></tr>
                     <tr><th>Category</th><td>${sessionScope.book.category.name} </td></tr>
                     <tr><th>Price</th><td>${sessionScope.book.price} </td></tr>

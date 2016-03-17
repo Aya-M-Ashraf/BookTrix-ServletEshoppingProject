@@ -33,6 +33,6 @@ public class ViewBooks extends HttpServlet {
             System.out.println("in null condition");
         }
         HttpSession session = request.getSession(true);
-        session.setAttribute("book",allBooks);
+        session.setAttribute("viewAllbooks", allbooks);
     }
 }

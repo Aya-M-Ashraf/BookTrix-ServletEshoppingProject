@@ -5,6 +5,7 @@ import Beans.Cart;
 import Beans.User;
 import DBconnectivity.ManipulateDB;
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.Vector;
 
 public class ControlServlet {
@@ -24,7 +25,7 @@ public class ControlServlet {
         return manipulateDB.checkUserNameExistence(userName);
     }
 
-    public boolean addBookToCart(String userName, int bookId) {
+    public boolean addBookToCart(String userName, int bookId , int bookQuantity) {
         int cartId = manipulateDB.selectPendingCartIdFromCart(userName);
         if (cartId == -1) {                 //no pending cart for this user is found
             Cart cart = new Cart();
@@ -32,16 +33,16 @@ public class ControlServlet {
             cart.setUser(manipulateDB.selectUserByUserName(userName));
             cart.setPending(1);
             manipulateDB.insertCart(cart);
-            return manipulateDB.insertBookIntoCart(bookId, manipulateDB.selectPendingCartIdFromCart(userName));
+            return manipulateDB.insertBookIntoCart(bookId, bookQuantity,manipulateDB.selectPendingCartIdFromCart(userName) );
         } else {
-            return manipulateDB.insertBookIntoCart(bookId, cartId);
+            return manipulateDB.insertBookIntoCart(bookId, bookQuantity, cartId);
         }
 
     }
 
-    public Vector<Book> getAllBooksInCart(String userName) {
+    public HashMap<Book,Integer> getAllBooksInCart(String userName) {
         int cartId = manipulateDB.selectPendingCartIdFromCart(userName);
-        return manipulateDB.selectBooksFromCart(cartId);
+        return manipulateDB.selectBooksWithQuantitiesFromCart(cartId);
     }
 
     public boolean doesEmailExist(String email) {
@@ -59,6 +60,24 @@ public class ControlServlet {
     public Vector<Book> getBooksInCategory(String categoryName) {
         return manipulateDB.selectAllBooksInCategory(categoryName);
     }
+    
+    public boolean buyMyCart(String userName){
+        double totalCartCost = 0;
+         int cartId = manipulateDB.selectPendingCartIdFromCart(userName);
+         Cart cart = manipulateDB.selectCartById(cartId);
+         cart.setPending(0);
+         for(Book book:cart.getMyBooks()){
+             totalCartCost =+ book.getPrice();
+         }
+         if (totalCartCost <= cart.getUser().getCreditLimit()) // customer can afford the cart
+         {
+             cart.getUser().setCreditLimit(cart.getUser().getCreditLimit()- totalCartCost);
+             manipulateDB.updateCart(cart);
+             manipulateDB.editUserData(cart.getUser());
+             return true;
+         }else{    // customer can't afford the cart
+             return false;
+         }         
     public Vector<Book> getAllBooks(){
         return manipulateDB.selectAllBooks();
     }
