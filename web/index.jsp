@@ -32,22 +32,6 @@
             #wrapper { max-width: 800px; margin: 0 auto; text-align: center; } 
         </style>
         <script>
-
-
-//             $(document).ready(function () {
-//                alert("sadsd");
-//                
-//              $.ajax({
-//                    url: "ViewBooks",
-//                    type: 'Post',
-//                    async: false,
-//                    data: {},
-//                    success: function (data, textStatus, jqXHR) {
-//                        alert("donne");
-//                    }
-//                });
-//            });
-
             function initBooks() {
                 $.ajax({
                     url: "ViewBooks",
