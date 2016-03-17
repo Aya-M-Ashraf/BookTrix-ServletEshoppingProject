@@ -43,6 +43,7 @@ public class ManipulateDB {
         return allUsers;
     }
 
+    
     public Vector<Book> selectAllBooks() {
         Vector<Book> allBooks = new Vector<>();
         try {
@@ -486,13 +487,13 @@ public class ManipulateDB {
         Vector<Book> books = new Vector<>();
         try {
             Statement statement1 = connection.createStatement();
-            String queryString1 = "select category_id from category";
+            String queryString1 = "select category_id from category where category_name = '"+categoryName+"'";
             ResultSet resultSet1 = statement1.executeQuery(queryString1);
             while (resultSet1.next()) {
                 int category_id = resultSet1.getInt(1);
                 Category category = new Category(category_id, categoryName);
                 Statement statement = connection.createStatement();
-                String queryString = "select * from book where caregory_id = "+category_id;
+                String queryString = "select * from book where category_id = "+category_id;
                 ResultSet resultSet = statement.executeQuery(queryString);
                 while (resultSet.next()) {
                     Book book = new Book();

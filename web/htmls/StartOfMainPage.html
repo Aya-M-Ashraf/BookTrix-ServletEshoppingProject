@@ -4,8 +4,6 @@
 <script>
     $(document).ready(function () {
         $("#searchText").keyup(function () {
-//            $("#searchResult").load("ViewBooks.jsp");
-//            alert($('#searchText').val());
             $.ajax({
                 url: "ViewSearchBooks",
                 type: 'Post',
@@ -44,6 +42,8 @@
 
         <script>
             $(document).ready(function () {
+//                alert("sadsd");
+                
                 $.ajax({
                     url: "GetCategories",
                     type: 'Post',
@@ -54,7 +54,7 @@
                     }
                 });
             });
-            
+
         </script>
     </head>
     <body>
@@ -149,7 +149,7 @@
                     <img src="Resources/pics/33.jpg" alt="PIC 3">
                     <div class="carousel-caption"> </div>
                 </div>
-                
+
                 <div class="item">
                     <img src="Resources/pics/22.jpg" alt="PIC 4" >
                     <div class="carousel-caption">...</div>

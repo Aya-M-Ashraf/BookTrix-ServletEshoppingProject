@@ -31,40 +31,18 @@
             h1 { font-size: 1.5em; } 
             #wrapper { max-width: 800px; margin: 0 auto; text-align: center; } 
         </style>
-
         <script>
-            $(function () {
-
-                var foo = $('.gallery');
-                foo.poptrox({
-                    usePopupCaption: true
-                });
-
-                var preview = $('.preview');
-                preview.poptrox({
-                    usePopupCaption: true
-                });
-            });
-        </script>
-        <script>
-            $(document).ready(function () {
+            function initBooks() {
                 $.ajax({
                     url: "ViewBooks",
                     type: 'Post',
                     async: false,
-                    data: {}
+                    data: {},
+                    success: function (data, textStatus, jqXHR) {
+                        $("#allbooks").load("ViewBooks.jsp");
+                    }
                 });
-
-                $('#tooltip3').tooltipster({
-                    content: $('<span><img src="Resources/audio/dracula.jpg"/><br> <strong>Dracula<br>Auther: Bram Stoker</strong></span>')
-                });
-                $('#tooltip4').tooltipster({
-                    content: $('<span><img src="Resources/audio/broken.jpg"/><br> <strong>The Broken Circle<br>Auther: Cheryl Potter</strong></span>')
-                });
-                $('#tooltip5').tooltipster({
-                    content: $('<span><img src="Resources/audio/living.jpg"/><br> <strong>Living On Air<br>Auther: Joe Cipriano</strong></span>')
-                });
-            });
+            }
         </script>
 
         <script>
@@ -97,7 +75,7 @@
                 hideallfun();
                 $("#audiobooks").show();
             }
-   
+
 
         </script>
         <script>
@@ -114,7 +92,7 @@
         </script>
     </head>
 
-    <body >  
+    <body onload="initBooks();" >  
 
         <jsp:include page="htmls/StartOfMainPage.html"></jsp:include>
 

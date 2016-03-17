@@ -16,17 +16,7 @@
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>  
 
         <script>
-            $(document).ready(function () {
-                $.ajax({
-                    url: "ViewBooks",
-                    type: 'Post',
-                    async: false,
-                    data: {},
-                    success: function (data, textStatus, jqXHR) {
-//                        $("#allbooks").load(location.href + " #allbooks");
-                    }
-                });
-            });
+           
         </script>
 
 
@@ -47,7 +37,7 @@
                             <div class="loc" id="shelf1"> 
                             </c:if>
                             <c:url var="myUrl" value="/Resources/pics/${myBook.img}"  context="/BookTrix"/>
-                            <div id = "${myBook.bookId}"  draggable="true" ondragstart="drag(event)" cost =520 class="gallery" > 
+                            <div id = "${myBook.bookId}" draggable="true" ondragstart="drag(event)" cost =520 class="gallery" > 
                                 <a href="Resources\Work\samples\1-java\index.html" data-poptrox="iframe,950x515" id = "${myBook.bookId}"> 
                                     <div  class="sample thumb1" style="width:95px; height:117px;" id = "${myBook.bookId}">
                                         <img src="${myUrl}" style="width:95px; height:117px;" id = "${myBook.bookId}">
