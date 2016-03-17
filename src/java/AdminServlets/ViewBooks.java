@@ -25,14 +25,14 @@ public class ViewBooks extends HttpServlet {
         ControlServlet controlServlet = new ControlServlet();
         String categoryName = request.getParameter("categoryName");
         System.out.println("viewBooks category name: "+ categoryName);
-        if(categoryName!=null){
+        if(categoryName!=null ){
             allBooks=controlServlet.getBooksInCategory(categoryName);
             System.out.println("in not null condition"+allBooks.size());
-        }else{
+        }else {
             allBooks = controlServlet.getAllBooks();
             System.out.println("in null condition");
         }
         HttpSession session = request.getSession(true);
-        session.setAttribute("viewAllbooks", allbooks);
+        session.setAttribute("viewAllbooks", allBooks);
     }
 }

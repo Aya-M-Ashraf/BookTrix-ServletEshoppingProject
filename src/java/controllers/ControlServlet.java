@@ -77,7 +77,8 @@ public class ControlServlet {
              return true;
          }else{    // customer can't afford the cart
              return false;
-         }         
+         }
+    }
     public Vector<Book> getAllBooks(){
         return manipulateDB.selectAllBooks();
     }

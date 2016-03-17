@@ -43,6 +43,7 @@ public class ManipulateDB {
         return allUsers;
     }
 
+    
     public Vector<Book> selectAllBooks() {
         Vector<Book> allBooks = new Vector<>();
         try {
