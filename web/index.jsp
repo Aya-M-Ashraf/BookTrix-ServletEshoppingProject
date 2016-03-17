@@ -114,7 +114,7 @@
         </script>
     </head>
 
-    <body onload="init()">  
+    <body>  
 
         <jsp:include page="htmls/StartOfMainPage.html"></jsp:include>
 

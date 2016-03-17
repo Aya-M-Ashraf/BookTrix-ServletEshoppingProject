@@ -59,4 +59,7 @@ public class ControlServlet {
     public Vector<Book> getBooksInCategory(String categoryName) {
         return manipulateDB.selectAllBooksInCategory(categoryName);
     }
+    public Vector<Book> getAllBooks(){
+        return manipulateDB.selectAllBooks();
+    }
 }

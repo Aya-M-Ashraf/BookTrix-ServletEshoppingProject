@@ -4,8 +4,6 @@
 <script>
     $(document).ready(function () {
         $("#searchText").keyup(function () {
-//            $("#searchResult").load("ViewBooks.jsp");
-//            alert($('#searchText').val());
             $.ajax({
                 url: "ViewSearchBooks",
                 type: 'Post',
