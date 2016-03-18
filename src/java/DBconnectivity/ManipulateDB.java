@@ -43,7 +43,6 @@ public class ManipulateDB {
         return allUsers;
     }
 
-    
     public Vector<Book> selectAllBooks() {
         Vector<Book> allBooks = new Vector<>();
         try {
@@ -244,7 +243,7 @@ public class ManipulateDB {
                 }
                 cart.setUser(user);
             }
-           cart.setMyBooks(selectBooksFromCart(cartId));
+            cart.setMyBooks(selectBooksFromCart(cartId));
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -275,12 +274,22 @@ public class ManipulateDB {
         }
     }
 
-    public boolean insertCategory(Category category) {
+    public boolean insertCategory(String categoryName) {
         try {
             Statement statement = connection.createStatement();
-            String st = "insert into category values(" + category.getId() + ",'" + category.getName() + "')";
-            statement.executeUpdate(st);
-            return true;
+            boolean isNewCategory = true;
+            for (Category c : selectAllCategories()) {
+                if (c.getName().equals(categoryName)) {
+                    isNewCategory = false;
+                }
+            }
+            if (isNewCategory) {
+                String st = "insert into category (category_name) values('" + categoryName + "')";
+                statement.executeUpdate(st);
+                return true;
+            } else {
+                return false;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -389,10 +398,10 @@ public class ManipulateDB {
         }
     }
 
-    public boolean insertBookIntoCart(int bookId,int bookQuantity ,int cartId) {
+    public boolean insertBookIntoCart(int bookId, int bookQuantity, int cartId) {
         try {
             Statement statement = connection.createStatement();
-            String st = "insert into cart_book values('" + cartId + "','" + bookId +"','" + bookQuantity + "')";
+            String st = "insert into cart_book values('" + cartId + "','" + bookId + "','" + bookQuantity + "')";
             statement.executeUpdate(st);
             return true;
         } catch (SQLException ex) {
@@ -400,7 +409,7 @@ public class ManipulateDB {
             return false;
         }
     }
-    
+
     public Vector<Book> selectBooksFromCart(int cartId) {
         Vector<Book> books = new Vector<>();
         try {
@@ -419,8 +428,8 @@ public class ManipulateDB {
         return books;
     }
 
-    public HashMap<Book,Integer> selectBooksWithQuantitiesFromCart(int cartId) {
-       HashMap<Book,Integer> booksWithQuantity = new HashMap<>();
+    public HashMap<Book, Integer> selectBooksWithQuantitiesFromCart(int cartId) {
+        HashMap<Book, Integer> booksWithQuantity = new HashMap<>();
         try {
             Statement statement1 = connection.createStatement();
             String queryString1 = "select book_quantity, book_id from cart_book where cart_id= '" + cartId + "'";
@@ -428,7 +437,7 @@ public class ManipulateDB {
             while (resultSet.next()) {
                 int bookQuantity = resultSet.getInt(1);
                 int bookId = resultSet.getInt(2);
-                booksWithQuantity.put(selectBookById(bookId),bookQuantity);
+                booksWithQuantity.put(selectBookById(bookId), bookQuantity);
             }
 
         } catch (SQLException ex) {
@@ -437,9 +446,9 @@ public class ManipulateDB {
         }
         return booksWithQuantity;
     }
-    
-        public boolean editUserData(User user) {
-        if (user.getProfilePicUrl()!=null) {
+
+    public boolean editUserData(User user) {
+        if (user.getProfilePicUrl() != null) {
             try {
                 Statement statement1 = connection.createStatement();
                 String queryString1 = "update user set password='" + user.getPassword() + "',credit_Limit=" + user.getCreditLimit() + ",job='" + user.getJob() + "',address='" + user.getAddress() + "',photo='" + user.getProfilePicUrl() + "' where email='" + user.getEmail() + "'";
@@ -471,29 +480,32 @@ public class ManipulateDB {
                 int c_id = resultSet.getInt(1);
                 String query2 = "delete from cart_book where book_id ='" + bookId + "' and cart_id=" + c_id;
                 int result = statement.executeUpdate(query2);
-                
+
                 if (result == 1) {
                     return true;
-                } else
-                   return false;
-            }
-            else 
+                } else {
+                    return false;
+                }
+            } else {
                 return false;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-             return false;
-        }}
+            return false;
+        }
+    }
+
     public Vector<Book> selectAllBooksInCategory(String categoryName) {
         Vector<Book> books = new Vector<>();
         try {
             Statement statement1 = connection.createStatement();
-            String queryString1 = "select category_id from category where category_name = '"+categoryName+"'";
+            String queryString1 = "select category_id from category where category_name = '" + categoryName + "'";
             ResultSet resultSet1 = statement1.executeQuery(queryString1);
             while (resultSet1.next()) {
                 int category_id = resultSet1.getInt(1);
                 Category category = new Category(category_id, categoryName);
                 Statement statement = connection.createStatement();
-                String queryString = "select * from book where category_id = "+category_id;
+                String queryString = "select * from book where category_id = " + category_id;
                 ResultSet resultSet = statement.executeQuery(queryString);
                 while (resultSet.next()) {
                     Book book = new Book();

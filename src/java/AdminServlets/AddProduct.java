@@ -3,6 +3,7 @@ package AdminServlets;
 import Beans.Book;
 import Beans.Category;
 import DBconnectivity.ManipulateDB;
+import controllers.ControlServlet;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +30,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  * @author Ahmed
  */
 public class AddProduct extends HttpServlet {
-
+    ControlServlet controlServlet;
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -95,5 +96,26 @@ public class AddProduct extends HttpServlet {
             Logger.getLogger(AddProduct.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response){
+        PrintWriter out = null;
+        try {
+            String categoryName = request.getParameter("categoryName");
+            controlServlet=new ControlServlet();
+            out = response.getWriter();
+            boolean inserted = controlServlet.addCategory(categoryName);
+            if(inserted==true){
+                out.println("Done");
+            }
+            else{
+                out.println("That category already exists");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(AddProduct.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            out.close();
+        }
     }
 }
