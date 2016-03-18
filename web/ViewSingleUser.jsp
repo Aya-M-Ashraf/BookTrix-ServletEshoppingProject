@@ -59,7 +59,7 @@
                     $("#password2").hide();
                     $("#pic").hide();
                     $("#btn").hide();
-            });
+            }});
 
         </script>
     </head>
