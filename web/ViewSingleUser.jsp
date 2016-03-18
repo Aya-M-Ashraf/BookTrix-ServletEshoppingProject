@@ -14,18 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-        <!--        <style>
-                    table {
-                        width: 100%;
-                    }
-                    td {
-                        border-bottom: 1px solid #ddd;
-                        border-top: 1px solid #ddd;
-                        height: 50px;
-                        width: 200px;
-                    }
-                    tr:hover {background-color: #f5f5f5}
-                </style>-->
+       
         <link rel="stylesheet" href="Resources/css/style1.css">
         <link rel="stylesheet" href="Resources/css/bootstrap.css"> 
         <link rel="stylesheet" href="Resources/css/font-awesome.min.css">   
@@ -60,10 +49,21 @@
                     $("#usernamemsg").text("");
                 }
             }
+            $(document).ready(function (){
+                alert("${role}");
+                if("${role}"==='admin'){
+                    $("#creditLimit").prop("disabled",true);
+                    $("#job").prop("disabled",true);
+                    $("#address").prop("disabled",true);
+                    $("#password").prop("disabled",true);
+                    $("#password2").hide();
+                    $("#pic").hide();
+                    $("#btn").hide();
+            });
 
         </script>
     </head>
-    <body align="center" onload="">
+    <body align="center" onload="checkAdmin()">
 
         <img src="Resources/users_pics/${sessionScope.user.profilePicUrl}" style="display: inline-block; width: 12%;height: 5%;">
 
@@ -83,8 +83,8 @@
                         <div>Address<br><input type="text" placeholder="address" id="address"  name="address" value="${sessionScope.user.address}"/></div>
                         <div>Password:<br><input type="password" placeholder="Password" required="" id="password"  name="password" value="${sessionScope.user.password}"/></div>
                         <div>Confirm Password:<br><input type="password" placeholder="Retype Password" required="" id="password2" value="${sessionScope.user.password}" name="password2" onblur="checkPassword()"/></div>
-                        <div align = "center"> <h5> Choose a Personal Photo</h5><input type="file" Name=fileName align="right" value="${sessionScope.user.profilePicUrl}"/></div>
-                        <div><input type="submit" value="Save Changes"/></div> <span id="usernamemsg" style="color: red"></span>
+                        <div align = "center" id="pic"> <h5> Choose a Personal Photo</h5><input type="file" Name=fileName align="right" value="${sessionScope.user.profilePicUrl}"/></div>
+                        <div id="btn"><input type="submit" value="Save Changes"/></div> <span id="usernamemsg" style="color: red"></span>
                     </div>
                 </form>
                 <c:if test = "${done=='1'}">

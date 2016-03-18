@@ -39,13 +39,6 @@ public class ViewUserProfile extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Vector<User> allusers = new Vector<>();
-
-//        User u1 = new User("email@ad.com", "My Name1", "user1", 200.0, "user", "user", "myimg.jpg","user" );
-//        User u2 = new User("email@ad.com", "My Name2", "user1", 200.0, "user", "user", "myimg.jpg", "user");
-//        User u3 = new User("email@ad.com", "My Name3", "user1", 200.0, "user", "user", "myimg.jpg", "user");
-//        allusers.add(u1);
-//        allusers.add(u2);
-//        allusers.add(u3);
         allusers = m.selectAllUsers();
         System.out.println("asdasdasdasd");
         
