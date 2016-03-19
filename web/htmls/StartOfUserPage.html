@@ -41,7 +41,6 @@
         });
         //view all books in my cart
         $("#myCart").click(function () {
-//            alert("click");
             $.ajax({
                 url: "Cart",
                 type: 'Get',
@@ -53,21 +52,29 @@
                     $("#allbooks").focus();
 
                 }
-            }
-            );
+            });
         });
 
         $("#myProfile").click(function () {
             $("#allbooks").load("ViewSingleUser.jsp");
             $("#allbooks").focus();
         });
+        $("#logout").click(function () {
+            $.ajax({
+                url: "Logout",
+                type: 'Get',
+                async: false,
+                data: {}
+            });
+        });
+
     });
 
 
 </script>
 <html>
 </head>
-<body>
+<body id='b'>
     <!-- start section tool box   settings to choose color-->
     <section class="option-box">
         <div class="color-option">
@@ -111,6 +118,7 @@
                         <ul class="dropdown-menu" role="menu" id="categoriesList">
                         </ul>
                     </li>
+                    <li id="logout"><a href="Login.jsp">Logout</a></li>
                 </ul>
                 <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">

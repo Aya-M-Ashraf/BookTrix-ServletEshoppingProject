@@ -40,6 +40,10 @@
         <servlet-name>RemoveBook</servlet-name>
         <servlet-class>AdminServlets.RemoveBook</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>CommonServlets.Logout</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminHome</servlet-name>
         <url-pattern>/AdminHome</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>RemoveBook</servlet-name>
         <url-pattern>/RemoveBook</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
