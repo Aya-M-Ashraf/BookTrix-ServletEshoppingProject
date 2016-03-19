@@ -568,6 +568,21 @@ public class ManipulateDB {
         }
     }
 
+    public void updateAllBookInfo(Book book) {
+        try {
+            PreparedStatement statment = connection.prepareStatement("UPDATE book SET quantity=?, author=?, price=?, description=? WHERE book_id= ?");
+            statment.setInt(1, book.getQuantity());
+            statment.setString(2, book.getAuthor());
+            statment.setInt(3, book.getPrice());
+            statment.setString(4, book.getDescription());
+            statment.setInt(5, book.getBookId());
+            statment.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public boolean selectBookIdFromCart(int cartId, int bookId) {
 
         try {

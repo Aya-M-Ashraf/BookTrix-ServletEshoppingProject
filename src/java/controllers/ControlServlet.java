@@ -113,4 +113,9 @@ public class ControlServlet {
         manipulateDB.updateBookCountInCart(cartID,bookId,value);
         
     }
+      public void updateBookInfo(Book book) {
+       
+        manipulateDB.updateAllBookInfo(book);
+        
+    }
 }
