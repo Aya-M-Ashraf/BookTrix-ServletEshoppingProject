@@ -112,7 +112,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li id="myProfile"><a href="#allbooks">My Profile</a></li>
                     <li id="myCart"><a href="#allbooks" >My Cart</a></li>
-                    <li class="active"><a href="index.jsp">Home<span class="sr-only">(current)</span></a></li>
+                    <li class="active"><a href="#allbooks">Home<span class="sr-only">(current)</span></a></li>
                     <li><a href="#aboutdiv">About</a></li>
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories<span class="caret"></span></a>

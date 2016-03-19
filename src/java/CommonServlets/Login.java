@@ -18,6 +18,7 @@ public class Login extends HttpServlet {
         controlservlet = new ControlServlet();
     }
 
+    @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         Cookie[] cookies = request.getCookies();
@@ -43,8 +44,11 @@ public class Login extends HttpServlet {
 
         Cookie[] cookies = null;
         cookies = request.getCookies();
-        String result = controlservlet.checkLogin(userName, password);
-
+        String result="not found";
+        boolean userNameExists = controlservlet.doesUserNameExist(userName);
+        if(userNameExists){
+        result = controlservlet.checkLogin(userName, password);
+        } 
         HttpSession session = request.getSession(true);
 
         if (result.equals("admin")) {
