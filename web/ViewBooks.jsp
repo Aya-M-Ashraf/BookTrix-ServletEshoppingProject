@@ -23,7 +23,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title></title>
     </head>
-    <body>
+    <body><br><br><br><br>
         <div class="bookshelf" id="allbooks" onmouseover ="hideCart()">
             <div class="shelf">
                 <c:forEach items="${sessionScope.viewAllbooks}" var="myBook" varStatus="stat">

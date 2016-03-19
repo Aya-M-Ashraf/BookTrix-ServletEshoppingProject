@@ -215,6 +215,20 @@ public class ManipulateDB {
         return book;
     }
 
+    public boolean deleteBookById(int bookId) {
+        try {
+            Statement statement1 = connection.createStatement();
+            String query2 = "delete from cart_book where book_id =" + bookId;
+            statement1.executeUpdate(query2);
+            String queryString1 = "delete from book  where book_id=" + bookId;         
+            statement1.executeUpdate(queryString1);
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+    }
+
     public Cart selectCartById(int cartId) {
         Cart cart = new Cart();
         try {

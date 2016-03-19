@@ -68,9 +68,9 @@ public class AddProduct extends HttpServlet {
                 } else {
                     if (!item.isFormField()) {
 
-                        System.out.println(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 16) + "/Resources/pics/" + item.getName()));
+                        System.out.println(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 27) + "/web/Resources/pics/" + item.getName()));
                         String imagesPath = "C:\\serverUpload";
-                        item.write(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 16) + "/Resources/pics/" + item.getName()));
+                        item.write(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 27) + "/web/Resources/pics/" + item.getName()));
                         img =item.getName();
                     }
                 }
@@ -84,7 +84,7 @@ public class AddProduct extends HttpServlet {
             System.out.println(b);
             m.insertBook(b);
 
-            response.sendRedirect("ViewBooks.jsp");
+            response.sendRedirect("AdminHome.jsp");
 
         } catch (Exception ex) {
             Logger.getLogger(AddProduct.class.getName()).log(Level.SEVERE, null, ex);

@@ -104,8 +104,8 @@ public class SignUp extends HttpServlet {
                 } else {
                     if (!item.isFormField()) {
 
-                        System.out.println(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 16) + "/Resources/users_pics/" + item.getName()));
-                        item.write(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 16) + "/Resources/users_pics/" + item.getName()));
+                        System.out.println(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 27) + "/web/Resources/users_pics/" + item.getName()));
+                        item.write(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 27) + "/web/Resources/users_pics/" + item.getName()));
                         img = item.getName();
                     }
                 }
@@ -115,7 +115,7 @@ public class SignUp extends HttpServlet {
             ManipulateDB m = new ManipulateDB();
             m.insertUser(u);
 
-            response.sendRedirect("ViewAllUsers.jsp");
+            response.sendRedirect("Login.jsp");
 
         } catch (Exception ex) {
             Logger.getLogger(AddProduct.class.getName()).log(Level.SEVERE, null, ex);

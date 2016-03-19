@@ -37,8 +37,8 @@
         <servlet-class>CommonServlets.DeleteBookFromCart</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>BuyCart</servlet-name>
-        <servlet-class>UserServlets.BuyCart</servlet-class>
+        <servlet-name>RemoveBook</servlet-name>
+        <servlet-class>AdminServlets.RemoveBook</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AdminHome</servlet-name>
@@ -77,8 +77,8 @@
         <url-pattern>/DeleteBookFromCart</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>BuyCart</servlet-name>
-        <url-pattern>/BuyCart</url-pattern>
+        <servlet-name>RemoveBook</servlet-name>
+        <url-pattern>/RemoveBook</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

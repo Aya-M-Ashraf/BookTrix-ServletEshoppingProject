@@ -70,13 +70,14 @@ $("#allbooks").load("ViewUserProfile?email="+event.target.id);
         <title>JSP Page</title>
     </head>
     <body>
-        <table>
+        <br><br><br><br>
+        <table align="center">
             <c:forEach items="${sessionScope.allusers}" var="myUser" varStatus="stat">
 
                 <fmt:parseNumber var="i" type="number" value="${stat.index}" ></fmt:parseNumber>            
                 <c:url var="myUrl" value="/Resources/users_pics/${myUser.profilePicUrl}"  context="/BookTrix"/>
                 <tr>
-                    <td  class="myuser" style="width: 500px" id="${myUser.email}" > 
+                    <td  class="myuser" style="width: 700px" id="${myUser.email}" > 
                         <table id="${myUser.email}">
                             <tr  id="${myUser.email}">
                                 <td id="${myUser.email}">
