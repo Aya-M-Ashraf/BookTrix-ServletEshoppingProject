@@ -401,6 +401,7 @@ public class ManipulateDB {
             int cartId = -1;
             Statement statement1 = connection.createStatement();
             String queryString1 = "select cart_id from cart where pending = '1' and user_name= '" + userName + "'";
+            System.out.println(queryString1);
             ResultSet resultSet = statement1.executeQuery(queryString1);
             if (resultSet.next()) {
                 cartId = resultSet.getInt(1);

@@ -28,7 +28,7 @@ public class Cart extends HttpServlet {
             
             String userName = request.getParameter("userName");
             HashMap<Book,Integer> allBooksWithQuantities = controller.getAllBooksInCart(userName);
-
+            System.out.println(userName);
             HttpSession session = request.getSession(true);
             session.setAttribute("booksWithQuantities", allBooksWithQuantities);
             
