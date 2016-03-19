@@ -23,8 +23,6 @@
                 }
             }
 
-
-
             $(document).ready(function () {
                 $(".addToCartImg").click(function (event) {
                     alert(event.target.id);
@@ -35,10 +33,7 @@
                                 "Quantity": "1"
                             }
                     , ajaxCallBack);
-
                 });
-
-
             });
 
         </script>
