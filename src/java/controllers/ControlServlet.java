@@ -92,4 +92,7 @@ public class ControlServlet {
     public Vector<Book> getAllBooks() {
         return manipulateDB.selectAllBooks();
     }
+    public boolean addCategory(String categoryName){
+       return manipulateDB.insertCategory(categoryName);
+    }
 }

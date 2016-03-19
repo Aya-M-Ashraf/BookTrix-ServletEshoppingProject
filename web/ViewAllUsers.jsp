@@ -56,10 +56,11 @@
 
 <script>
     $(document).ready(function () {
-        $.post("ViewUserProfile")
+        $.post("ViewUserProfile");
         $(".myuser").click(function (event) {
 //            alert(event.target.id);
-            window.location = "ViewUserProfile?email="+event.target.id;
+//            window.location = "ViewUserProfile?email="+event.target.id;
+$("#allbooks").load("ViewUserProfile?email="+event.target.id);
         });
     });
 </script>

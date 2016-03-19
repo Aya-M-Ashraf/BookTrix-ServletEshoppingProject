@@ -1,3 +1,9 @@
+<%-- 
+    Document   : AddCategory
+    Created on : Mar 18, 2016, 12:38:13 PM
+    Author     : lenovo
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -6,6 +12,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+        <link rel="stylesheet" href="Resources/css/style1.css">
         <link rel="stylesheet" href="Resources/css/bootstrap.css"> 
         <link rel="stylesheet" href="Resources/css/font-awesome.min.css">   
         <link rel="stylesheet" href="Resources/css/style.css" >
@@ -17,6 +27,7 @@
         <link type="text/css" rel="stylesheet" href="Resources/css/jquery.ui.css"/>
         <link type="text/css" rel="stylesheet" href="Resources/css/default.css"/>
         <link type="text/css" rel="stylesheet" href="Resources/css/tooltipster.css"/>
+
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>  
         <script type="text/javascript" src="Resources/js/jquery.tooltipster.min.js"></script>
         <script type="text/javascript" src="Resources/js/html5shiv.min.js"></script>
@@ -30,41 +41,40 @@
         <script src="Resources/js/plugin.js"></script>
         <script src="Resources/js/wow.min.js"></script>
         <script>new WOW().init();</script>
-
-        <style>
-            body { font-family: sans-serif; font-size: 12pt; color: #444; line-height: 1.5em; } 
-            h1 { font-size: 1.5em; } 
-            #wrapper { max-width: 800px; margin: 0 auto; text-align: center; } 
-        </style>
         <script>
-            function initBooks() {
-                $.ajax({
-                    url: "ViewBooks",
-                    type: 'Post',
-                    async: false,
-                    data: {},
-                    success: function (data, textStatus, jqXHR) {
-                        $("#allbooks").load("ViewBooks.jsp");
-                    }
-                });
+            var addCatgReq = null;
+
+            if (window.XMLHttpRequest) {
+                addCatgReq = new XMLHttpRequest();
+            }
+            else if (window.ActiveXObject) {
+                addCatgReq = new ActiveXObject(Microsoft.XMLHTTP);
+            }
+            function add() {
+                addCatgReq.onreadystatechange = handleAdding;
+                var name = document.getElementById("categoryName").value;
+                addCatgReq.open("GET", "AddProduct?categoryName=" + name, true);
+                addCatgReq.send();
+            }
+            function handleAdding() {
+                if (addCatgReq.readyState === 4 && addCatgReq.status === 200) {
+                        $("#msg").text(addCatgReq.responseText);
+                }
             }
         </script>
-
-
     </head>
+    <body>
+        <div class="container">
 
-    <body  onload="initBooks();">
-        <jsp:include page="htmls/StartOfAdminPage.html"></jsp:include>
-            <section  class="about text-center wow bounceIn"  data-wow-duration="0.5s" data-wow-offset="300" >
-                <div class="container" style="margin-bottom: 95px;">
-
-                    <div  id="allbooks">
-
-                    <jsp:include page="ViewBooks.jsp"></jsp:include>
+            <section id="content">
+                <form>
+                    <h1>Add Category</h1>
+                    <div class="row">
+                        <div>Category Name:<br><input type="text" placeholder="category name" required="" id="categoryName"/></div>
+                        <div id="btn"><input type="button" value="Add" onclick="add()"/></div><br> <div id="msg" style="font-size: small"></div>
                     </div>
-
-                </div>
+                </form>
             </section>
-        <jsp:include page="htmls/RestOfMainPage.html"></jsp:include> 
+        </div>
     </body>
 </html>
