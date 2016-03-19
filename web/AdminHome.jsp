@@ -1,3 +1,4 @@
+<!--el user el 2deem-->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -36,7 +37,50 @@
             h1 { font-size: 1.5em; } 
             #wrapper { max-width: 800px; margin: 0 auto; text-align: center; } 
         </style>
+
+
+
         <script>
+
+            function allowDrop(ev) {
+                ev.preventDefault();
+            }
+            var bookDivId;
+            function drag(ev) {
+                ev.dataTransfer.setData("text", ev.target.id);
+                bookDivId = ev.target.id;
+            }
+
+            function drop(ev) {
+
+                addToMyCart(bookDivId);
+            }
+
+
+            function addToMyCart(bookId) {
+                $.post("Cart",
+                        {
+                            "userName": '${userName}',
+                            "bookId": bookId,
+                            "Quantity": "1"
+                        }
+                , ajaxCallBack);
+            }
+            ///// to be continued
+
+            /////// to be continued 
+            function ajaxCallBack(responseTxt, statusTxt, xhr) {
+                if (statusTxt === "success") {
+                    alert(responseTxt);
+                }
+            }
+            
+            function showCart() {
+                $("#mycart").show(1000);
+            }
+            function hideCart() {
+                $("#mycart").hide(1000);
+            }
             function initBooks() {
                 $.ajax({
                     url: "ViewBooks",
@@ -44,27 +88,45 @@
                     async: false,
                     data: {},
                     success: function (data, textStatus, jqXHR) {
-                        $("#allbooks").load("ViewBooks.jsp");
+                        $("#allbooks").load("ViewBooksAdmin.jsp");
                     }
                 });
             }
+
         </script>
+
 
 
     </head>
 
-    <body  onload="initBooks();">
+
+    <body onload="initBooks()">
+<!--    <center><h3> welcome ${userName} </h3></center> -->
+
         <jsp:include page="htmls/StartOfAdminPage.html"></jsp:include>
-            <section  class="about text-center wow bounceIn"  data-wow-duration="0.5s" data-wow-offset="300" >
+
+              <section  class="about text-center wow bounceIn"  data-wow-duration="0.5s" data-wow-offset="300" >
                 <div class="container" style="margin-bottom: 95px;">
 
                     <div  id="allbooks">
 
-                    <jsp:include page="ViewBooks.jsp"></jsp:include>
+                    <jsp:include page="ViewBooksAdmin.jsp"></jsp:include>
                     </div>
 
                 </div>
             </section>
-        <jsp:include page="htmls/RestOfMainPage.html"></jsp:include> 
+        <jsp:include page="htmls/RestOfMainPage.html"></jsp:include>    
     </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+

@@ -3,6 +3,17 @@
 
 <script>
     $(document).ready(function () {
+
+        $.ajax({
+            url: "GetCategories",
+            type: 'Post',
+            async: false,
+            data: {},
+            success: function (data, textStatus, jqXHR) {
+                $("#categoriesList").load("categoriesList.jsp");
+            }
+        });
+
         $("#searchText").keyup(function () {
             $.ajax({
                 url: "ViewSearchBooks",
@@ -29,43 +40,34 @@
         });
         $("#searchResult").mouseover(function () {
             $("#searchResult").show();
-        })
-    });
-
-
-</script>
-
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<script>
-    $(document).ready(function () {
-//                alert("sadsd");
-
-        $.ajax({
-            url: "GetCategories",
-            type: 'Post',
-            async: false,
-            data: {},
-            success: function (data, textStatus, jqXHR) {
-                $("#categoriesList").load("categoriesList.jsp");
-            }
         });
+
+
         $("#viewUsers").click(function () {
-            alert("sadsd");
             $.ajax({
                 url: "ViewUserProfile",
                 type: 'Post',
                 async: false,
                 data: {},
                 success: function (data, textStatus, jqXHR) {
-                    alert("success");
                     $("#allbooks").load("ViewAllUsers.jsp");
 
                 }
             });
         });
+        $("#addBook").click(function () {
+
+            $("#allbooks").load("AddBookForm.jsp");
+
+        });
+          $("#home").click(function () {
+
+            $("#allbooks").load("ViewBooksAdmin.jsp");
+
+        });
+
+
+
     });
 
 
@@ -113,10 +115,10 @@
             <div class="collapse navbar-collapse" id="ournavbar">
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li id="viewUsers" ><a href="#" >View Users</a></li>
-                    <li ><a href="">Add Book</a></li>
-                    <li class="active"><a href="">Home<span class="sr-only">(current)</span></a></li>
-                    <li><a href="">Add Category</a></li>
+                    <li id="viewUsers" ><a href="#allbooks"" >View Users</a></li>
+                    <li id="addBook"><a href="#allbooks">Add Book</a></li>
+                    <li id="home" class="active"><a href="#allbooks">Home<span class="sr-only">(current)</span></a></li>
+                    <li id="addCategory"><a href="#allbooks">Add Category</a></li>
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu" id="categoriesList">
@@ -182,7 +184,6 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-    <div id="main"></div>
 
 </body>
 </html>

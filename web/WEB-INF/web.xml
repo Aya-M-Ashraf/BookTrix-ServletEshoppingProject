@@ -36,6 +36,10 @@
         <servlet-name>DeleteBookFromCart</servlet-name>
         <servlet-class>CommonServlets.DeleteBookFromCart</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RemoveBook</servlet-name>
+        <servlet-class>AdminServlets.RemoveBook</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminHome</servlet-name>
         <url-pattern>/AdminHome</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>DeleteBookFromCart</servlet-name>
         <url-pattern>/DeleteBookFromCart</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RemoveBook</servlet-name>
+        <url-pattern>/RemoveBook</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
