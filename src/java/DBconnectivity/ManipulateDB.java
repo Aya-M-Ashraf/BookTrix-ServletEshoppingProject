@@ -2,6 +2,7 @@ package DBconnectivity;
 
 import Beans.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -238,7 +239,7 @@ public class ManipulateDB {
             ResultSet resultSet = statement1.executeQuery(queryString1);
             while (resultSet.next()) {
                 cart.setCreationDate(resultSet.getDate(2));
-                cart.setQuantity(resultSet.getInt(3));
+                cart.setTotal(resultSet.getInt(3));
                 cart.setPending(resultSet.getInt(4));
                 cart.setCartId(resultSet.getInt(5));
                 String userEmail = resultSet.getString(1);
@@ -258,7 +259,7 @@ public class ManipulateDB {
                 }
                 cart.setUser(user);
             }
-            cart.setMyBooks(selectBooksFromCart(cartId));
+            cart.setMyBooks(selectBooksWithQuantitiesFromCart(cartId));
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -289,12 +290,22 @@ public class ManipulateDB {
         }
     }
 
-    public boolean insertCategory(Category category) {
+    public boolean insertCategory(String categoryName) {
         try {
             Statement statement = connection.createStatement();
-            String st = "insert into category values(" + category.getId() + ",'" + category.getName() + "')";
-            statement.executeUpdate(st);
-            return true;
+            boolean isNewCategory = true;
+            for (Category c : selectAllCategories()) {
+                if (c.getName().equals(categoryName)) {
+                    isNewCategory = false;
+                }
+            }
+            if (isNewCategory) {
+                String st = "insert into category (category_name) values('" + categoryName + "')";
+                statement.executeUpdate(st);
+                return true;
+            } else {
+                return false;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
             return false;
@@ -304,7 +315,7 @@ public class ManipulateDB {
     public boolean insertCart(Cart cart) {
         try {
             Statement statement = connection.createStatement();
-            String st = "insert into cart values('" + cart.getUser().getUserName() + "','" + cart.getCreationDate() + "'," + cart.getQuantity() + "," + cart.getPending() + "," + cart.getCartId() + ")";
+            String st = "insert into cart values('" + cart.getUser().getUserName() + "','" + cart.getCreationDate() + "'," + cart.getTotal() + "," + cart.getPending() + "," + cart.getCartId() + ")";
             statement.executeUpdate(st);
             return true;
         } catch (SQLException ex) {
@@ -532,6 +543,28 @@ public class ManipulateDB {
     }
 
     public void updateCart(Cart cart) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            PreparedStatement statment = connection.prepareStatement("update cart set pending = ? , total = ? where cart_id = ?");
+            statment.setInt(1, cart.getPending());
+            statment.setDouble(2, cart.getTotal());
+            statment.setInt(3, cart.getCartId());
+            
+            statment.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void updateBook(Book book) {
+        try {
+            PreparedStatement statment = connection.prepareStatement("update book set quantity = ? where book_id = ?");
+            statment.setInt(1, book.getQuantity());
+            statment.setInt(2, book.getBookId());
+            statment.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

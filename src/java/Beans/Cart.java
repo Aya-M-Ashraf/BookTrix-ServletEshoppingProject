@@ -1,22 +1,22 @@
-
 package Beans;
 
 import java.util.Date;
-import java.util.Vector;
+import java.util.HashMap;
 
 
 public class Cart {
-    private int quantity,pending,cartId;
+    private int pending,cartId;
     private Date creationDate;
-    private Vector<Book> myBooks;
+    private HashMap<Book,Integer> myBooks;
     private User user;
+    private double total;
 
-    public int getQuantity() {
-        return quantity;
+    public double getTotal() {
+        return total;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setTotal(double total) {
+        this.total = total;
     }
 
     public int getPending() {
@@ -43,11 +43,11 @@ public class Cart {
         this.creationDate = creationDate;
     }
 
-    public Vector<Book> getMyBooks() {
+    public HashMap<Book, Integer> getMyBooks() {
         return myBooks;
     }
 
-    public void setMyBooks(Vector<Book> myBooks) {
+    public void setMyBooks(HashMap<Book, Integer> myBooks) {
         this.myBooks = myBooks;
     }
 

@@ -6,6 +6,7 @@ import Beans.User;
 import DBconnectivity.ManipulateDB;
 import java.sql.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 public class ControlServlet {
@@ -66,16 +67,24 @@ public class ControlServlet {
         int cartId = manipulateDB.selectPendingCartIdFromCart(userName);
         Cart cart = manipulateDB.selectCartById(cartId);
         cart.setPending(0);
-        for (Book book : cart.getMyBooks()) {
-            totalCartCost = +book.getPrice();
+
+        for (Map.Entry<Book, Integer> book : cart.getMyBooks().entrySet()) {
+            totalCartCost = +((book.getKey().getPrice()) * book.getValue());
         }
+        System.out.println(totalCartCost);
         if (totalCartCost <= cart.getUser().getCreditLimit()) // customer can afford the cart
         {
             cart.getUser().setCreditLimit(cart.getUser().getCreditLimit() - totalCartCost);
+            cart.setTotal(totalCartCost);
             manipulateDB.updateCart(cart);
             manipulateDB.editUserData(cart.getUser());
+            for (Map.Entry<Book, Integer> book : cart.getMyBooks().entrySet()) {
+                Book eachBook = book.getKey();
+                eachBook.setQuantity((eachBook.getQuantity())- book.getValue());
+                manipulateDB.updateBook(eachBook);
+            }
             return true;
-        } else {    // customer can't afford the cart
+        } else {                               // customer can't afford the cart
             return false;
         }
     }
@@ -83,6 +92,8 @@ public class ControlServlet {
     public Vector<Book> getAllBooks() {
         return manipulateDB.selectAllBooks();
     }
+    public boolean addCategory(String categoryName){
+       return manipulateDB.insertCategory(categoryName);
 
     public boolean deleteBookById(int bookId) {
         return manipulateDB.deleteBookById(bookId);
