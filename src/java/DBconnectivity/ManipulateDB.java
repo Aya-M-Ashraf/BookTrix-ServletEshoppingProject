@@ -587,7 +587,7 @@ public class ManipulateDB {
 
     public boolean increaseBookQuantityInCartByOne(int cartId, int bookId) {
         try {
-            PreparedStatement sta = connection.prepareStatement("select quantity from  cart_book where cart_id = ? and  book_id = ?");
+            PreparedStatement sta = connection.prepareStatement("select book_quantity from  cart_book where cart_id = ? and  book_id = ?");
             sta.setInt(1, cartId);
             sta.setInt(2, bookId);
             ResultSet rrs = sta.executeQuery();
@@ -595,7 +595,7 @@ public class ManipulateDB {
                 int quantity = rrs.getInt(1);
                 quantity = quantity + 1;
 
-                PreparedStatement statment = connection.prepareStatement("update cart_book set quantity = ? where book_id = ?");
+                PreparedStatement statment = connection.prepareStatement("update cart_book set book_quantity = ? where book_id = ?");
                 statment.setInt(1, quantity);
                 statment.setInt(2, bookId);
                 if (statment.executeUpdate() == 1) {

@@ -88,7 +88,7 @@
                     async: false,
                     data: {},
                     success: function (data, textStatus, jqXHR) {
-                        $("#allbooks").load("ViewBooks.jsp");
+                        $("#allbooks").load("ViewBooksUser.jsp");
                     }
                 });
             }
@@ -117,7 +117,7 @@
 
                     <div  id="allbooks">
 
-                    <jsp:include page="ViewBooks.jsp"></jsp:include>
+                    <jsp:include page="ViewBooksUser.jsp"></jsp:include>
                     </div>
 
                 </div>
