@@ -36,7 +36,7 @@ public class ControlServlet {
             manipulateDB.insertCart(cart);
             return manipulateDB.insertBookIntoCart(bookId, bookQuantity, manipulateDB.selectPendingCartIdFromCart(userName));
         } else {
-            if (manipulateDB.selectBookIdFromCart(cartId)) {
+            if (manipulateDB.selectBookIdFromCart(cartId,bookId)) {
                 return manipulateDB.increaseBookQuantityInCartByOne(cartId, bookId);
             } else {
                 return manipulateDB.insertBookIntoCart(bookId, bookQuantity, cartId);
