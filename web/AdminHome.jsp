@@ -103,10 +103,6 @@
         <c:redirect url="Login.jsp"></c:redirect>
     </c:if>
 
-    <c:if test="${role=='admin'}">
-        <c:redirect url="AdminHome.jsp"></c:redirect>
-    </c:if>
-
     <body onload="initBooks()">
 <!--    <center><h3> welcome ${userName} </h3></center> -->
 
