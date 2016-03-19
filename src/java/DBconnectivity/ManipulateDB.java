@@ -568,11 +568,12 @@ public class ManipulateDB {
         }
     }
 
-    public boolean selectBookIdFromCart(int cartId) {
+    public boolean selectBookIdFromCart(int cartId,int bookId) {
 
         try {
-            PreparedStatement statment = connection.prepareStatement("select book_id from cart_book  where cart_id = ?");
+            PreparedStatement statment = connection.prepareStatement("select book_id from cart_book  where cart_id = ? and book_id=?");
             statment.setInt(1, cartId);
+            statment.setInt(2, bookId);
             ResultSet rs = statment.executeQuery();
             if (rs.next()) {
                 return true;
