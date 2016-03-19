@@ -61,12 +61,18 @@
                     }
                     );
                 });
+            });
 
-
+            $(".quantity").change(function (event) {
+                $.post("BuyCart",
+                        {
+                            "userName": '${userName}',
+                            "bookId": event.target.id,
+                            "value": $(event.target).val()
+                        });
             });
 
             function  buyCart() {
-
                 $.ajax({
                     url: "BuyCart",
                     type: 'Get',
@@ -139,7 +145,7 @@
                         <tr>
                             <td>
                                 <h5 style="color:#a73f2d; ">Price : ${myBook.key.price} $</h5>
-                                <h5 style="color:#a78f2a; ">Quantity : <input type="number" min="1" max="${myBook.key.quantity}" value="${myBook.value}" id="quantity" name="quantity"/> </h5>
+                                <h5 style="color:#a78f2a; ">Quantity : <input type="number" min="1" max="${myBook.key.quantity}" value="${myBook.value}" id="${myBook.key.bookId}" class="quantity" /> </h5>
                             </td> 
 
                         </tr>
@@ -158,7 +164,7 @@
         </c:forEach>
         <tr>
             <td colspan="5" align="center" style="background-color: white;">
-                <h1> Total Cost : ${totalCost}</h1>
+                <h1 id="changableTotal"> Total Cost : ${totalCost}</h1>
             </td>
         </tr>
         <tr>

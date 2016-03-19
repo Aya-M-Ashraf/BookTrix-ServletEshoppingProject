@@ -220,7 +220,7 @@ public class ManipulateDB {
             Statement statement1 = connection.createStatement();
             String query2 = "delete from cart_book where book_id =" + bookId;
             statement1.executeUpdate(query2);
-            String queryString1 = "delete from book  where book_id=" + bookId;         
+            String queryString1 = "delete from book  where book_id=" + bookId;
             statement1.executeUpdate(queryString1);
             return true;
         } catch (SQLException ex) {
@@ -568,7 +568,7 @@ public class ManipulateDB {
         }
     }
 
-    public boolean selectBookIdFromCart(int cartId,int bookId) {
+    public boolean selectBookIdFromCart(int cartId, int bookId) {
 
         try {
             PreparedStatement statment = connection.prepareStatement("select book_id from cart_book  where cart_id = ? and book_id=?");
@@ -604,10 +604,9 @@ public class ManipulateDB {
                 } else {
                     return false;
                 }
-
-            }
-            else 
+            } else {
                 return false;
+            }
 
         } catch (SQLException ex) {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
@@ -616,5 +615,23 @@ public class ManipulateDB {
 
     }
 
-}
+    public boolean updateBookCountInCart(int cartID, int bookId, int value) {
+        try {
 
+            PreparedStatement statment = connection.prepareStatement("update cart_book set book_quantity = ? where book_id = ? and cart_id = ?");
+            statment.setInt(1, value);
+            statment.setInt(2, bookId);
+            statment.setInt(3, cartID);
+            if (statment.executeUpdate() == 1) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+
+    }
+}

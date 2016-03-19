@@ -106,4 +106,11 @@ public class ControlServlet {
     public boolean deleteBookById(int bookId) {
         return manipulateDB.deleteBookById(bookId);
     }
+
+    public void updateBookCountInCart(String userName, int bookId, int value) {
+        int cartID = manipulateDB.selectPendingCartIdFromCart(userName);
+        System.out.println(cartID+" "+bookId+" "+value);
+        manipulateDB.updateBookCountInCart(cartID,bookId,value);
+        
+    }
 }
