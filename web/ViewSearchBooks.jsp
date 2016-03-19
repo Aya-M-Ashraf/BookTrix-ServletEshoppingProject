@@ -61,7 +61,7 @@
             $(document).ready(function () {
 
                 $(".mybook").click(function (event) {
-                    alert(event.target.id);
+//                    alert(event.target.id);
                     $.ajax({
                         url: "ViewSingleBook",
                         type: 'Post',

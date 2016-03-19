@@ -50,7 +50,7 @@
                 }
             }
             $(document).ready(function (){
-                alert("${role}");
+//                alert("${role}");
                 if("${role}"==='admin'){
                     $("#creditLimit").prop("disabled",true);
                     $("#job").prop("disabled",true);

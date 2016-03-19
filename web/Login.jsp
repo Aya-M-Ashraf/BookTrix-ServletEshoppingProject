@@ -43,8 +43,8 @@
     </head>
 
     <body> 
-        <jsp:include page="htmls/StartOfMainPage.html"></jsp:include>
-
+        <jsp:include page="htmls/StartOfSigninPage.html"></jsp:include>
+        <br> <br> <br> <br>
             <div class="container">
 
                 <section id="content">
@@ -59,7 +59,7 @@
                         <div>
                             <input type="submit" value="Login" />
                             <div><input id="remember" name="remember" type="checkbox" value="rememberme"><span style="color:#FF1F1F">Remember me </span> </div>
-                            <a href="">Register</a>
+                            <a href="SignUp.jsp">Register</a>
                         </div>
                     </form>
                 <c:if test = "${error=='1'}">
