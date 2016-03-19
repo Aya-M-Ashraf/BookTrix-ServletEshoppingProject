@@ -41,46 +41,6 @@
 
 
         <script>
-
-            function allowDrop(ev) {
-                ev.preventDefault();
-            }
-            var bookDivId;
-            function drag(ev) {
-                ev.dataTransfer.setData("text", ev.target.id);
-                bookDivId = ev.target.id;
-            }
-
-            function drop(ev) {
-
-                addToMyCart(bookDivId);
-            }
-
-
-            function addToMyCart(bookId) {
-                $.post("Cart",
-                        {
-                            "userName": '${userName}',
-                            "bookId": bookId,
-                            "Quantity": "1"
-                        }
-                , ajaxCallBack);
-            }
-            ///// to be continued
-
-            /////// to be continued 
-            function ajaxCallBack(responseTxt, statusTxt, xhr) {
-                if (statusTxt === "success") {
-                    alert(responseTxt);
-                }
-            }
-            });
-            function showCart() {
-                $("#mycart").show(1000);
-            }
-            function hideCart() {
-                $("#mycart").hide(1000);
-            }
             function initBooks() {
                 $.ajax({
                     url: "ViewBooks",
@@ -101,10 +61,6 @@
 
     <c:if test="${userName==null}">
         <c:redirect url="Login.jsp"></c:redirect>
-    </c:if>
-
-    <c:if test="${role=='admin'}">
-        <c:redirect url="AdminHome.jsp"></c:redirect>
     </c:if>
 
     <body onload="initBooks()">

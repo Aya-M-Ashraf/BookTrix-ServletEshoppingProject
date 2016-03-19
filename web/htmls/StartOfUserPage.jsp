@@ -61,6 +61,14 @@
             $("#allbooks").load("ViewSingleUser.jsp");
             $("#allbooks").focus();
         });
+         $("#logout").click(function () {
+            $.ajax({
+                url: "Logout",
+                type: 'Get',
+                async: false,
+                data: {}
+            });
+        });
     });
 
 
@@ -111,6 +119,7 @@
                         <ul class="dropdown-menu" role="menu" id="categoriesList">
                         </ul>
                     </li>
+                    <li id="logout"><a href="Login.jsp">Logout</a></li>
                 </ul>
                 <form class="navbar-form navbar-left" role="search">
                     <div class="form-group">

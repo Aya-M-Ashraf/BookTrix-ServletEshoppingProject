@@ -40,6 +40,8 @@
 
         <script>
             function initBooks() {
+//                alert("added init");
+
                 $.ajax({
                     url: "ViewBooks",
                     type: 'Post',
@@ -69,7 +71,7 @@
 
         <jsp:include page="htmls/StartOfUserPage.jsp"></jsp:include>
 
-              <section  class="about text-center wow bounceIn"  data-wow-duration="0.5s" data-wow-offset="300" >
+            <section  class="about text-center wow bounceIn"  data-wow-duration="0.5s" data-wow-offset="300" >
                 <div class="container" style="margin-bottom: 95px;">
 
                     <div  id="allbooks">

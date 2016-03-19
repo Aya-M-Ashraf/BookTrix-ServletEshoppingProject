@@ -116,7 +116,7 @@
 
         <c:forEach items="${sessionScope.booksWithQuantities}" var="myBook" varStatus="stat">
             <fmt:parseNumber var="i" type="number" value="${stat.index}" ></fmt:parseNumber>
-            <c:set var="totalCost" value="${totalCost =totalCost+myBook.key.price}"></c:set>
+            <c:set var="totalCost" value="${totalCost =totalCost+(myBook.key.price * myBook.value)}"></c:set>
 
 
             <c:url var="myUrl" value="/Resources/pics/${myBook.key.img}"  context="/BookTrix"/>                       
