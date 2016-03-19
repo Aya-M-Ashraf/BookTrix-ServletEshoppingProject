@@ -36,7 +36,7 @@
             success: function (data) {
                 
                 $('#img').attr('src', 'Resources/images/Done.png');
-                $('#textValue').text("Done...");
+                $('#textValue').text("Done");
             }
         });
 
