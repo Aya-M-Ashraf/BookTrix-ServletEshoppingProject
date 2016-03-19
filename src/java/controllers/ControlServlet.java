@@ -94,7 +94,7 @@ public class ControlServlet {
     }
     public boolean addCategory(String categoryName){
        return manipulateDB.insertCategory(categoryName);
-
+    }
     public boolean deleteBookById(int bookId) {
         return manipulateDB.deleteBookById(bookId);
     }
