@@ -64,6 +64,31 @@
 
 
             });
+
+            function  buyCart() {
+
+                $.ajax({
+                    url: "BuyCart",
+                    type: 'Post',
+                    async: false,
+                    data: {
+                        "userName": '${userName}'
+                    }, success: function (data, textStatus, jqXHR) {
+                        $.ajax({
+                            url: "Cart",
+                            type: 'Get',
+                            async: false,
+                            data: {
+                                "userName": '${userName}'
+                            }, success: function (data, textStatus, jqXHR) {
+                                $("#resViewCart").text(" your books will be there soon :) ");
+                            }
+                        }
+                        );
+                    }
+                }
+                );
+            }
         </script>
 
         <style>
@@ -114,9 +139,9 @@
                         <tr>
                             <td>
                                 <h5 style="color:#a73f2d; ">Price : ${myBook.key.price} $</h5>
-                                 <h5 style="color:#a78f2a; ">Quantity : ${myBook.value} </h5>
+                                <h5 style="color:#a78f2a; ">Quantity : <input type="number" min="1" max="${myBook.key.quantity}" value="${myBook.value}" id="quantity" name="quantity"/> </h5>
                             </td> 
-                           
+
                         </tr>
                         <tr>
                             <td style="background-color: white;">
@@ -138,7 +163,7 @@
         </tr>
         <tr>
             <td colspan="5" align="center" style="background-color: white;">
-                <input type="button" value="Buy" >
+                <input type="button" value="Buy" onclick="buyCart()" >
             </td>
         </tr>
     </table>
