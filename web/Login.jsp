@@ -39,7 +39,7 @@
         <script src="Resources/js/bootstrap.min.js"></script>
         <script src="Resources/js/plugin.js"></script>
         <script src="Resources/js/wow.min.js"></script>
-        <script>new WOW().init();</script>
+        <!--<script>new WOW().init();</script>-->
     </head>
 
     <body> 
