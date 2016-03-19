@@ -115,7 +115,7 @@ public class SignUp extends HttpServlet {
             ManipulateDB m = new ManipulateDB();
             m.insertUser(u);
 
-            response.sendRedirect("ViewAllUsers.jsp");
+            response.sendRedirect("Login.jsp");
 
         } catch (Exception ex) {
             Logger.getLogger(AddProduct.class.getName()).log(Level.SEVERE, null, ex);

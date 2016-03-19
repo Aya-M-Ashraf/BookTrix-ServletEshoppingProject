@@ -37,7 +37,7 @@
     <body>
             <c:forEach items="${sessionScope.allcategories}" var="myCategory" varStatus="loop">
                 <li class="categoriesList">
-                    <a id="${myCategory.name}" href="#"> ${myCategory.name} </a>
+                    <a id="${myCategory.name}" href="#allbooks"> ${myCategory.name} </a>
                 </li>
             </c:forEach>
         

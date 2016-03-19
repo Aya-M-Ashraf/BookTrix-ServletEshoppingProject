@@ -217,12 +217,11 @@ public class ManipulateDB {
     }
 
     public boolean deleteBookById(int bookId) {
-        Book book = new Book();
         try {
             Statement statement1 = connection.createStatement();
-            String queryString1 = "delete from book  where book_id=" + bookId;
-            System.out.println(queryString1);
-                    
+            String query2 = "delete from cart_book where book_id =" + bookId;
+            statement1.executeUpdate(query2);
+            String queryString1 = "delete from book  where book_id=" + bookId;         
             statement1.executeUpdate(queryString1);
             return true;
         } catch (SQLException ex) {
