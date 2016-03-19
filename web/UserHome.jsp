@@ -41,47 +41,9 @@
 
 
         <script>
-
-            function allowDrop(ev) {
-                ev.preventDefault();
-            }
-            var bookDivId;
-            function drag(ev) {
-                ev.dataTransfer.setData("text", ev.target.id);
-                bookDivId = ev.target.id;
-            }
-
-            function drop(ev) {
-
-                addToMyCart(bookDivId);
-            }
-
-
-            function addToMyCart(bookId) {
-                $.post("Cart",
-                        {
-                            "userName": '${userName}',
-                            "bookId": bookId,
-                            "Quantity": "1"
-                        }
-                , ajaxCallBack);
-            }
-            ///// to be continued
-
-            /////// to be continued 
-            function ajaxCallBack(responseTxt, statusTxt, xhr) {
-                if (statusTxt === "success") {
-                    alert(responseTxt);
-                }
-            }
-            });
-            function showCart() {
-                $("#mycart").show(1000);
-            }
-            function hideCart() {
-                $("#mycart").hide(1000);
-            }
             function initBooks() {
+//                alert("added init");
+
                 $.ajax({
                     url: "ViewBooks",
                     type: 'Post',
@@ -112,7 +74,7 @@
 
         <jsp:include page="htmls/StartOfUserPage.jsp"></jsp:include>
 
-              <section  class="about text-center wow bounceIn"  data-wow-duration="0.5s" data-wow-offset="300" >
+            <section  class="about text-center wow bounceIn"  data-wow-duration="0.5s" data-wow-offset="300" >
                 <div class="container" style="margin-bottom: 95px;">
 
                     <div  id="allbooks">
