@@ -49,7 +49,7 @@ public class SignUp extends HttpServlet {
             }
             break;
             case "userName": {
-                String userName = request.getParameter("userName");
+                String userName = request.getParameter("userName").toLowerCase();
                 boolean userNameFound = controlServlet.doesUserNameExist(userName);
                 if (userNameFound) {
                     out.println("This user name alraedy exists");

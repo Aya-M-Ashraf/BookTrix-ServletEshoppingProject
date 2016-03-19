@@ -24,6 +24,7 @@ public class BuyCart extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
        String userName = request.getParameter("userName");
+        System.out.println(userName);
         if (controller.buyMyCart(userName))
         {
             
