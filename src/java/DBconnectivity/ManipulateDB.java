@@ -279,7 +279,7 @@ public class ManipulateDB {
     public boolean insertBook(Book book) {
         try {
             Statement statement = connection.createStatement();
-            String st = "insert into book (`book_name`, `quantity`, `author`, `category_id`, `price`, `img`, `description`) values('" + book.getBookName() + "'," + book.getQuantity() + ",'" + book.getAuthor() + "'," + book.getCategory().getId() + "," + book.getPrice() + ",'" + book.getImg() + "','" + book.getDescription() + "')";
+            String st = "insert into book (book_name, quantity, author, category_id, price, img, description) values ('" + book.getBookName() + "'," + book.getQuantity() + ",'" + book.getAuthor() + "'," + book.getCategory().getId() + "," + book.getPrice() + ",'" + book.getImg() + "','" + book.getDescription() + "')";
             statement.executeUpdate(st);
             return true;
         } catch (SQLException ex) {
