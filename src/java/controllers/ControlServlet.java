@@ -36,7 +36,11 @@ public class ControlServlet {
             manipulateDB.insertCart(cart);
             return manipulateDB.insertBookIntoCart(bookId, bookQuantity, manipulateDB.selectPendingCartIdFromCart(userName));
         } else {
-            return manipulateDB.insertBookIntoCart(bookId, bookQuantity, cartId);
+            if (manipulateDB.selectBookIdFromCart(cartId)) {
+                return manipulateDB.increaseBookQuantityInCartByOne(cartId, bookId);
+            } else {
+                return manipulateDB.insertBookIntoCart(bookId, bookQuantity, cartId);
+            }
         }
 
     }
@@ -65,22 +69,25 @@ public class ControlServlet {
     public boolean buyMyCart(String userName) {
         double totalCartCost = 0;
         int cartId = manipulateDB.selectPendingCartIdFromCart(userName);
+        System.out.println(cartId);
         Cart cart = manipulateDB.selectCartById(cartId);
         cart.setPending(0);
 
         for (Map.Entry<Book, Integer> book : cart.getMyBooks().entrySet()) {
-            totalCartCost = +((book.getKey().getPrice()) * book.getValue());
+            totalCartCost += ((book.getKey().getPrice()) * book.getValue());
         }
         System.out.println(totalCartCost);
+        System.out.println(cart.getUser().getCreditLimit());
         if (totalCartCost <= cart.getUser().getCreditLimit()) // customer can afford the cart
         {
             cart.getUser().setCreditLimit(cart.getUser().getCreditLimit() - totalCartCost);
             cart.setTotal(totalCartCost);
+            System.out.println(totalCartCost);
             manipulateDB.updateCart(cart);
             manipulateDB.editUserData(cart.getUser());
             for (Map.Entry<Book, Integer> book : cart.getMyBooks().entrySet()) {
                 Book eachBook = book.getKey();
-                eachBook.setQuantity((eachBook.getQuantity())- book.getValue());
+                eachBook.setQuantity((eachBook.getQuantity()) - book.getValue());
                 manipulateDB.updateBook(eachBook);
             }
             return true;
@@ -92,7 +99,8 @@ public class ControlServlet {
     public Vector<Book> getAllBooks() {
         return manipulateDB.selectAllBooks();
     }
-    public boolean addCategory(String categoryName){
-       return manipulateDB.insertCategory(categoryName);
+
+    public boolean addCategory(String categoryName) {
+        return manipulateDB.insertCategory(categoryName);
     }
 }

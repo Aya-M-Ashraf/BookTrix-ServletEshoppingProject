@@ -69,7 +69,7 @@
 
                 $.ajax({
                     url: "BuyCart",
-                    type: 'Post',
+                    type: 'Get',
                     async: false,
                     data: {
                         "userName": '${userName}'
