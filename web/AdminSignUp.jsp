@@ -56,10 +56,11 @@
                     $("#usernamemsg").text("user name is required");
                 } else {
                       $("#usernamemsg").text("");
-                    signUpReq.open("GET", "SignUp?type=userName&userName=" + name, true);
+                    signUpReq.open("GET", "AdminSignUp?type=userName&userName=" + name, true);
                     signUpReq.send();
                 }
             }
+
             function handleNameVerfication() {
                 if (signUpReq.readyState === 4 && signUpReq.status === 200) {
                     if (signUpReq.responseText !== "valid") {
@@ -86,7 +87,7 @@
                     $("#emailmsg").text("email is required");
                 } else {
                     $("#emailmsg").text("");
-                    signUpReq1.open("GET", "SignUp?type=mail&email=" + mail, true);
+                    signUpReq1.open("GET", "AdminSignUp?type=mail&email=" + mail, true);
                     signUpReq1.send();
                 }
             }
@@ -124,14 +125,13 @@
             <div class="container">
 
                 <section id="content">
-                    <form action="SignUp" method="POST" ENCTYPE="MULTIPART/FORM-DATA" >
+                    <form action="AdminSignUp" method="POST" ENCTYPE="MULTIPART/FORM-DATA" >
                         <h1>Sign UP</h1>
                         <div class="row">
                             <div><input type="text" placeholder="Email" required="" id="email"  name="email" onblur="checkEmail()"/><span style="color:red">*</span></div>
                             <span id="emailmsg" style="color:red"></span>
                             <div><input type="text" placeholder="user name" required="" id="userName"  name="userName" onblur="checkUserName()"/><span style="color:red">*</span></div>
                             <span id="usernamemsg" style="color:red"></span>
-                            <div><input type="number" placeholder="credit limit" required="" id="creditLimit"  name="creditLimit" /></div>
                             <div><input type="text" placeholder="job" required="" id="job"  name="job" /></div>
                             <div><input type="text" placeholder="address" id="address"  name="address"/></div>
                             <div><input type="password" placeholder="Password" required="" id="password"  name="password"/><span style="color:red">*</span></div>

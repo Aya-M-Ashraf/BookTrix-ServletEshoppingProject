@@ -53,7 +53,7 @@
                                 data: {
                                     "userName": '${user.userName}'
                                 }, success: function (data, textStatus, jqXHR) {
-                                    $("#resViewCart").load("ViewCart.jsp");
+                                    $("#allbooks").load("ViewCart.jsp");
                                 }
                             }
                             );

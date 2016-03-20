@@ -1,6 +1,5 @@
-package CommonServlets;
+package AdminServlets;
 
-import AdminServlets.AddProduct;
 import Beans.User;
 import DBconnectivity.ManipulateDB;
 import controllers.ControlServlet;
@@ -12,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +19,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-public class SignUp extends HttpServlet {
+@WebServlet(name = "AdminSignUp", urlPatterns = {"/AdminSignUp"})
+public class AdminSignUp extends HttpServlet {
 
     ControlServlet controlServlet;
 
@@ -68,7 +69,7 @@ public class SignUp extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String email = null, userName = null, job = null, address = null, password = null, img = null, role = "user";
+        String email = null, userName = null, job = null, address = null, password = null, img = null, role = "admin";
         double creditLimit = 0;
 
         try {
@@ -91,8 +92,6 @@ public class SignUp extends HttpServlet {
                         email = value;
                     } else if (name.equalsIgnoreCase("userName")) {
                         userName = value;
-                    } else if (name.equalsIgnoreCase("creditLimit")) {
-                        creditLimit = Double.parseDouble(value);
                     } else if (name.equalsIgnoreCase("job")) {
                         job = value;
 
@@ -101,13 +100,11 @@ public class SignUp extends HttpServlet {
                     } else if (name.equalsIgnoreCase("password")) {
                         password = value;
                     }
-                } else {
-                    if (!item.isFormField()) {
+                } else if (!item.isFormField()) {
 
-                        System.out.println(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 27) + "/web/Resources/users_pics/" + item.getName()));
-                        item.write(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 27) + "/web/Resources/users_pics/" + item.getName()));
-                        img = item.getName();
-                    }
+                    System.out.println(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 27) + "/web/Resources/users_pics/" + item.getName()));
+                    item.write(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 27) + "/web/Resources/users_pics/" + item.getName()));
+                    img = item.getName();
                 }
             }
 
@@ -115,7 +112,7 @@ public class SignUp extends HttpServlet {
             ManipulateDB m = new ManipulateDB();
             m.insertUser(u);
 
-            response.sendRedirect("Login.jsp");
+            response.sendRedirect("AdminHome.jsp");
 
         } catch (Exception ex) {
             Logger.getLogger(AddProduct.class.getName()).log(Level.SEVERE, null, ex);

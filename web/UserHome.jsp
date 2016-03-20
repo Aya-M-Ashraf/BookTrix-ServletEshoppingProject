@@ -38,8 +38,6 @@
             #wrapper { max-width: 800px; margin: 0 auto; text-align: center; } 
         </style>
 
-
-
         <script>
             function initBooks() {
 //                alert("added init");
@@ -54,7 +52,6 @@
                     }
                 });
             }
-
         </script>
 
 
