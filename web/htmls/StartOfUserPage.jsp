@@ -54,10 +54,9 @@
                 type: 'Get',
                 async: false,
                 data: {
-                    "userName": '${userName}'
+                    "userName": '${user.userName}'
                 }, success: function (data, textStatus, jqXHR) {
                     $("#allbooks").load("ViewCart.jsp");
-                    $("#allbooks").focus();
 
                 }
             }
@@ -148,7 +147,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand hvr-pop" href="#">Book <span>TriX</span></a>
+                <a class="navbar-brand hvr-pop" href="#">Book <span>${user.creditLimit}</span></a>
 
             </div>
             <div class="collapse navbar-collapse" id="ournavbar">

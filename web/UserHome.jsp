@@ -70,7 +70,6 @@
     </c:if>
 
     <body onload="initBooks()">
-<!--    <center><h3> welcome ${userName} </h3></center> -->
 
         <jsp:include page="htmls/StartOfUserPage.jsp"></jsp:include>
 

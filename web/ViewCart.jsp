@@ -43,7 +43,7 @@
                         type: 'Post',
                         async: false,
                         data: {
-                            "userName": '${userName}',
+                            "userName": '${user.userName}',
                             "bookId": event.target.id
                         }, success: function (data, textStatus, jqXHR) {
                             $.ajax({
@@ -51,7 +51,7 @@
                                 type: 'Get',
                                 async: false,
                                 data: {
-                                    "userName": '${userName}'
+                                    "userName": '${user.userName}'
                                 }, success: function (data, textStatus, jqXHR) {
                                     $("#resViewCart").load("ViewCart.jsp");
                                 }
@@ -66,7 +66,7 @@
             $(".quantity").change(function (event) {
                 $.post("BuyCart",
                         {
-                            "userName": '${userName}',
+                            "userName": '${user.userName}',
                             "bookId": event.target.id,
                             "value": $(event.target).val()
                         });
@@ -78,16 +78,16 @@
                     type: 'Get',
                     async: false,
                     data: {
-                        "userName": '${userName}'
+                        "userName": '${user.userName}'
                     }, success: function (data, textStatus, jqXHR) {
+                         $("#allbooks").text(data);
                         $.ajax({
                             url: "Cart",
                             type: 'Get',
                             async: false,
                             data: {
-                                "userName": '${userName}'
-                            }, success: function (data, textStatus, jqXHR) {
-                                $("#resViewCart").text(" your books will be there soon :) ");
+                                "userName": '${user.userName}'
+                            }, success: function (data, textStatus, jqXHR) {                             
                             }
                         }
                         );
