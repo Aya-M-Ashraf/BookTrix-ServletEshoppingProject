@@ -123,4 +123,14 @@ public class ControlServlet {
         manipulateDB.updateAllBookInfo(book);
         
     }
+
+    public Vector<Cart> selectPastCarts(String userName) {
+       Vector<Cart> pastCarts = new Vector<>();
+       pastCarts =  manipulateDB.selectAllPastCarts(userName);
+       return pastCarts;
+    }
+
+    public Cart selectCartById(int cartId) {
+       return manipulateDB.selectCartById(cartId);
+    }
 }

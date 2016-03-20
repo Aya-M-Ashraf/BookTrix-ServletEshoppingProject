@@ -1,10 +1,8 @@
 package CommonServlets;
 
-import Beans.Book;
 import Beans.User;
 import DBconnectivity.ManipulateDB;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Vector;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,12 +34,11 @@ public class ViewUserProfile extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Vector<User> allusers = new Vector<>();
         allusers = m.selectAllUsers();
         System.out.println("asdasdasdasd");
-        
+
         HttpSession session = request.getSession(true);
         session.setAttribute("allusers", allusers);
 

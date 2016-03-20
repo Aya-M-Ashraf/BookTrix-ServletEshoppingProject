@@ -48,6 +48,10 @@
         <servlet-name>UpdateBook</servlet-name>
         <servlet-class>AdminServlets.UpdateBook</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetCartsHistory</servlet-name>
+        <servlet-class>AdminServlets.GetCartsHistory</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminHome</servlet-name>
         <url-pattern>/AdminHome</url-pattern>
@@ -95,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>UpdateBook</servlet-name>
         <url-pattern>/UpdateBook</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetCartsHistory</servlet-name>
+        <url-pattern>/GetCartsHistory</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
