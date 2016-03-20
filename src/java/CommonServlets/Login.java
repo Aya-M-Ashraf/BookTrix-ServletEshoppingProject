@@ -71,8 +71,12 @@ public class Login extends HttpServlet {
         cookies = request.getCookies();
         String result = "not found";
         boolean userNameExists = controlservlet.doesUserNameExist(userName);
+
         if (userNameExists) {
-            result = controlservlet.checkLogin(userName, password);
+            String userPW = controlservlet.getUserByUserName(userName).getPassword();
+            if (userPW.equals(password)) {
+                result = controlservlet.checkLogin(userName, password);
+            }
         }
         HttpSession session = request.getSession(true);
         
