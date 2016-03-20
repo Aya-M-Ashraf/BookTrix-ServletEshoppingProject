@@ -4,6 +4,11 @@
 <script>
     $(document).ready(function () {
         $("#logout").click(function () {
+            $("#viewUsers").attr("class", "");
+            $("#addBook").attr("class", "");
+            $("#home").attr("class", "");
+            $("#addCategory").attr("class", "");
+            $("#logout").attr("class", "active");
             $.ajax({
                 url: "Logout",
                 type: 'Get',
@@ -26,8 +31,6 @@
                         $("#categoriesList").html(data);
                     }
                 });
-//                $("#categoriesList").load("categoriesList.jsp");
-////                alert("in docu.red");
             }
         });
 
@@ -61,6 +64,12 @@
 
 
         $("#viewUsers").click(function () {
+            $("#viewUsers").attr("class", "active");
+            $("#addBook").attr("class", "");
+            $("#home").attr("class", "");
+            $("#addCategory").attr("class", "");
+            $("#logout").attr("class", "");
+
             $.ajax({
                 url: "ViewUserProfile",
                 type: 'Post',
@@ -73,16 +82,31 @@
             });
         });
         $("#addBook").click(function () {
+            $("#viewUsers").attr("class", "");
+            $("#addBook").attr("class", "active");
+            $("#home").attr("class", "");
+            $("#addCategory").attr("class", "");
+            $("#logout").attr("class", "");
 
             $("#allbooks").load("AddBookForm.jsp");
 
         });
         $("#home").click(function () {
+            $("#viewUsers").attr("class", "");
+            $("#addBook").attr("class", "");
+            $("#home").attr("class", "active");
+            $("#addCategory").attr("class", "");
+            $("#logout").attr("class", "");
 
             $("#allbooks").load("ViewBooksAdmin.jsp");
 
         });
         $("#addCategory").click(function () {
+            $("#viewUsers").attr("class", "");
+            $("#addBook").attr("class", "");
+            $("#home").attr("class", "");
+            $("#addCategory").attr("class", "active");
+            $("#logout").attr("class", "");
 
             $("#allbooks").load("AddCategory.jsp");
 
@@ -92,18 +116,18 @@
 
 
     });
-    function categotiesList() {
-        $.ajax({
-            url: "GetCategories",
-            type: 'Post',
-            async: false,
-            data: {},
-            success: function (data, textStatus, jqXHR) {
-                $("#categoriesList").load("categoriesList.jsp");
-            }
-        });
-
-    }
+//    function categotiesList() {
+//        $.ajax({
+//            url: "GetCategories",
+//            type: 'Post',
+//            async: false,
+//            data: {},
+//            success: function (data, textStatus, jqXHR) {
+//                $("#categoriesList").load("categoriesList.jsp");
+//            }
+//        });
+//
+//    }
 
 
 </script>

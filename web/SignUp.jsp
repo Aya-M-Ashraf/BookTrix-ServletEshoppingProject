@@ -56,11 +56,10 @@
                     $("#usernamemsg").text("user name is required");
                 } else {
                       $("#usernamemsg").text("");
-                    signUpReq.open("GET", "SignUpServlet?type=userName&userName=" + name, true);
+                    signUpReq.open("GET", "SignUp?type=userName&userName=" + name, true);
                     signUpReq.send();
                 }
             }
-
             function handleNameVerfication() {
                 if (signUpReq.readyState === 4 && signUpReq.status === 200) {
                     if (signUpReq.responseText !== "valid") {
@@ -87,7 +86,7 @@
                     $("#emailmsg").text("email is required");
                 } else {
                     $("#emailmsg").text("");
-                    signUpReq1.open("GET", "SignUpServlet?type=mail&email=" + mail, true);
+                    signUpReq1.open("GET", "SignUp?type=mail&email=" + mail, true);
                     signUpReq1.send();
                 }
             }

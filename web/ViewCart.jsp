@@ -43,7 +43,7 @@
                         type: 'Post',
                         async: false,
                         data: {
-                            "userName": '${userName}',
+                            "userName": '${user.userName}',
                             "bookId": event.target.id
                         }, success: function (data, textStatus, jqXHR) {
                             $.ajax({
@@ -51,7 +51,7 @@
                                 type: 'Get',
                                 async: false,
                                 data: {
-                                    "userName": '${userName}'
+                                    "userName": '${user.userName}'
                                 }, success: function (data, textStatus, jqXHR) {
                                     $("#allbooks").load("ViewCart.jsp");
                                 }
@@ -61,27 +61,33 @@
                     }
                     );
                 });
+            });
 
-
+            $(".quantity").change(function (event) {
+                $.post("BuyCart",
+                        {
+                            "userName": '${user.userName}',
+                            "bookId": event.target.id,
+                            "value": $(event.target).val()
+                        });
             });
 
             function  buyCart() {
-
                 $.ajax({
                     url: "BuyCart",
                     type: 'Get',
                     async: false,
                     data: {
-                        "userName": '${userName}'
+                        "userName": '${user.userName}'
                     }, success: function (data, textStatus, jqXHR) {
+                         $("#allbooks").html(data);
                         $.ajax({
                             url: "Cart",
                             type: 'Get',
                             async: false,
                             data: {
-                                "userName": '${userName}'
-                            }, success: function (data, textStatus, jqXHR) {
-                                $("#resViewCart").text(" your books will be there soon :) ");
+                                "userName": '${user.userName}'
+                            }, success: function (data, textStatus, jqXHR) {                             
                             }
                         }
                         );
@@ -108,7 +114,7 @@
         <title></title>
     </head>
     <body id="mainBody">
-    <center><h2>${userName}'s Cart</h2></center>
+    <center><h2>${user.userName}'s Cart</h2></center>
 
     <table align="center" style="width: 60%;" >
         <fmt:parseNumber var="totalCost" type="number" value="0" ></fmt:parseNumber>
@@ -139,7 +145,7 @@
                         <tr>
                             <td>
                                 <h5 style="color:#a73f2d; ">Price : ${myBook.key.price} $</h5>
-                                <h5 style="color:#a78f2a; ">Quantity : <input type="number" min="1" max="${myBook.key.quantity}" value="${myBook.value}" id="quantity" name="quantity"/> </h5>
+                                <h5 style="color:#a78f2a; ">Quantity : <input type="number" min="1" max="${myBook.key.quantity}" value="${myBook.value}" id="${myBook.key.bookId}" class="quantity" /> </h5>
                             </td> 
 
                         </tr>
@@ -158,7 +164,7 @@
         </c:forEach>
         <tr>
             <td colspan="5" align="center" style="background-color: white;">
-                <h1> Total Cost : ${totalCost}</h1>
+                <h1 id="changableTotal"> Total Cost : ${totalCost}</h1>
             </td>
         </tr>
         <tr>

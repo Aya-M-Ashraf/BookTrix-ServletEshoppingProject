@@ -41,16 +41,22 @@
         });
         //view all books in my cart
         $("#myCart").click(function () {
+            $("#home").attr("class", "");
+            $("#about").attr("class", "");
+            $("#myCart").attr("class", "active");
+            $("#myProfile").attr("class", "");
+            $("#logout").attr("class", "");
+
+
 //            alert("click");
             $.ajax({
                 url: "Cart",
                 type: 'Get',
                 async: false,
                 data: {
-                    "userName": '${userName}'
+                    "userName": '${user.userName}'
                 }, success: function (data, textStatus, jqXHR) {
                     $("#allbooks").load("ViewCart.jsp");
-                    $("#allbooks").focus();
 
                 }
             }
@@ -58,15 +64,52 @@
         });
 
         $("#myProfile").click(function () {
+            $("#home").attr("class", "");
+            $("#about").attr("class", "");
+            $("#myCart").attr("class", "");
+            $("#myProfile").attr("class", "active");
+            $("#logout").attr("class", "");
+
             $("#allbooks").load("ViewSingleUser.jsp");
             $("#allbooks").focus();
         });
-         $("#logout").click(function () {
+
+        $("#about").click(function () {
+            $("#home").attr("class", "");
+            $("#about").attr("class", "active");
+            $("#myCart").attr("class", "");
+            $("#myProfile").attr("class", "");
+            $("#logout").attr("class", "");
+
+        });
+        $("#logout").click(function () {
+            $("#home").attr("class", "");
+            $("#about").attr("class", "");
+            $("#myCart").attr("class", "");
+            $("#myProfile").attr("class", "");
+            $("#logout").attr("class", "active");
             $.ajax({
                 url: "Logout",
                 type: 'Get',
                 async: false,
                 data: {}
+            });
+        });
+        $("#home").click(function () {
+            $("#home").attr("class", "active");
+            $("#about").attr("class", "");
+            $("#myCart").attr("class", "");
+            $("#myProfile").attr("class", "");
+            $("#logout").attr("class", "");
+
+            $.ajax({
+                url: "ViewBooks",
+                type: 'Post',
+                async: false,
+                data: {},
+                success: function (data, textStatus, jqXHR) {
+                    $("#allbooks").load("ViewBooksUser.jsp");
+                }
             });
         });
     });
@@ -104,7 +147,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand hvr-pop" href="#">Book <span>TriX</span></a>
+                <a class="navbar-brand hvr-pop" href="#">Book <span>${user.creditLimit}</span></a>
 
             </div>
             <div class="collapse navbar-collapse" id="ournavbar">
@@ -112,8 +155,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li id="myProfile"><a href="#allbooks">My Profile</a></li>
                     <li id="myCart"><a href="#allbooks" >My Cart</a></li>
-                    <li class="active"><a href="#allbooks">Home<span class="sr-only">(current)</span></a></li>
-                    <li><a href="#aboutdiv">About</a></li>
+                    <li id="home"class="active"><a href="#allbooks">Home<span class="sr-only">(current)</span></a></li>
+                    <li id="about"><a href="#aboutdiv">About</a></li>
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu" id="categoriesList">
