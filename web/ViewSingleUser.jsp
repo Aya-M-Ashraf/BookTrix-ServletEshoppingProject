@@ -56,7 +56,7 @@
                     $("#job").prop("disabled", true);
                     $("#address").prop("disabled", true);
                     $("#password").prop("disabled", true);
-                    $("#password").attr("type","text");
+                    $("#password").attr("type", "text");
                     $("#passwordDiv2").hide();
                     $("#pic").hide();
                     $("#btn").hide();
@@ -64,6 +64,10 @@
             });
 
         </script>
+
+        <c:if test="${userName==null}">
+            <c:redirect url="Login.jsp"></c:redirect>
+        </c:if>
     </head>
     <body align="center" onload="checkAdmin()">
 

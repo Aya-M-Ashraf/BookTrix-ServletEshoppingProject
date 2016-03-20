@@ -19,7 +19,7 @@
 
             function ajaxCallBack(responseTxt, statusTxt, xhr) {
                 if (statusTxt === "success") {
-                    
+
 
                 }
             }
@@ -35,11 +35,32 @@
                             }
                     , ajaxCallBack);
                 });
+                $(".viewBookInfo").click(function (event) {
+//                    alert(event.target.id);
+                    $.ajax({
+                        url: "ViewSingleBook",
+                        type: 'Post',
+                        async: false,
+                        data: {
+                            "bookid": event.target.id
+                        },
+                        success: function (data) {
+                            $('#allbooks').load("BookInfo.jsp");
+//                            alert("sucess");
+                        }
+                    });
+                });
             });
 
         </script>
 
+        <c:if test="${user.userName==null}">
+            <c:redirect url="Login.jsp"></c:redirect>
+        </c:if>
 
+        <c:if test="${user.role=='admin'}">
+            <c:redirect url="AdminHome.jsp"></c:redirect>
+        </c:if>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title></title>
@@ -59,7 +80,7 @@
                             </c:if>
                             <c:url var="myUrl" value="/Resources/pics/${myBook.img}"  context="/BookTrix"/>
                             <div id = "${myBook.bookId}" draggable="true" ondragstart="drag(event)" cost =520 class="gallery" > 
-                                <a href="Resources\Work\samples\1-java\index.html" data-poptrox="iframe,950x515" id = "${myBook.bookId}"> 
+                                <a href="#allbooks" class="viewBookInfo" id = "${myBook.bookId}"> 
                                     <div  class="sample thumb1" style="width:95px; height:117px;" id = "${myBook.bookId}">
                                         <img src="${myUrl}" style="width:95px; height:117px;" id = "${myBook.bookId}">
                                     </div>  

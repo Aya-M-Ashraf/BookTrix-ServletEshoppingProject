@@ -80,7 +80,7 @@
                     data: {
                         "userName": '${user.userName}'
                     }, success: function (data, textStatus, jqXHR) {
-                        $("#allbooks").html(data);                       
+                        $("#allbooks").html(data);
                         $("#creditOfUser").text('${user.creditLimit} $');
 
                         $.ajax({
@@ -110,7 +110,13 @@
             tr:nth-child(odd){background-color: #f2f2f2}
             th {background-color: #a73f2d; color: white;}
         </style>
+        <c:if test="${user.userName==null}">
+            <c:redirect url="Login.jsp"></c:redirect>
+        </c:if>
 
+        <c:if test="${user.role=='admin'}">
+            <c:redirect url="AdminHome.jsp"></c:redirect>
+        </c:if>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title></title>

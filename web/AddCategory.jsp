@@ -61,6 +61,13 @@
             }
         </script>
     </head>
+    <c:if test="${userName==null}">
+        <c:redirect url="Login.jsp"></c:redirect>
+    </c:if>
+
+    <c:if test="${user.role=='user'}">
+        <c:redirect url="UserHome.jsp"></c:redirect>
+    </c:if>
     <body>   
         <br><br><br>
         <h1>Add Category</h1><br>

@@ -31,6 +31,13 @@
     tr:nth-child(even){background-color: #f2f2f2}
     th {background-color: #a73f2d; color: white;}
 </style>
+   <c:if test="${userName==null}">
+        <c:redirect url="Login.jsp"></c:redirect>
+    </c:if>
+
+    <c:if test="${user.role=='user'}">
+        <c:redirect url="UserHome.jsp"></c:redirect>
+    </c:if>
 <html>
     <head>
         <title>TODO supply a title</title>

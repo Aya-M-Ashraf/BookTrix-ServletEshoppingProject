@@ -62,6 +62,14 @@
         });
     });
 </script>
+
+   <c:if test="${userName==null}">
+        <c:redirect url="Login.jsp"></c:redirect>
+    </c:if>
+
+    <c:if test="${user.role=='user'}">
+        <c:redirect url="UserHome.jsp"></c:redirect>
+    </c:if>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
