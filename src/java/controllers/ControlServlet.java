@@ -30,7 +30,7 @@ public class ControlServlet {
         int cartId = manipulateDB.selectPendingCartIdFromCart(userName);
         if (cartId == -1) {                 //no pending cart for this user is found
             Cart cart = new Cart();
-            cart.setCreationDate(new Date(876236576587L));
+            cart.setCreationDate(new java.sql.Date(new java.util.Date().getTime()));
             cart.setUser(manipulateDB.selectUserByUserName(userName));
             cart.setPending(1);
             manipulateDB.insertCart(cart);
@@ -118,9 +118,20 @@ public class ControlServlet {
     public User getUserByUserName(String userName) {
         return manipulateDB.selectUserByUserName(userName);
     }
-      public void updateBookInfo(Book book) {
-       
+
+    public void updateBookInfo(Book book) {
+
         manipulateDB.updateAllBookInfo(book);
-        
+
+    }
+
+    public double selectTotalPriceOfBooks() {
+        ManipulateDB manipulateDB = new ManipulateDB();
+        double totalPriceOfBooks = 0;
+        Vector<Book> allBooks = manipulateDB.selectAllBooks();
+        for (Book book : allBooks) {
+            totalPriceOfBooks += book.getPrice();
+        }
+        return totalPriceOfBooks;
     }
 }

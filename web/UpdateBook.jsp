@@ -73,14 +73,14 @@
             <tr>
                 <td align="center">
 
-                    Available Quantity: <br><input type="number" name="quantity" value="${sessionScope.book.quantity}" style="width: 40%; "  >
+                    Available Quantity: <br><input type="number" name="quantity" min="0" value="${sessionScope.book.quantity}" style="width: 40%; "  >
 
                 </td>  
             </tr>
             <tr>
                 <td align="center">
 
-                    Price: <br><input type="number" name="price" value="${sessionScope.book.price}" style="width: 40%; "  >
+                    Price: <br><input type="number" name="price" min="0" value="${sessionScope.book.price}" style="width: 40%; "  >
 
                 </td>  
             </tr>
