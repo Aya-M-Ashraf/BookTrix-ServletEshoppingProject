@@ -118,4 +118,9 @@ public class ControlServlet {
     public User getUserByUserName(String userName) {
         return manipulateDB.selectUserByUserName(userName);
     }
+      public void updateBookInfo(Book book) {
+       
+        manipulateDB.updateAllBookInfo(book);
+        
+    }
 }

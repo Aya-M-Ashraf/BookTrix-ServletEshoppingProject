@@ -14,7 +14,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-       
+
         <link rel="stylesheet" href="Resources/css/style1.css">
         <link rel="stylesheet" href="Resources/css/bootstrap.css"> 
         <link rel="stylesheet" href="Resources/css/font-awesome.min.css">   
@@ -49,17 +49,19 @@
                     $("#usernamemsg").text("");
                 }
             }
-            $(document).ready(function (){
+            $(document).ready(function () {
 //                alert("${role}");
-                if("${role}"==='admin'){
-                    $("#creditLimit").prop("disabled",true);
-                    $("#job").prop("disabled",true);
-                    $("#address").prop("disabled",true);
-                    $("#password").prop("disabled",true);
-                    $("#password2").hide();
+                if ("${role}" === 'admin') {
+                    $("#creditLimit").prop("disabled", true);
+                    $("#job").prop("disabled", true);
+                    $("#address").prop("disabled", true);
+                    $("#password").prop("disabled", true);
+                    $("#password").attr("type","text");
+                    $("#passwordDiv2").hide();
                     $("#pic").hide();
                     $("#btn").hide();
-            }});
+                }
+            });
 
         </script>
     </head>
@@ -82,7 +84,7 @@
                         <div>Job:<br><input type="text" placeholder="job" required="" id="job"  name="job" value="${sessionScope.user.job}"/></div>
                         <div>Address<br><input type="text" placeholder="address" id="address"  name="address" value="${sessionScope.user.address}"/></div>
                         <div>Password:<br><input type="password" placeholder="Password" required="" id="password"  name="password" value="${sessionScope.user.password}"/></div>
-                        <div>Confirm Password:<br><input type="password" placeholder="Retype Password" required="" id="password2" value="${sessionScope.user.password}" name="password2" onblur="checkPassword()"/></div>
+                        <div id="passwordDiv2">Confirm Password:<br><input type="password" placeholder="Retype Password" required="" id="password2" value="${sessionScope.user.password}" name="password2" onblur="checkPassword()"/></div>
                         <div align = "center" id="pic"> <h5> Choose a Personal Photo</h5><input type="file" Name=fileName align="right" value="${sessionScope.user.profilePicUrl}"/></div>
                         <div id="btn"><input type="submit" value="Save Changes"/></div> <span id="usernamemsg" style="color: red"></span>
                     </div>

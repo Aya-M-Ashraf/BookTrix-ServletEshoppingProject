@@ -41,7 +41,7 @@
                             "bookid": event.target.id
                         },
                         success: function (data) {
-                            $('#allbooks').load("BookInfo.jsp");
+                            $('#allbooks').load("UpdateBook.jsp");
 //                            alert("sucess");
                         }
                     });
