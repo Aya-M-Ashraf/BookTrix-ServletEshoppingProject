@@ -13,13 +13,13 @@ import javax.servlet.http.*;
 
 @WebServlet(name = "Login", urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
-
+    
     ControlServlet controlservlet;
 
     public void init() {
         controlservlet = new ControlServlet();
     }
-
+    
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("in get method");
@@ -59,14 +59,14 @@ public class Login extends HttpServlet {
             }
         }
     }
-
+    
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
         String[] values = request.getParameterValues("remember");
-
+        
         Cookie[] cookies = null;
         cookies = request.getCookies();
         String result = "not found";
@@ -75,9 +75,9 @@ public class Login extends HttpServlet {
             result = controlservlet.checkLogin(userName, password);
         }
         HttpSession session = request.getSession(true);
-
+        
         if (result.equals("admin")) {
-
+            
             session.setAttribute("role", "admin");
             session.setAttribute("userName", userName);
             if (values != null) {
@@ -85,7 +85,7 @@ public class Login extends HttpServlet {
                 nameCookie.setMaxAge(60 * 60 * 24);
                 Cookie roleCookie = new Cookie("role", "admin");
                 roleCookie.setMaxAge(60 * 60 * 24);
-
+                
                 response.addCookie(nameCookie);
                 response.addCookie(roleCookie);
             }
@@ -99,7 +99,7 @@ public class Login extends HttpServlet {
                 nameCookie.setMaxAge(60 * 60 * 24);
                 Cookie roleCookie = new Cookie("role", "user");
                 roleCookie.setMaxAge(60 * 60 * 24);
-
+                
                 response.addCookie(nameCookie);
                 response.addCookie(roleCookie);
             }
@@ -109,5 +109,5 @@ public class Login extends HttpServlet {
             response.sendRedirect("Login.jsp");
         }
     }
-
+    
 }
