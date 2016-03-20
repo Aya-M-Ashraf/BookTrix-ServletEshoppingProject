@@ -68,7 +68,7 @@ public class SignUp extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String email = null, userName = null, job = null, address = null, password = null, img = null, role = null;
+        String email = null, userName = null, job = null, address = null, password = null, img = null, role = "user";
         double creditLimit = 0;
 
         try {
