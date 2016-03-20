@@ -118,9 +118,15 @@
         </script>
 
     </head>
+   <c:if test="${userName==null}">
+        <c:redirect url="Login.jsp"></c:redirect>
+    </c:if>
 
+    <c:if test="${user.role=='user'}">
+        <c:redirect url="UserHome.jsp"></c:redirect>
+    </c:if>
     <body  > 
-        <jsp:include page="htmls/StartOfSignupPage.html"></jsp:include>
+        <jsp:include page="htmls/StartOfAdminPage.html"></jsp:include>
             <br><br>
             <div class="container">
 

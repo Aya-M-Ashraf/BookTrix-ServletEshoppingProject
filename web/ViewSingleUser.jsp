@@ -72,6 +72,10 @@
             });
 
         </script>
+
+        <c:if test="${userName==null}">
+            <c:redirect url="Login.jsp"></c:redirect>
+        </c:if>
     </head>
     <body align="center" onload="checkAdmin()">
 

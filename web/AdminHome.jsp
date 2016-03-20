@@ -63,6 +63,10 @@
         <c:redirect url="Login.jsp"></c:redirect>
     </c:if>
 
+    <c:if test="${user.role=='user'}">
+        <c:redirect url="UserHome.jsp"></c:redirect>
+    </c:if>
+
     <body onload="initBooks()">
 
         <jsp:include page="htmls/StartOfAdminPage.html"></jsp:include>
