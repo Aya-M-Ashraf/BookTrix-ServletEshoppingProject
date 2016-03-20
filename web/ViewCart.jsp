@@ -53,7 +53,7 @@
                                 data: {
                                     "userName": '${userName}'
                                 }, success: function (data, textStatus, jqXHR) {
-                                    $("#resViewCart").load("ViewCart.jsp");
+                                    $("#allbooks").load("ViewCart.jsp");
                                 }
                             }
                             );
@@ -64,12 +64,32 @@
             });
 
             $(".quantity").change(function (event) {
-                $.post("BuyCart",
-                        {
-                            "userName": '${userName}',
+            
+               $.ajax({
+                        url: "BuyCart",
+                        type: 'Post',
+                        async: false,
+                        data: {
+                             "userName": '${userName}',
                             "bookId": event.target.id,
                             "value": $(event.target).val()
-                        });
+                        }, success: function (data, textStatus, jqXHR) {
+                            $.ajax({
+                                url: "Cart",
+                                type: 'Get',
+                                async: false,
+                                data: {
+                                    "userName": '${userName}'
+                                }, success: function (data, textStatus, jqXHR) {
+                                    $("#allbooks").load("ViewCart.jsp");
+                                }
+                            }
+                            );
+                        }
+                    }
+                    );
+            
+  
             });
 
             function  buyCart() {

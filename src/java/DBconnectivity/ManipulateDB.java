@@ -448,7 +448,7 @@ public class ManipulateDB {
         try {
 
             Statement statement1 = connection.createStatement();
-            String queryString1 = "select book_quantity, book_id from cart_book where cart_id= '" + cartId + "'";
+            String queryString1 = "select book_quantity, book_id from cart_book where cart_id= '" + cartId + "' order by book_id";
             ResultSet resultSet = statement1.executeQuery(queryString1);
             while (resultSet.next()) {
                 int bookQuantity = resultSet.getInt(1);

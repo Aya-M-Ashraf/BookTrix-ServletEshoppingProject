@@ -4,6 +4,7 @@ import Beans.Book;
 import controllers.ControlServlet;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.HashMap;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +28,8 @@ public class Cart extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             
             String userName = request.getParameter("userName");
-            HashMap<Book,Integer> allBooksWithQuantities = controller.getAllBooksInCart(userName);
+            HashMap<Book,Integer> allBooksWithQuantities = controller.getAllBooksInCart(userName); 
+           
             System.out.println(userName);
             HttpSession session = request.getSession(true);
             session.setAttribute("booksWithQuantities", allBooksWithQuantities);
