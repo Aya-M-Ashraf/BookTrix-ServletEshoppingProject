@@ -120,7 +120,7 @@
     </head>
 
     <body  > 
-        <jsp:include page="htmls/StartOfSignupPage.html"></jsp:include>
+        <jsp:include page="htmls/StartOfAdminPage.html"></jsp:include>
             <br><br>
             <div class="container">
 
