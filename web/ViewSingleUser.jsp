@@ -61,6 +61,14 @@
                     $("#pic").hide();
                     $("#btn").hide();
                 }
+
+                $.post("GetCartsHistory",
+                        {
+                            "userName": '${user.userName}'
+                        });
+                $(".myCart").click(function (event) {
+                    $("#allbooks").load("GetCartsHistory?id=" + event.target.id);
+                });
             });
 
         </script>
@@ -93,10 +101,38 @@
                         <div id="btn"><input type="submit" value="Save Changes"/></div> <span id="usernamemsg" style="color: red"></span>
                     </div>
                 </form>
+
                 <c:if test = "${done=='1'}">
                     <div id="doneMsg"><font color="green"><b>Done Successfully</b></font></div>
                     </c:if>
             </section>
+            <center>< <div id="pastCarts">
+                    <h2> ${sessionScope.user.userName}'s Past Carts </h2>
+                    <table align="center">
+                        <c:forEach items="${sessionScope.pastCarts}" var="myCart" varStatus="stat">
+
+                            <fmt:parseNumber var="i" type="number" value="${stat.index}" ></fmt:parseNumber>            
+                                <tr>
+                                    <td class="myCart" style="width: 700px" id="${myCart.cartId}"> 
+                                    <table id="${myCart.cartId}">
+                                        <tr  id="${myCart.cartId}">
+                                            <td id="${myCart.cartId}">
+                                                <h3 id="${myCart.cartId}">${myCart.creationDate}</h3>
+                                            </td>
+                                            <td style="width:100px;" id="${myCart.cartId}">
+                                            </td>
+                                            <td  id="${myCart.cartId}" >
+                                                <h3 id="${myCart.cartId}">${myCart.user.userName}</h3>
+                                                <h3 id="${myCart.cartId}">Cost : ${myCart.total} $</h3>
+                                                <h3 id="${myCart.cartId}">with ${myCart.myBooks.size()} books</h3>
+                                            </td>
+                                        </tr> 
+                                    </table>                      
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div></center>
         </div>
     </body>
 </html>
