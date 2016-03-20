@@ -36,14 +36,19 @@ public class BuyCart extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         if (controller.buyMyCart(userName)) {
-            out.print("your books will be there soon :) ");
+            out.print("<br><br><br><br><h1>"
+                    + "<img src=\"Resources/images/Delivery.png\" style=\"width:500px; height:500px; \"align=\"Center\" /> "
+                    + "your books will be there soon :) <h1>");
             ControlServlet c = new ControlServlet();
             User myUser = c.getUser(userName);
             HttpSession session = request.getSession(true);
             session.setAttribute("user", myUser);
 
         } else {   // customer can't afford the cart
-            out.print("No enough Credit .. Sorry! ");
+
+            out.print("<br><br><br><br><h1>"
+                    + "<img src=\"Resources/images/sorry.png\" style=\"width:500px; height:500px; \"align=\"Center\" /> "
+                    + "No enough Credit .. Sorry! <h1>");
         }
 
     }
