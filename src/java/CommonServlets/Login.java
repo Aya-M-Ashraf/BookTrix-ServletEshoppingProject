@@ -1,7 +1,9 @@
 package CommonServlets;
 
+import Beans.User;
 import controllers.ControlServlet;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,22 +15,45 @@ import javax.servlet.http.*;
 public class Login extends HttpServlet {
 
     ControlServlet controlservlet;
-    
-    public void init(){
+
+    public void init() {
         controlservlet = new ControlServlet();
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        System.out.println("in get method");
         Cookie[] cookies = request.getCookies();
+        System.out.println(cookies.length);
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("role")) {
+                    System.out.println(cookie.getValue());
                     if (cookie.getValue().equals("admin")) {
-                        response.sendRedirect("AdminHome.jsp");
+
+                        for (Cookie userNameCookie : cookies) {
+                            if (userNameCookie.getName().equals("userName")) {
+                                System.out.println(userNameCookie.getValue());
+                                ControlServlet c = new ControlServlet();
+                                User myUser = c.getUser(userNameCookie.getValue());
+                                HttpSession session = request.getSession(true);
+                                session.setAttribute("user", myUser);
+
+                            }
+                        }
                     } else if (cookie.getValue().equals("user")) {
-                        response.sendRedirect("UserHome.jsp");
+                        System.out.println("true");
+                        for (Cookie userNameCookie : cookies) {
+                            if (userNameCookie.getName().equals("userName")) {
+                                System.out.println(userNameCookie.getValue());
+                                ControlServlet c = new ControlServlet();
+                                User myUser = c.getUser(userNameCookie.getValue());
+                                HttpSession session = request.getSession(true);
+                                session.setAttribute("user", myUser);
+                            }
+                        }
+                        PrintWriter out = response.getWriter();
+                        out.print("user");
                     }
                 }
             }
@@ -44,11 +69,11 @@ public class Login extends HttpServlet {
 
         Cookie[] cookies = null;
         cookies = request.getCookies();
-        String result="not found";
+        String result = "not found";
         boolean userNameExists = controlservlet.doesUserNameExist(userName);
-        if(userNameExists){
-        result = controlservlet.checkLogin(userName, password);
-        } 
+        if (userNameExists) {
+            result = controlservlet.checkLogin(userName, password);
+        }
         HttpSession session = request.getSession(true);
 
         if (result.equals("admin")) {
@@ -68,7 +93,7 @@ public class Login extends HttpServlet {
         } else if (result.equals("user")) {
             session.setAttribute("role", "user");
             session.setAttribute("userName", userName);
-            session.setAttribute("user",controlservlet.getUser(userName));
+            session.setAttribute("user", controlservlet.getUser(userName));
             if (values != null) {
                 Cookie nameCookie = new Cookie("userName", userName);
                 nameCookie.setMaxAge(60 * 60 * 24);

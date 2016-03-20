@@ -71,10 +71,15 @@
                                 <table align="center" style="width:95px; height:40px;">
                                     <tr>
                                         <td>
-                                            <a > 
-                                                <img src="Resources/images/Edit.png" style="width:35px; height:40px; cursor: pointer;"align="left" class="addToCartImg" id="${myBook.bookId}"/> 
+                                            <a >  
+                                                <br>
+                                                <c:if test="${ myBook.quantity ==0}">
+                                                    <img src="Resources/images/OutOfStock.png" style="width:95px; height:40px; "align="Center"  id="${myBook.bookId}"/> 
+                                                </c:if>
+                                                <c:if test="${myBook.quantity !=0}">
+                                                    <img src="Resources/images/AddToCart.png" style="width:95px; height:40px; cursor: pointer;"align="Center" class="addToCartImg" id="${myBook.bookId}"/> 
+                                                </c:if>
                                             </a>
-                                            <h6 align="left">Edit</h6>
                                         </td>
                                     </tr>
 

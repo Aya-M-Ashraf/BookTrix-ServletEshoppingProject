@@ -40,11 +40,26 @@
         <script src="Resources/js/plugin.js"></script>
         <script src="Resources/js/wow.min.js"></script>
         <!--<script>new WOW().init();</script>-->
+
+        <script>
+             $.ajax({
+                    url: "Login",
+                    type: 'GET',
+                    async: false,
+                    data: {},
+                    success: function (data, textStatus, jqXHR) {
+                        if(data== "user"){
+                            window.location.href = "UserHome.jsp";
+                        }
+                    }
+                });
+        </script>
     </head>
+
 
     <body> 
         <jsp:include page="htmls/StartOfSigninPage.html"></jsp:include>
-        <br> <br> <br> <br>
+            <br> <br> <br> <br>
             <div class="container">
 
                 <section id="content">

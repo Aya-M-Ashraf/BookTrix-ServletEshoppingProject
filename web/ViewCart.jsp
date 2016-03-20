@@ -114,7 +114,7 @@
         <title></title>
     </head>
     <body id="mainBody">
-    <center><h2>${userName}'s Cart</h2></center>
+    <center><h2>${user.userName}'s Cart</h2></center>
 
     <table align="center" style="width: 60%;" >
         <fmt:parseNumber var="totalCost" type="number" value="0" ></fmt:parseNumber>
