@@ -43,7 +43,7 @@
                         type: 'Post',
                         async: false,
                         data: {
-                            "userName": '${userName}',
+                            "userName": '${user.userName}',
                             "bookId": event.target.id
                         }, success: function (data, textStatus, jqXHR) {
                             $.ajax({
@@ -51,7 +51,7 @@
                                 type: 'Get',
                                 async: false,
                                 data: {
-                                    "userName": '${userName}'
+                                    "userName": '${user.userName}'
                                 }, success: function (data, textStatus, jqXHR) {
                                     $("#allbooks").load("ViewCart.jsp");
                                 }
@@ -64,13 +64,9 @@
             });
 
             $(".quantity").change(function (event) {
-            
-               $.ajax({
-                        url: "BuyCart",
-                        type: 'Post',
-                        async: false,
-                        data: {
-                             "userName": '${userName}',
+                $.post("BuyCart",
+                        {
+                            "userName": '${user.userName}',
                             "bookId": event.target.id,
                             "value": $(event.target).val()
                         }, success: function (data, textStatus, jqXHR) {
@@ -98,16 +94,16 @@
                     type: 'Get',
                     async: false,
                     data: {
-                        "userName": '${userName}'
+                        "userName": '${user.userName}'
                     }, success: function (data, textStatus, jqXHR) {
+                         $("#allbooks").html(data);
                         $.ajax({
                             url: "Cart",
                             type: 'Get',
                             async: false,
                             data: {
-                                "userName": '${userName}'
-                            }, success: function (data, textStatus, jqXHR) {
-                                $("#resViewCart").text(" your books will be there soon :) ");
+                                "userName": '${user.userName}'
+                            }, success: function (data, textStatus, jqXHR) {                             
                             }
                         }
                         );

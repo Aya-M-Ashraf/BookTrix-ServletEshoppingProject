@@ -64,7 +64,6 @@
     </c:if>
 
     <body onload="initBooks()">
-<!--    <center><h3> welcome ${userName} </h3></center> -->
 
         <jsp:include page="htmls/StartOfAdminPage.html"></jsp:include>
 

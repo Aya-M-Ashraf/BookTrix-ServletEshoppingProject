@@ -38,8 +38,6 @@
             #wrapper { max-width: 800px; margin: 0 auto; text-align: center; } 
         </style>
 
-
-
         <script>
             function initBooks() {
 //                alert("added init");
@@ -54,7 +52,6 @@
                     }
                 });
             }
-
         </script>
 
 
@@ -70,7 +67,6 @@
     </c:if>
 
     <body onload="initBooks()">
-<!--    <center><h3> welcome ${userName} </h3></center> -->
 
         <jsp:include page="htmls/StartOfUserPage.jsp"></jsp:include>
 
