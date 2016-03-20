@@ -80,7 +80,7 @@
                     data: {
                         "userName": '${user.userName}'
                     }, success: function (data, textStatus, jqXHR) {
-                         $("#allbooks").text(data);
+                         $("#allbooks").html(data);
                         $.ajax({
                             url: "Cart",
                             type: 'Get',
