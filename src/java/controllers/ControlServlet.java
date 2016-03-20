@@ -36,7 +36,7 @@ public class ControlServlet {
             manipulateDB.insertCart(cart);
             return manipulateDB.insertBookIntoCart(bookId, bookQuantity, manipulateDB.selectPendingCartIdFromCart(userName));
         } else {
-            if (manipulateDB.selectBookIdFromCart(cartId,bookId)) {
+            if (manipulateDB.selectBookIdFromCart(cartId, bookId)) {
                 return manipulateDB.increaseBookQuantityInCartByOne(cartId, bookId);
             } else {
                 return manipulateDB.insertBookIntoCart(bookId, bookQuantity, cartId);
@@ -103,14 +103,19 @@ public class ControlServlet {
     public boolean addCategory(String categoryName) {
         return manipulateDB.insertCategory(categoryName);
     }
+
     public boolean deleteBookById(int bookId) {
         return manipulateDB.deleteBookById(bookId);
     }
 
     public void updateBookCountInCart(String userName, int bookId, int value) {
         int cartID = manipulateDB.selectPendingCartIdFromCart(userName);
-        System.out.println(cartID+" "+bookId+" "+value);
-        manipulateDB.updateBookCountInCart(cartID,bookId,value);
-        
+        System.out.println(cartID + " " + bookId + " " + value);
+        manipulateDB.updateBookCountInCart(cartID, bookId, value);
+
+    }
+
+    public User getUserByUserName(String userName) {
+        return manipulateDB.selectUserByUserName(userName);
     }
 }

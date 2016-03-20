@@ -11,16 +11,16 @@ import javax.servlet.http.*;
 
 @WebServlet(name = "Login", urlPatterns = {"/Login"})
 public class Login extends HttpServlet {
-
+    
     ControlServlet controlservlet;
     
-    public void init(){
+    public void init() {
         controlservlet = new ControlServlet();
     }
-
+    
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
@@ -34,25 +34,26 @@ public class Login extends HttpServlet {
             }
         }
     }
-
+    
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
         String[] values = request.getParameterValues("remember");
-
+        
         Cookie[] cookies = null;
         cookies = request.getCookies();
-        String result="not found";
+        String result = "not found";
         boolean userNameExists = controlservlet.doesUserNameExist(userName);
-        if(userNameExists){
-        result = controlservlet.checkLogin(userName, password);
-        } 
+        String userPW = controlservlet.getUserByUserName(userName).getPassword();
+        if (userNameExists && userPW.equals(password)) {
+            result = controlservlet.checkLogin(userName, password);
+        }        
         HttpSession session = request.getSession(true);
-
+        
         if (result.equals("admin")) {
-
+            
             session.setAttribute("role", "admin");
             session.setAttribute("userName", userName);
             if (values != null) {
@@ -60,7 +61,7 @@ public class Login extends HttpServlet {
                 nameCookie.setMaxAge(60 * 60 * 24);
                 Cookie roleCookie = new Cookie("role", "admin");
                 roleCookie.setMaxAge(60 * 60 * 24);
-
+                
                 response.addCookie(nameCookie);
                 response.addCookie(roleCookie);
             }
@@ -68,13 +69,13 @@ public class Login extends HttpServlet {
         } else if (result.equals("user")) {
             session.setAttribute("role", "user");
             session.setAttribute("userName", userName);
-            session.setAttribute("user",controlservlet.getUser(userName));
+            session.setAttribute("user", controlservlet.getUser(userName));
             if (values != null) {
                 Cookie nameCookie = new Cookie("userName", userName);
                 nameCookie.setMaxAge(60 * 60 * 24);
                 Cookie roleCookie = new Cookie("role", "user");
                 roleCookie.setMaxAge(60 * 60 * 24);
-
+                
                 response.addCookie(nameCookie);
                 response.addCookie(roleCookie);
             }
@@ -84,5 +85,5 @@ public class Login extends HttpServlet {
             response.sendRedirect("Login.jsp");
         }
     }
-
+    
 }
