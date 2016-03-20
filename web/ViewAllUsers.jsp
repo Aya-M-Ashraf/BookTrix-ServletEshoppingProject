@@ -80,14 +80,14 @@
                             <tr  id="${myUser.email}">
                                 <td id="${myUser.email}">
                                     <img src="${myUrl}" style="width:80px; height:80px;"  id="${myUser.email}"> 
-                                    <h3 id="${myUser.email}">${myUser.userName}</h3>
+                                    <h3 id="${myUser.email}">Name  : ${myUser.userName}</h3>
                                 </td>
                                 <td style="width:100px;" id="${myUser.email}">
                                 </td>
                                 <td  id="${myUser.email}" >
-                                    <h3 id="${myUser.email}">${myUser.email}</h3>
-                                    <h3 id="${myUser.email}">${myUser.creditLimit}</h3>
-                                    <h3 id="${myUser.email}">${myUser.address}</h3>
+                                    <h3 id="${myUser.email}">Email  : ${myUser.email}</h3>
+                                    <h3 id="${myUser.email}">Credit Limit  : ${myUser.creditLimit}</h3>
+                                    <h3 id="${myUser.email}">Address  : ${myUser.address}</h3>
                                 </td>
                             </tr> 
                         </table>                      

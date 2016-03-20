@@ -74,11 +74,11 @@
                                         <td>
                                             <a >  
                                                 <br>
-                                                <c:if test="${ myBook.quantity ==0}">
+                                                <c:if test="${ myBook.quantity <=0}">
                                                     <img src="Resources/images/OutOfStock.png" style="width:95px; height:40px; "align="Center"  id="${myBook.bookId}"/> 
                                                     <h5>Avaliable : ${ myBook.quantity}</h5>
                                                 </c:if>
-                                                <c:if test="${myBook.quantity !=0}">
+                                                <c:if test="${myBook.quantity >0}">
                                                     <img src="Resources/images/AddToCart.png" style="width:95px; height:40px; cursor: pointer;"align="Center" class="addToCartImg" id="${myBook.bookId}"/>
                                                     <h5>Avaliable : ${ myBook.quantity}</h5>
                                                 </c:if>

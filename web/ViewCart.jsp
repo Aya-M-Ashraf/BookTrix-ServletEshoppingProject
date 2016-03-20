@@ -80,14 +80,16 @@
                     data: {
                         "userName": '${user.userName}'
                     }, success: function (data, textStatus, jqXHR) {
-                         $("#allbooks").html(data);
+                        $("#allbooks").html(data);                       
+                        $("#creditOfUser").text('${user.creditLimit} $');
+
                         $.ajax({
                             url: "Cart",
                             type: 'Get',
                             async: false,
                             data: {
                                 "userName": '${user.userName}'
-                            }, success: function (data, textStatus, jqXHR) {                             
+                            }, success: function (data, textStatus, jqXHR) {
                             }
                         }
                         );
