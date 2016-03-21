@@ -33,7 +33,6 @@ public class SignUp extends HttpServlet {
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
         String type = request.getParameter("type");
-        System.out.println(type);
         switch (type) {
             case "mail": {
                 String email = request.getParameter("email");
