@@ -16,7 +16,23 @@
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.1.min.js"></script>  
 
         <script>
-           
+            $(document).ready(function () {
+                $(".viewBookInfo").click(function (event) {
+//                    alert(event.target.id);
+                    $.ajax({
+                        url: "ViewSingleBook",
+                        type: 'Post',
+                        async: false,
+                        data: {
+                            "bookid": event.target.id
+                        },
+                        success: function (data) {
+                            $('#allbooks').load("BookInfo.jsp");
+//                            alert("sucess");
+                        }
+                    });
+                });
+            });
         </script>
 
 
@@ -38,7 +54,7 @@
                             </c:if>
                             <c:url var="myUrl" value="/Resources/pics/${myBook.img}"  context="/BookTrix"/>
                             <div id = "${myBook.bookId}" draggable="true" ondragstart="drag(event)" cost =520 class="gallery" > 
-                                <a href="Resources\Work\samples\1-java\index.html" data-poptrox="iframe,950x515" id = "${myBook.bookId}"> 
+                                <a href="#allbooks" class="viewBookInfo" id = "${myBook.bookId}"> 
                                     <div  class="sample thumb1" style="width:95px; height:117px;" id = "${myBook.bookId}">
                                         <img src="${myUrl}" style="width:95px; height:117px;" id = "${myBook.bookId}">
                                     </div>  

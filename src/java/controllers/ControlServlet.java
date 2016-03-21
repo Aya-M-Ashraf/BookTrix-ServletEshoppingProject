@@ -134,4 +134,14 @@ public class ControlServlet {
         }
         return totalPriceOfBooks;
     }
+
+    public Vector<Cart> selectPastCarts(String userName) {
+       Vector<Cart> pastCarts = new Vector<>();
+       pastCarts =  manipulateDB.selectAllPastCarts(userName);
+       return pastCarts;
+    }
+
+    public Cart selectCartById(int cartId) {
+       return manipulateDB.selectCartById(cartId);
+    }
 }

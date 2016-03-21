@@ -62,6 +62,14 @@
         });
     });
 </script>
+
+   <c:if test="${userName==null}">
+        <c:redirect url="Login.jsp"></c:redirect>
+    </c:if>
+
+    <c:if test="${user.role=='user'}">
+        <c:redirect url="UserHome.jsp"></c:redirect>
+    </c:if>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -80,14 +88,14 @@
                             <tr  id="${myUser.email}">
                                 <td id="${myUser.email}">
                                     <img src="${myUrl}" style="width:80px; height:80px;"  id="${myUser.email}"> 
-                                    <h3 id="${myUser.email}">${myUser.userName}</h3>
+                                    <h3 id="${myUser.email}">Name  : ${myUser.userName}</h3>
                                 </td>
                                 <td style="width:100px;" id="${myUser.email}">
                                 </td>
                                 <td  id="${myUser.email}" >
-                                    <h3 id="${myUser.email}">${myUser.email}</h3>
-                                    <h3 id="${myUser.email}">${myUser.creditLimit}</h3>
-                                    <h3 id="${myUser.email}">${myUser.address}</h3>
+                                    <h3 id="${myUser.email}">Email  : ${myUser.email}</h3>
+                                    <h3 id="${myUser.email}">Credit Limit  : ${myUser.creditLimit}</h3>
+                                    <h3 id="${myUser.email}">Address  : ${myUser.address}</h3>
                                 </td>
                             </tr> 
                         </table>                      

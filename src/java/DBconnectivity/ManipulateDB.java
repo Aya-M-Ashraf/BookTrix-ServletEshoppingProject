@@ -649,4 +649,23 @@ public class ManipulateDB {
         }
 
     }
+
+    public Vector<Cart> selectAllPastCarts(String userName) {
+        int cartId = 0;
+        Cart cart = new Cart();
+        Vector<Cart> pastCarts = new Vector<>();
+        try {
+            Statement statement1 = connection.createStatement();
+            String queryString1 = "select cart_id from cart where pending = '0' and user_name= '" + userName + "'";
+            ResultSet resultSet = statement1.executeQuery(queryString1);
+            while (resultSet.next()) {
+                cartId = resultSet.getInt(1);
+                cart = selectCartById(cartId);
+                pastCarts.add(cart);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pastCarts;
+    }
 }

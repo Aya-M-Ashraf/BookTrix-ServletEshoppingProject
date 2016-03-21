@@ -147,7 +147,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand hvr-pop" href="#">Book <span>${user.creditLimit}</span></a>
+                <a class="navbar-brand hvr-pop" href="#">${user.userName}  :<span id="creditOfUser">${user.creditLimit} $</span></a>
 
             </div>
             <div class="collapse navbar-collapse" id="ournavbar">

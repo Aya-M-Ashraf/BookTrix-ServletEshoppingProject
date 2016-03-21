@@ -96,15 +96,14 @@
                                 <tr  id="${myBook.bookId}">
                                     <td id="${myBook.bookId}">
                                         <img src="${myUrl}" style="width:80px; height:80px;"  id="${myBook.bookId}"> 
-                                        <h3 id="${myBook.bookId}">${myBook.bookName}</h3>
-                                        <h4 id="${myBook.bookId}">${myBook.author}</h4>
+                                        <h4 id="${myBook.bookId}">Name  : ${myBook.bookName}</h4>
                                     </td>
                                     <td style="width:100px;" id="${myBook.bookId}">
                                     </td>
                                     <td  id="${myBook.bookId}" >
-                                        <h3 id="${myBook.bookId}">${myBook.category}</h3>
-                                        <h3 id="${myBook.bookId}">${myBook.price}</h3>
-                                        <h3 id="${myBook.bookId}">${myBook.description}</h3>
+                                        <h4 id="${myBook.bookId}">Author  : ${myBook.author}</h4>
+                                        <h4 id="${myBook.bookId}">Price  : ${myBook.price}</h4>
+                                        <h4 id="${myBook.bookId}">Description  : ${myBook.description}</h4>
                                     </td>
                                 </tr> 
                             </table>                      

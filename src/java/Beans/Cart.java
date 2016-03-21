@@ -1,10 +1,11 @@
 package Beans;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 
 
-public class Cart {
+public class Cart implements Serializable {
     private int pending,cartId;
     private Date creationDate;
     private HashMap<Book,Integer> myBooks;
@@ -13,6 +14,7 @@ public class Cart {
 
     public double getTotal() {
         return total;
+        
     }
 
     public void setTotal(double total) {
