@@ -67,14 +67,14 @@
                 <tr>
                     <td align="center">
                         <br>
-                        <input type="number" name="quantity" placeholder="Quantity"style="width: 40%; " required >
+                        <input type="number" name="quantity" min="1" placeholder="Quantity"style="width: 40%; " required >
                         <br>
                     </td>  
                 </tr>
                 <tr>
                     <td align="center">
                         <br>
-                        <input type="number" name="price" placeholder="Price"style="width: 40%; " required >
+                        <input type="number" name="price" min="1" placeholder="Price"style="width: 40%; " required >
                         <br>
                     </td>  
                 </tr>

@@ -23,7 +23,6 @@ public class ManipulateDB {
         Vector<User> allUsers = new Vector<>();
         try {
             Statement statement = connection.createStatement();
-            System.out.println("asdasdasd");
             String queryString = "select * from user";
             ResultSet resultSet = statement.executeQuery(queryString);
             while (resultSet.next()) {
@@ -78,7 +77,6 @@ public class ManipulateDB {
         try {
             Statement statement1 = connection.createStatement();
             String queryString1 = "select b.book_id,b.book_name,b.quantity,b.author,b.category_id,b.price,b.img,c.category_name,b.description from book b join category c on b.category_id=c.category_id where b.book_id ='" + bookId + "'";
-            System.out.println(queryString1);
             ResultSet resultSet = statement1.executeQuery(queryString1);
             while (resultSet.next()) {
                 book.setBookId(resultSet.getInt(1));
@@ -401,7 +399,6 @@ public class ManipulateDB {
             int cartId = -1;
             Statement statement1 = connection.createStatement();
             String queryString1 = "select cart_id from cart where pending = '1' and user_name= '" + userName + "'";
-            System.out.println(queryString1);
             ResultSet resultSet = statement1.executeQuery(queryString1);
             if (resultSet.next()) {
                 cartId = resultSet.getInt(1);
@@ -448,7 +445,7 @@ public class ManipulateDB {
         try {
 
             Statement statement1 = connection.createStatement();
-            String queryString1 = "select book_quantity, book_id from cart_book where cart_id= '" + cartId + "'";
+            String queryString1 = "select book_quantity, book_id from cart_book where cart_id= '" + cartId + "' order by book_id";
             ResultSet resultSet = statement1.executeQuery(queryString1);
             while (resultSet.next()) {
                 int bookQuantity = resultSet.getInt(1);

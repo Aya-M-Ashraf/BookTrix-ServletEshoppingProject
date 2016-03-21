@@ -28,8 +28,6 @@ public class AddProduct extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("welcome ===>" + new File("pics/").getAbsolutePath());
-
         try {
             String bookName =null,bookAuthor =null,category =null,desc =null,img =null;
                     double quantity =0,price =0;
