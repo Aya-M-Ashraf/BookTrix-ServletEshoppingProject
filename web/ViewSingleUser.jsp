@@ -64,22 +64,24 @@
 
                 $.post("GetCartsHistory",
                         {
-                            "userName": '${user.userName}'
+                            "userName": '${viewUser.userName}'
                         });
                 $(".myCart").click(function (event) {
-                    $("#allbooks").load("GetCartsHistory?id=" + event.target.id);
+//                    $("#allbooks").load("GetCartsHistory?id=" + event.target.id);
+                    $("#allbooks").load("ViewPastCart.jsp");
                 });
             });
 
         </script>
+        <style>
+            input[type=button] {padding: 15px 32px; background:#ccc; border:0 none;cursor:pointer;-webkit-border-radius: 5px;border-radius: 5px; }
 
-        <c:if test="${userName==null}">
-            <c:redirect url="Login.jsp"></c:redirect>
-        </c:if>
+        </style>
+
     </head>
     <body align="center" onload="checkAdmin()">
 
-        <img src="Resources/users_pics/${sessionScope.user.profilePicUrl}" style="display: inline-block; width: 12%;height: 5%;">
+        <img src="Resources/users_pics/${sessionScope.viewUser.profilePicUrl}" style="display: inline-block; width: 12%;height: 5%;">
 
         <div class="container">
 
@@ -87,52 +89,29 @@
                 <form action="EditUser" method="POST" ENCTYPE="MULTIPART/FORM-DATA" >
                     <h1>User Profile</h1>
                     <div class="row">
-                        <input type="hidden" value="${sessionScope.user.email}" name="email">
-                        <input type="hidden" value="${sessionScope.user.userName}" name="userName">
+                        <input type="hidden" value="${sessionScope.viewUser.email}" name="email">
+                        <input type="hidden" value="${sessionScope.viewUser.userName}" name="userName">
 
-                        <div>Email:<br><input type="text" placeholder="Email" id="email"  name="email" disabled value="${sessionScope.user.email}"/></div>
-                        <div>Name:<br><input type="text" placeholder="user name" id="userName"  name="userName" disabled value="${sessionScope.user.userName}"/></div>
-                        <div>Credit Limit<br><input type="number" placeholder="credit limit" required="" id="creditLimit"  name="creditLimit" value="${sessionScope.user.creditLimit}"/></div>
-                        <div>Job:<br><input type="text" placeholder="job" required="" id="job"  name="job" value="${sessionScope.user.job}"/></div>
-                        <div>Address<br><input type="text" placeholder="address" id="address"  name="address" value="${sessionScope.user.address}"/></div>
-                        <div>Password:<br><input type="password" placeholder="Password" required="" id="password"  name="password" value="${sessionScope.user.password}"/></div>
-                        <div id="passwordDiv2">Confirm Password:<br><input type="password" placeholder="Retype Password" required="" id="password2" value="${sessionScope.user.password}" name="password2" onblur="checkPassword()"/></div>
-                        <div align = "center" id="pic"> <h5> Choose a Personal Photo</h5><input type="file" Name=fileName align="right" value="${sessionScope.user.profilePicUrl}"/></div>
+                        <div>Email:<br><input type="text" placeholder="Email" id="email"  name="email" disabled value="${sessionScope.viewUser.email}"/></div>
+                        <div>Name:<br><input type="text" placeholder="user name" id="userName"  name="userName" disabled value="${sessionScope.viewUser.userName}"/></div>
+                        <div>Credit Limit<br><input type="number" placeholder="credit limit" required="" id="creditLimit"  name="creditLimit" value="${sessionScope.viewUser.creditLimit}"/></div>
+                        <div>Job:<br><input type="text" placeholder="job" required="" id="job"  name="job" value="${sessionScope.viewUser.job}"/></div>
+                        <div>Address<br><input type="text" placeholder="address" id="address"  name="address" value="${sessionScope.viewUser.address}"/></div>
+                        <div>Password:<br><input type="password" placeholder="Password" required="" id="password"  name="password" value="${sessionScope.viewUser.password}"/></div>
+                        <div id="passwordDiv2">Confirm Password:<br><input type="password" placeholder="Retype Password" required="" id="password2" value="${sessionScope.viewUser.password}" name="password2" onblur="checkPassword()"/></div>
+                        <div align = "center" id="pic"> <h5> Choose a Personal Photo</h5><input type="file" Name=fileName align="right" value="${sessionScope.viewUser.profilePicUrl}"/></div>
                         <div id="btn"><input type="submit" value="Save Changes"/></div> <span id="usernamemsg" style="color: red"></span>
                     </div>
                 </form>
+
+                        <a href="#allbooks"><input  type="button" value="Show history" class="myCart"/></a>
+
 
                 <c:if test = "${done=='1'}">
                     <div id="doneMsg"><font color="green"><b>Done Successfully</b></font></div>
                     </c:if>
             </section>
-            <center>< <div id="pastCarts">
-                    <h2> ${sessionScope.user.userName}'s Past Carts </h2>
-                    <table align="center">
-                        <c:forEach items="${sessionScope.pastCarts}" var="myCart" varStatus="stat">
 
-                            <fmt:parseNumber var="i" type="number" value="${stat.index}" ></fmt:parseNumber>            
-                                <tr>
-                                    <td class="myCart" style="width: 700px" id="${myCart.cartId}"> 
-                                    <table id="${myCart.cartId}">
-                                        <tr  id="${myCart.cartId}">
-                                            <td id="${myCart.cartId}">
-                                                <h3 id="${myCart.cartId}">${myCart.creationDate}</h3>
-                                            </td>
-                                            <td style="width:100px;" id="${myCart.cartId}">
-                                            </td>
-                                            <td  id="${myCart.cartId}" >
-                                                <h3 id="${myCart.cartId}">${myCart.user.userName}</h3>
-                                                <h3 id="${myCart.cartId}">Cost : ${myCart.total} $</h3>
-                                                <h3 id="${myCart.cartId}">with ${myCart.myBooks.size()} books</h3>
-                                            </td>
-                                        </tr> 
-                                    </table>                      
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </table>
-                </div></center>
         </div>
     </body>
 </html>

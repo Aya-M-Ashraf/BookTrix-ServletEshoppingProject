@@ -63,6 +63,8 @@
     });
 </script>
 
+
+
    <c:if test="${userName==null}">
         <c:redirect url="Login.jsp"></c:redirect>
     </c:if>

@@ -27,7 +27,7 @@ public class ViewUserProfile extends HttpServlet {
         String currEmail = request.getParameter("email");
         User user = m.selectUserByEmail(currEmail);
         HttpSession session = request.getSession(true);
-        session.setAttribute("user", user);
+        session.setAttribute("viewUser", user);
         RequestDispatcher rd = request.getRequestDispatcher("ViewSingleUser.jsp");
         rd.forward(request, response);
 

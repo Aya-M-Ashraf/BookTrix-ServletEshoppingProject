@@ -64,12 +64,30 @@
             });
 
             $(".quantity").change(function (event) {
-                $.post("BuyCart",
-                        {
-                            "userName": '${user.userName}',
+            
+                $.ajax({
+                        url: "BuyCart",
+                        type: 'Post',
+                        async: false,
+                        data: {
+                             "userName": '${user.userName}',
                             "bookId": event.target.id,
                             "value": $(event.target).val()
-                        });
+                        }, success: function (data, textStatus, jqXHR) {
+                            $.ajax({
+                                url: "Cart",
+                                type: 'Get',
+                                async: false,
+                                data: {
+                                    "userName": '${user.userName}'
+                                }, success: function (data, textStatus, jqXHR) {
+                                    $("#allbooks").load("ViewCart.jsp");
+                                }
+                            }
+                            );
+                        }
+                    }
+                    );
             });
 
             function  buyCart() {

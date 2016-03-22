@@ -69,9 +69,7 @@
             $("#myCart").attr("class", "");
             $("#myProfile").attr("class", "active");
             $("#logout").attr("class", "");
-
-            $("#allbooks").load("ViewSingleUser.jsp");
-            $("#allbooks").focus();
+            $("#allbooks").load("ViewUserProfile?email=${user.email}" );
         });
 
         $("#about").click(function () {

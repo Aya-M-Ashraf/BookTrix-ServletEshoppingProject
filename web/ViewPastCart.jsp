@@ -53,55 +53,37 @@
         <title></title>
     </head>
     <body id="mainBody">
+        <br><br><br><br>
+    <center>< <div id="pastCarts">
+            <h2> ${sessionScope.viewUser.userName}'s Past Carts </h2>
+            <table align="center">
+                <c:forEach items="${sessionScope.pastCarts}" var="myCart" varStatus="stat">
 
-        <table align="center" style="width: 60%;" >
-            <fmt:parseNumber var="totalCost" type="number" value="0" ></fmt:parseNumber>
-
-
-            <c:forEach items="${sessionScope.cart.myBooks}" var="myBook" varStatus="stat">
-                <fmt:parseNumber var="i" type="number" value="${stat.index}" ></fmt:parseNumber>
-                <c:set var="totalCost" value="${totalCost =totalCost+(myBook.key.price * myBook.value)}"></c:set>
-
-
-                <c:url var="myUrl" value="/Resources/pics/${myBook.key.img}"  context="/BookTrix"/>                       
-
-                <c:if test="${i%5 ==0}">
-                    <tr>
-                    </c:if>
-                    <td>
-                        <table align="center" style="width: 60%;">
-                            <tr>
-                                <td style="background-color: transparent;">
-                                    <img src="${myUrl}" style="width:95px; height:117px;" id = "${myBook.key.bookId}"> 
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="background-color: transparent;">
-                                    <h5>Name : ${myBook.key.bookName}</h5>
-                                </td> 
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h5 style="color:#a73f2d; ">Price : ${myBook.key.price} $</h5>
-                                    <h5 style="color:#a78f2a; ">Quantity :${myBook.key.quantity} </h5>
-                                </td> 
-
-                            </tr>
-
-                        </table>
-                    </td>
-
-
-                    <c:if test="${i%5 ==4 and i!=0}">
+                    <fmt:parseNumber var="i" type="number" value="${stat.index}" ></fmt:parseNumber>            
+                        <tr>
+                            <td class="myCart" style="width: 700px" id="${myCart.cartId}"> 
+                            <table id="${myCart.cartId}">
+                                <tr  id="${myCart.cartId}">
+                                    <td id="${myCart.cartId}">
+                                        <h3 id="${myCart.cartId}">${myCart.creationDate}</h3>
+                                    </td>
+                                    <td style="width:100px;" id="${myCart.cartId}">
+                                    </td>
+                                    <td  id="${myCart.cartId}" >
+                                        <h3 id="${myCart.cartId}">${myCart.user.userName}</h3>
+                                        <h3 id="${myCart.cartId}">Cost : ${myCart.total} $</h3>
+                                        <h3 id="${myCart.cartId}">with ${myCart.myBooks.size()} books</h3>
+                                    </td>
+                                </tr> 
+                            </table>                      
+                        </td>
                     </tr>
-                </c:if>
-            </c:forEach>
-            <tr>
-                <td colspan="5" align="center" style="background-color: white;">
-                    <h1 id="changableTotal"> Total Cost : ${totalCost}</h1>
-                </td>
-            </tr>
+                </c:forEach>
+            </table>
+        </div>
+    </center>
 
-        </table>
-    </body> 
+
+
+</body> 
 </html>

@@ -93,6 +93,9 @@ public class EditUser extends HttpServlet {
             controlServlet.editUserDate(u);
             HttpSession session = request.getSession(true);
             session.setAttribute("done", "1");
+            ControlServlet c = new ControlServlet();
+            User myUser = c.getUser(userName);
+            session.setAttribute("user", myUser);
             response.sendRedirect("UserHome.jsp");
 
         } catch (Exception ex) {
