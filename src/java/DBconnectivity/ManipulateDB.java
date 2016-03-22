@@ -1,6 +1,7 @@
 package DBconnectivity;
 
 import Beans.*;
+import dao.BookJpaController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +11,9 @@ import java.util.HashMap;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 public class ManipulateDB {
 
@@ -18,7 +22,7 @@ public class ManipulateDB {
     public ManipulateDB() {
         connection = DBconnection.getConnection();
     }
-
+//1
     public Vector<User> selectAllUsers() {
         Vector<User> allUsers = new Vector<>();
         try {
@@ -42,7 +46,7 @@ public class ManipulateDB {
         }
         return allUsers;
     }
-
+//2
     public Vector<Book> selectAllBooks() {
         Vector<Book> allBooks = new Vector<>();
         try {
@@ -69,7 +73,7 @@ public class ManipulateDB {
         }
         return allBooks;
     }
-
+//3
     public Book selectSingleBook(int bookId) {
         Vector<Book> allBooks = new Vector<>();
         Book book = new Book();
@@ -96,7 +100,7 @@ public class ManipulateDB {
         }
         return book;
     }
-
+//4
     public Vector<Book> selectAllBooksWhereNameLike(String bookName) {
         Vector<Book> allBooks = new Vector<>();
         try {
@@ -124,7 +128,7 @@ public class ManipulateDB {
         }
         return allBooks;
     }
-
+//5
     public Vector<Category> selectAllCategories() {
         Vector<Category> allCategories = new Vector<>();
         try {
@@ -143,7 +147,7 @@ public class ManipulateDB {
         }
         return allCategories;
     }
-
+//6
     public User selectUserByEmail(String userEmail) {
         User user = new User();
         try {
@@ -165,7 +169,7 @@ public class ManipulateDB {
         }
         return user;
     }
-
+//7
     public User selectUserByUserName(String userName) {
         User user = new User();
         try {
@@ -187,7 +191,7 @@ public class ManipulateDB {
         }
         return user;
     }
-
+//8
     public Book selectBookById(int bookId) {
         Book book = new Book();
         try {
@@ -212,7 +216,7 @@ public class ManipulateDB {
         }
         return book;
     }
-
+//9
     public boolean deleteBookById(int bookId) {
         try {
             Statement statement1 = connection.createStatement();
@@ -226,7 +230,7 @@ public class ManipulateDB {
             return false;
         }
     }
-
+//10
     public Cart selectCartById(int cartId) {
         Cart cart = new Cart();
         try {
@@ -261,7 +265,7 @@ public class ManipulateDB {
         }
         return cart;
     }
-
+//11
     public boolean insertUser(User user) {
         try {
             Statement statement = connection.createStatement();
@@ -273,7 +277,7 @@ public class ManipulateDB {
             return false;
         }
     }
-
+//12
     public boolean insertBook(Book book) {
         try {
             Statement statement = connection.createStatement();
@@ -285,7 +289,7 @@ public class ManipulateDB {
             return false;
         }
     }
-
+//13
     public boolean insertCategory(String categoryName) {
         try {
             Statement statement = connection.createStatement();
@@ -307,7 +311,7 @@ public class ManipulateDB {
             return false;
         }
     }
-
+//14
     public boolean insertCart(Cart cart) {
         try {
             Statement statement = connection.createStatement();
@@ -319,7 +323,7 @@ public class ManipulateDB {
             return false;
         }
     }
-
+//15
     public String selectRoleFromUser(String userName, String password) {
         String role = null;
         try {
@@ -335,7 +339,7 @@ public class ManipulateDB {
         }
         return role;
     }
-
+//16
     public Category selectCategoryFromName(String categoryName) {
         Category category = new Category();
         try {
@@ -352,7 +356,7 @@ public class ManipulateDB {
         }
         return category;
     }
-
+//17
     public boolean checkUserNameExistence(String userName) {
         boolean userNameFound = false;
         try {
@@ -368,7 +372,7 @@ public class ManipulateDB {
         }
         return userNameFound;
     }
-
+//18
     public boolean checkEmailExistence(String email) {
         boolean emailFound = false;
         try {
@@ -384,7 +388,7 @@ public class ManipulateDB {
         }
         return emailFound;
     }
-
+//19
     public void closeConnection() {
         try {
             connection.close();
@@ -392,7 +396,7 @@ public class ManipulateDB {
             Logger.getLogger(DBconnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+//20
     public int selectPendingCartIdFromCart(String userName) {
 
         try {
@@ -409,7 +413,7 @@ public class ManipulateDB {
             return -1;
         }
     }
-
+//21
     public boolean insertBookIntoCart(int bookId, int bookQuantity, int cartId) {
         try {
             Statement statement = connection.createStatement();
@@ -421,7 +425,7 @@ public class ManipulateDB {
             return false;
         }
     }
-
+//22
     public Vector<Book> selectBooksFromCart(int cartId) {
         Vector<Book> books = new Vector<>();
         try {
@@ -439,7 +443,7 @@ public class ManipulateDB {
         }
         return books;
     }
-
+//23
     public HashMap<Book, Integer> selectBooksWithQuantitiesFromCart(int cartId) {
         HashMap<Book, Integer> booksWithQuantity = new HashMap<>();
         try {
@@ -459,7 +463,7 @@ public class ManipulateDB {
         }
         return booksWithQuantity;
     }
-
+//24
     public boolean editUserData(User user) {
         if (user.getProfilePicUrl() != null) {
             try {
@@ -483,7 +487,7 @@ public class ManipulateDB {
             }
         }
     }
-
+//25
     public boolean deleteBook(String userName, int bookId) {
         try {
             Statement statement = connection.createStatement();
@@ -507,7 +511,7 @@ public class ManipulateDB {
             return false;
         }
     }
-
+//26
     public Vector<Book> selectAllBooksInCategory(String categoryName) {
         Vector<Book> books = new Vector<>();
         try {
@@ -538,7 +542,7 @@ public class ManipulateDB {
         }
         return books;
     }
-
+//27
     public void updateCart(Cart cart) {
         try {
             PreparedStatement statment = connection.prepareStatement("update cart set pending = ? , total = ? where cart_id = ?");
@@ -552,7 +556,7 @@ public class ManipulateDB {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+//28
     public void updateBook(Book book) {
         try {
             PreparedStatement statment = connection.prepareStatement("update book set quantity = ? where book_id = ?");
@@ -564,7 +568,7 @@ public class ManipulateDB {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+//29
     public void updateAllBookInfo(Book book) {
         try {
             PreparedStatement statment = connection.prepareStatement("UPDATE book SET quantity=?, author=?, price=?, description=? WHERE book_id= ?");
@@ -579,7 +583,7 @@ public class ManipulateDB {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+//30
     public boolean selectBookIdFromCart(int cartId, int bookId) {
 
         try {
@@ -597,7 +601,7 @@ public class ManipulateDB {
             return false;
         }
     }
-
+//31
     public boolean increaseBookQuantityInCartByOne(int cartId, int bookId) {
         try {
             PreparedStatement sta = connection.prepareStatement("select book_quantity from  cart_book where cart_id = ? and  book_id = ?");
@@ -626,7 +630,7 @@ public class ManipulateDB {
         }
 
     }
-
+//32
     public boolean updateBookCountInCart(int cartID, int bookId, int value) {
         try {
 
@@ -646,7 +650,7 @@ public class ManipulateDB {
         }
 
     }
-
+//33
     public Vector<Cart> selectAllPastCarts(String userName) {
         int cartId = 0;
         Cart cart = new Cart();
