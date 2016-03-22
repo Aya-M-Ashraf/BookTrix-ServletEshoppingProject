@@ -388,7 +388,7 @@ public class ManipulateDB {
         }
         return emailFound;
     }
-//19
+    
     public void closeConnection() {
         try {
             connection.close();
@@ -396,7 +396,7 @@ public class ManipulateDB {
             Logger.getLogger(DBconnection.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-//20
+//19
     public int selectPendingCartIdFromCart(String userName) {
 
         try {
@@ -413,7 +413,7 @@ public class ManipulateDB {
             return -1;
         }
     }
-//21
+//20
     public boolean insertBookIntoCart(int bookId, int bookQuantity, int cartId) {
         try {
             Statement statement = connection.createStatement();
@@ -425,7 +425,7 @@ public class ManipulateDB {
             return false;
         }
     }
-//22
+//21
     public Vector<Book> selectBooksFromCart(int cartId) {
         Vector<Book> books = new Vector<>();
         try {
@@ -443,7 +443,7 @@ public class ManipulateDB {
         }
         return books;
     }
-//23
+//22
     public HashMap<Book, Integer> selectBooksWithQuantitiesFromCart(int cartId) {
         HashMap<Book, Integer> booksWithQuantity = new HashMap<>();
         try {
@@ -463,7 +463,7 @@ public class ManipulateDB {
         }
         return booksWithQuantity;
     }
-//24
+//23
     public boolean editUserData(User user) {
         if (user.getProfilePicUrl() != null) {
             try {
@@ -487,7 +487,7 @@ public class ManipulateDB {
             }
         }
     }
-//25
+//24
     public boolean deleteBook(String userName, int bookId) {
         try {
             Statement statement = connection.createStatement();
@@ -511,7 +511,7 @@ public class ManipulateDB {
             return false;
         }
     }
-//26
+//25
     public Vector<Book> selectAllBooksInCategory(String categoryName) {
         Vector<Book> books = new Vector<>();
         try {
@@ -542,8 +542,8 @@ public class ManipulateDB {
         }
         return books;
     }
-//27
-    public void updateCart(Cart cart) {
+//26
+   public void updateCart(Cart cart) {
         try {
             PreparedStatement statment = connection.prepareStatement("update cart set pending = ? , total = ? where cart_id = ?");
             statment.setInt(1, cart.getPending());
@@ -556,7 +556,7 @@ public class ManipulateDB {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-//28
+//27
     public void updateBook(Book book) {
         try {
             PreparedStatement statment = connection.prepareStatement("update book set quantity = ? where book_id = ?");
@@ -568,7 +568,7 @@ public class ManipulateDB {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-//29
+//38
     public void updateAllBookInfo(Book book) {
         try {
             PreparedStatement statment = connection.prepareStatement("UPDATE book SET quantity=?, author=?, price=?, description=? WHERE book_id= ?");
@@ -583,7 +583,7 @@ public class ManipulateDB {
             Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-//30
+//39
     public boolean selectBookIdFromCart(int cartId, int bookId) {
 
         try {
@@ -601,7 +601,7 @@ public class ManipulateDB {
             return false;
         }
     }
-//31
+//30
     public boolean increaseBookQuantityInCartByOne(int cartId, int bookId) {
         try {
             PreparedStatement sta = connection.prepareStatement("select book_quantity from  cart_book where cart_id = ? and  book_id = ?");
@@ -630,7 +630,7 @@ public class ManipulateDB {
         }
 
     }
-//32
+//31
     public boolean updateBookCountInCart(int cartID, int bookId, int value) {
         try {
 
@@ -650,7 +650,7 @@ public class ManipulateDB {
         }
 
     }
-//33
+//32
     public Vector<Cart> selectAllPastCarts(String userName) {
         int cartId = 0;
         Cart cart = new Cart();
