@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 22, 2016 10:27:27 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Beans.User" table="user" catalog="bookstore" optimistic-lock="version">
+        <id name="email" type="string">
+            <column name="email" length="45" />
+            <generator class="assigned" />
+        </id>
+        <property name="userName" type="string">
+            <column name="user_name" length="45" not-null="true" unique="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="45" not-null="true" />
+        </property>
+        <property name="creditLimit" type="big_decimal">
+            <column name="credit_limit" precision="50" scale="1" not-null="true" />
+        </property>
+        <property name="job" type="string">
+            <column name="job" length="45" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" length="45" />
+        </property>
+        <property name="photo" type="string">
+            <column name="photo" length="145" />
+        </property>
+        <property name="role" type="string">
+            <column name="role" length="45" />
+        </property>
+    </class>
+</hibernate-mapping>

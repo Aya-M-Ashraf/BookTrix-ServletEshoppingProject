@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Mar 22, 2016 10:27:27 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="Beans.Cart" table="cart" catalog="bookstore" optimistic-lock="version">
+        <id name="cartId" type="java.lang.Integer">
+            <column name="cart_id" />
+            <generator class="identity" />
+        </id>
+        <property name="userName" type="string">
+            <column name="user_name" length="45" not-null="true" />
+        </property>
+        <property name="creationDate" type="date">
+            <column name="creation_date" length="10" />
+        </property>
+        <property name="total" type="java.lang.Integer">
+            <column name="total" />
+        </property>
+        <property name="pending" type="java.lang.Integer">
+            <column name="pending" />
+        </property>
+        <set name="cartBooks" table="cart_book" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="cart_id" not-null="true" />
+            </key>
+            <one-to-many class="Beans.CartBook" />
+        </set>
+    </class>
+</hibernate-mapping>

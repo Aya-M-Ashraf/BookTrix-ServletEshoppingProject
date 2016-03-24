@@ -1,672 +1,377 @@
 package DBconnectivity;
 
 import Beans.*;
-import dao.BookJpaController;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Restrictions;
 
 public class ManipulateDB {
 
-    Connection connection;
+    SessionFactory sessionFactory;
+    Session session;
 
     public ManipulateDB() {
-        connection = DBconnection.getConnection();
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+        session = sessionFactory.openSession();
+        session.beginTransaction();
     }
+
 //1
     public Vector<User> selectAllUsers() {
-        Vector<User> allUsers = new Vector<>();
-        try {
-            Statement statement = connection.createStatement();
-            String queryString = "select * from user";
-            ResultSet resultSet = statement.executeQuery(queryString);
-            while (resultSet.next()) {
-                User user = new User();
-                user.setEmail(resultSet.getString(1));
-                user.setUserName(resultSet.getString(2));
-                user.setPassword(resultSet.getString(3));
-                user.setCreditLimit(resultSet.getDouble(4));
-                user.setJob(resultSet.getString(5));
-                user.setAddress(resultSet.getString(6));
-                user.setProfilePicUrl(resultSet.getString(7));
-                user.setRole(resultSet.getString(8));
-                allUsers.add(user);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        Criteria myCriteria = session.createCriteria(User.class);
+        List result = myCriteria.list();
+        Vector<User> allUsers = new Vector<>(result);
         return allUsers;
     }
 //2
+
     public Vector<Book> selectAllBooks() {
-        Vector<Book> allBooks = new Vector<>();
-        try {
-            Statement statement1 = connection.createStatement();
-            String queryString1 = "select b.book_id,b.book_name,b.quantity,b.author,b.category_id,b.price,b.img,c.category_name,b.description from book b join category c on b.category_id=c.category_id";
-            ResultSet resultSet = statement1.executeQuery(queryString1);
-            while (resultSet.next()) {
-                Book book = new Book();
-                book.setBookId(resultSet.getInt(1));
-                book.setBookName(resultSet.getString(2));
-                book.setQuantity(resultSet.getInt(3));
-                book.setAuthor(resultSet.getString(4));
-                book.setPrice(resultSet.getInt(6));
-                book.setImg(resultSet.getString(7));
-                int categoryId = resultSet.getInt(5);
-                String categoryName = resultSet.getString(8);
-                book.setDescription(resultSet.getString(9));
-                Category category = new Category(categoryId, categoryName);
-                book.setCategory(category);
-                allBooks.add(book);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Criteria criteria = session.createCriteria(Book.class);
+        List result = criteria.list();
+        Vector<Book> allBooks = new Vector<>(result);
         return allBooks;
     }
 //3
-    public Book selectSingleBook(int bookId) {
-        Vector<Book> allBooks = new Vector<>();
-        Book book = new Book();
 
-        try {
-            Statement statement1 = connection.createStatement();
-            String queryString1 = "select b.book_id,b.book_name,b.quantity,b.author,b.category_id,b.price,b.img,c.category_name,b.description from book b join category c on b.category_id=c.category_id where b.book_id ='" + bookId + "'";
-            ResultSet resultSet = statement1.executeQuery(queryString1);
-            while (resultSet.next()) {
-                book.setBookId(resultSet.getInt(1));
-                book.setBookName(resultSet.getString(2));
-                book.setQuantity(resultSet.getInt(3));
-                book.setAuthor(resultSet.getString(4));
-                book.setPrice(resultSet.getInt(6));
-                book.setImg(resultSet.getString(7));
-                int categoryId = resultSet.getInt(5);
-                String categoryName = resultSet.getString(8);
-                book.setDescription(resultSet.getString(9));
-                Category category = new Category(categoryId, categoryName);
-                book.setCategory(category);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return book;
+    public Book selectSingleBook(int bookId) {
+        return ((Book) session.get(Book.class, bookId));
     }
 //4
+
     public Vector<Book> selectAllBooksWhereNameLike(String bookName) {
-        Vector<Book> allBooks = new Vector<>();
-        try {
-            Statement statement1 = connection.createStatement();
-            String queryString1 = "select b.book_id,b.book_name,b.quantity,b.author,b.category_id,b.price,b.img,c.category_name,b.description from book b join category c on b.category_id=c.category_id where b.book_name like'%" + bookName + "%'";
-            System.out.println("in select search books " + queryString1);
-            ResultSet resultSet = statement1.executeQuery(queryString1);
-            while (resultSet.next()) {
-                Book book = new Book();
-                book.setBookId(resultSet.getInt(1));
-                book.setBookName(resultSet.getString(2));
-                book.setQuantity(resultSet.getInt(3));
-                book.setAuthor(resultSet.getString(4));
-                book.setPrice(resultSet.getInt(6));
-                book.setImg(resultSet.getString(7));
-                int categoryId = resultSet.getInt(5);
-                String categoryName = resultSet.getString(8);
-                book.setDescription(resultSet.getString(9));
-                Category category = new Category(categoryId, categoryName);
-                book.setCategory(category);
-                allBooks.add(book);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Criteria criteria = session.createCriteria(Book.class).add(Restrictions.like("bookName", bookName, MatchMode.ANYWHERE));
+        List result = criteria.list();
+        Vector<Book> allBooks = new Vector<>(result);
         return allBooks;
     }
 //5
-    public Vector<Category> selectAllCategories() {
-        Vector<Category> allCategories = new Vector<>();
-        try {
-            Statement statement1 = connection.createStatement();
-            String queryString1 = "select * from category ";
-            ResultSet resultSet = statement1.executeQuery(queryString1);
-            while (resultSet.next()) {
-                Category category = new Category();
-                category.setId(resultSet.getInt(1));
-                category.setName(resultSet.getString(2));
 
-                allCategories.add(category);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public Vector<Category> selectAllCategories() {
+
+        Criteria myCriteria = session.createCriteria(Category.class);
+        List result = myCriteria.list();
+        Vector<Category> allCategories = new Vector<>(result);
+
         return allCategories;
     }
+
 //6
     public User selectUserByEmail(String userEmail) {
-        User user = new User();
-        try {
-            Statement statement1 = connection.createStatement();
-            String queryString1 = "select * from user where email='" + userEmail + "'";
-            ResultSet resultSet = statement1.executeQuery(queryString1);
-            while (resultSet.next()) {
-                user.setEmail(resultSet.getString(1));
-                user.setUserName(resultSet.getString(2));
-                user.setPassword(resultSet.getString(3));
-                user.setCreditLimit(resultSet.getDouble(4));
-                user.setJob(resultSet.getString(5));
-                user.setAddress(resultSet.getString(6));
-                user.setProfilePicUrl(resultSet.getString(7));
-                user.setRole(resultSet.getString(8));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Criteria myCriteria = session.createCriteria(User.class).add(Restrictions.eq("email", userEmail));
+        User user = (User) myCriteria.uniqueResult();
         return user;
     }
+
 //7
     public User selectUserByUserName(String userName) {
-        User user = new User();
-        try {
-            Statement statement1 = connection.createStatement();
-            String queryString1 = "select * from user where user_name='" + userName + "'";
-            ResultSet resultSet = statement1.executeQuery(queryString1);
-            while (resultSet.next()) {
-                user.setEmail(resultSet.getString(1));
-                user.setUserName(resultSet.getString(2));
-                user.setPassword(resultSet.getString(3));
-                user.setCreditLimit(resultSet.getDouble(4));
-                user.setJob(resultSet.getString(5));
-                user.setAddress(resultSet.getString(6));
-                user.setProfilePicUrl(resultSet.getString(7));
-                user.setRole(resultSet.getString(8));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return user;
+        return ((User) session
+                .createCriteria(User.class)
+                .add(Restrictions.eq("userName", userName))
+                .uniqueResult());
     }
 //8
+
     public Book selectBookById(int bookId) {
-        Book book = new Book();
-        try {
-            Statement statement1 = connection.createStatement();
-            String queryString1 = "select b.book_id,b.book_name,b.quantity,b.author,b.price,b.img,b.category_id,c.category_name,b.description from book b join category c on b.category_id=c.category_id where b.book_id=" + bookId;
-            ResultSet resultSet = statement1.executeQuery(queryString1);
-            while (resultSet.next()) {
-                book.setBookId(resultSet.getInt(1));
-                book.setBookName(resultSet.getString(2));
-                book.setQuantity(resultSet.getInt(3));
-                book.setAuthor(resultSet.getString(4));
-                book.setPrice(resultSet.getInt(5));
-                book.setImg(resultSet.getString(6));
-                int categoryId = resultSet.getInt(7);
-                String categoryName = resultSet.getString(8);
-                book.setDescription(resultSet.getString(9));
-                Category category = new Category(categoryId, categoryName);
-                book.setCategory(category);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        Criteria myCriteria = session.createCriteria(Book.class).add(Restrictions.eq("bookId", bookId));
+        Book book = (Book) myCriteria.uniqueResult();
         return book;
     }
-//9
+
+//9 
     public boolean deleteBookById(int bookId) {
-        try {
-            Statement statement1 = connection.createStatement();
-            String query2 = "delete from cart_book where book_id =" + bookId;
-            statement1.executeUpdate(query2);
-            String queryString1 = "delete from book  where book_id=" + bookId;
-            statement1.executeUpdate(queryString1);
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+
+        List<CartBook> cartBook = (List<CartBook>) session.createCriteria(CartBook.class)
+                .add(Restrictions.eq("book.bookId", bookId)).list();
+        for (Iterator iterator = cartBook.iterator(); iterator.hasNext();) {
+            CartBook c = (CartBook) iterator.next();
+//            Object persistance = session.load(CartBook.class, c.getId());
+            session.delete(c);
         }
+        Criteria myCriteria = session.createCriteria(Book.class);
+        Book book = (Book) myCriteria.add(Restrictions.eq("bookId", bookId)).uniqueResult();
+        session.delete(book);
+        return true;
+
     }
 //10
+
     public Cart selectCartById(int cartId) {
-        Cart cart = new Cart();
-        try {
-            Statement statement1 = connection.createStatement();
-            String queryString1 = "select * from cart where cart_id=" + cartId;
-            ResultSet resultSet = statement1.executeQuery(queryString1);
-            while (resultSet.next()) {
-                cart.setCreationDate(resultSet.getDate(2));
-                cart.setTotal(resultSet.getInt(3));
-                cart.setPending(resultSet.getInt(4));
-                cart.setCartId(resultSet.getInt(5));
-                String userName = resultSet.getString(1);
-                Statement statement2 = connection.createStatement();
-                String queryString2 = "select * from user where user_name='" + userName + "'";
-                ResultSet resultSet2 = statement2.executeQuery(queryString2);
-                User user = new User();
-                while (resultSet2.next()) {
-                    user.setEmail(resultSet2.getString(1));
-                    user.setUserName(resultSet2.getString(2));
-                    user.setPassword(resultSet2.getString(3));
-                    user.setCreditLimit(resultSet2.getDouble(4));
-                    user.setJob(resultSet2.getString(5));
-                    user.setAddress(resultSet2.getString(6));
-                    user.setProfilePicUrl(resultSet2.getString(7));
-                    user.setRole(resultSet2.getString(8));
-                }
-                cart.setUser(user);
-            }
-            cart.setMyBooks(selectBooksWithQuantitiesFromCart(cartId));
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Criteria criteria = session.createCriteria(Cart.class).add(Restrictions.eq("cartId", cartId));
+        Cart cart = (Cart) criteria.uniqueResult();
         return cart;
     }
 //11
+
     public boolean insertUser(User user) {
-        try {
-            Statement statement = connection.createStatement();
-            String st = "insert into user values('" + user.getEmail() + "','" + user.getUserName() + "','" + user.getPassword() + "'," + user.getCreditLimit() + ",'" + user.getJob() + "','" + user.getAddress() + "','" + user.getProfilePicUrl() + "','" + user.getRole() + "')";
-            statement.executeUpdate(st);
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
+        session.save(user);
+        session.getTransaction().commit();
+        return true;
     }
 //12
+
     public boolean insertBook(Book book) {
-        try {
-            Statement statement = connection.createStatement();
-            String st = "insert into book (book_name, quantity, author, category_id, price, img, description) values ('" + book.getBookName() + "'," + book.getQuantity() + ",'" + book.getAuthor() + "'," + book.getCategory().getId() + "," + book.getPrice() + ",'" + book.getImg() + "','" + book.getDescription() + "')";
-            statement.executeUpdate(st);
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
+        session.save(book);
+        session.getTransaction().commit();
+        return true;
     }
 //13
+
     public boolean insertCategory(String categoryName) {
-        try {
-            Statement statement = connection.createStatement();
-            boolean isNewCategory = true;
-            for (Category c : selectAllCategories()) {
-                if (c.getName().equals(categoryName)) {
-                    isNewCategory = false;
-                }
+        boolean isNewCategory = true;
+        for (Category c : selectAllCategories()) {
+            if (c.getCategoryName().equals(categoryName)) {
+                isNewCategory = false;
             }
-            if (isNewCategory) {
-                String st = "insert into category (category_name) values('" + categoryName + "')";
-                statement.executeUpdate(st);
-                return true;
-            } else {
-                return false;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (isNewCategory) {
+            Category category = new Category();
+            category.setCategoryName(categoryName);
+            session.save(category);
+            session.getTransaction().commit();
+            return true;
+        } else {
             return false;
         }
     }
+
 //14
     public boolean insertCart(Cart cart) {
-        try {
-            Statement statement = connection.createStatement();
-            String st = "insert into cart values('" + cart.getUser().getUserName() + "','" + cart.getCreationDate() + "'," + cart.getTotal() + "," + cart.getPending() + "," + cart.getCartId() + ")";
-            statement.executeUpdate(st);
-            return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        }
+        session.save(cart);
+        session.getTransaction().commit();
+        return true;
     }
 //15
+
     public String selectRoleFromUser(String userName, String password) {
         String role = null;
-        try {
-            Statement statement = connection.createStatement();
-            String queryString = "select role from user where user_name='" + userName + "'" + "and password='" + password + "'";
-            ResultSet rs = statement.executeQuery(queryString);
-            while (rs.next()) {
-                role = rs.getString(1);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-            role = "not found";
-        }
+        Criteria myCriteria = session.createCriteria(User.class).add(Restrictions.eq("userName", userName)).add(Restrictions.eq("password", password));
+        User user = (User) myCriteria.uniqueResult();
+        role = user.getRole();
         return role;
     }
 //16
-    public Category selectCategoryFromName(String categoryName) {
-        Category category = new Category();
-        try {
-            Statement statement = connection.createStatement();
-            String queryString = "select *  from category where category_name='" + categoryName + "'";
-            ResultSet rs = statement.executeQuery(queryString);
-            while (rs.next()) {
-                category.setId(rs.getInt(1));
-                category.setName(rs.getString(2));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
 
-        }
-        return category;
+    public Category selectCategoryFromName(String categoryName) {
+        return ((Category) session
+                .createCriteria(Category.class)
+                .add(Restrictions.eq("categoryName", categoryName))
+                .uniqueResult());
     }
 //17
-    public boolean checkUserNameExistence(String userName) {
-        boolean userNameFound = false;
-        try {
-            Statement statement = connection.createStatement();
-            String queryString = "select * from user where user_name = '" + userName + "'";
-            ResultSet rs = statement.executeQuery(queryString);
-            while (rs.next()) {
-                userNameFound = true;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-            userNameFound = false;
-        }
-        return userNameFound;
-    }
-//18
-    public boolean checkEmailExistence(String email) {
-        boolean emailFound = false;
-        try {
-            Statement statement = connection.createStatement();
-            String queryString = "select * from user where email = '" + email + "'";
-            ResultSet rs = statement.executeQuery(queryString);
-            while (rs.next()) {
-                emailFound = true;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-            emailFound = false;
-        }
-        return emailFound;
-    }
-    
-    public void closeConnection() {
-        try {
-            connection.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(DBconnection.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-//19
-    public int selectPendingCartIdFromCart(String userName) {
 
-        try {
-            int cartId = -1;
-            Statement statement1 = connection.createStatement();
-            String queryString1 = "select cart_id from cart where pending = '1' and user_name= '" + userName + "'";
-            ResultSet resultSet = statement1.executeQuery(queryString1);
-            if (resultSet.next()) {
-                cartId = resultSet.getInt(1);
-            }
-            return cartId;
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-            return -1;
-        }
-    }
-//20
-    public boolean insertBookIntoCart(int bookId, int bookQuantity, int cartId) {
-        try {
-            Statement statement = connection.createStatement();
-            String st = "insert into cart_book values('" + cartId + "','" + bookId + "','" + bookQuantity + "')";
-            statement.executeUpdate(st);
+    public boolean checkUserNameExistence(String userName) {
+        User u = (User) session
+                .createCriteria(User.class)
+                .add(Restrictions.eq("userName", userName))
+                .uniqueResult();
+
+        if (u != null) {
             return true;
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        } else {
             return false;
         }
     }
+//18
+
+    public boolean checkEmailExistence(String email) {
+        User u = (User) session
+                .createCriteria(User.class)
+                .add(Restrictions.eq("email", email))
+                .uniqueResult();
+
+        if (u != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+//19
+    public int selectPendingCartIdFromCart(String userName) {
+
+        int cartId = -1;
+        Criteria myCriteria = session.createCriteria(Cart.class).add(Restrictions.eq("userName", userName)).add(Restrictions.eq("pending", 1));
+        Cart cart = (Cart) myCriteria.uniqueResult();
+        if (cart != null) {
+            cartId = cart.getCartId();
+        }
+        return cartId;
+    }
+
+    //20
+    public boolean insertBookIntoCart(int bookId, int bookQuantity, int cartId) {
+
+        CartBook c = new CartBook();
+        Book book = selectBookById(bookId);
+        Cart cart = selectCartById(cartId);
+        c.setId(new CartBookId(cartId, bookId));
+        c.setBookQuantity(bookQuantity);
+        c.setBook(book);
+        c.setCart(cart);
+        session.save(c);
+        session.getTransaction().commit();
+        return true;
+    }
 //21
+
     public Vector<Book> selectBooksFromCart(int cartId) {
         Vector<Book> books = new Vector<>();
-        try {
-            Statement statement1 = connection.createStatement();
-            String queryString1 = "select book_id from cart_book where cart_id= '" + cartId + "'";
-            ResultSet resultSet = statement1.executeQuery(queryString1);
-            while (resultSet.next()) {
-                int bookId = resultSet.getInt(1);
-                books.add(selectBookById(bookId));
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-
+        Criteria myCriteria = session.createCriteria(CartBook.class).add(Restrictions.eq("cart.id", cartId));
+        List<CartBook> result = myCriteria.list();
+        for (CartBook cartBook : result) {
+            books.add(cartBook.getBook());
         }
         return books;
     }
 //22
+
     public HashMap<Book, Integer> selectBooksWithQuantitiesFromCart(int cartId) {
         HashMap<Book, Integer> booksWithQuantity = new HashMap<>();
-        try {
 
-            Statement statement1 = connection.createStatement();
-            String queryString1 = "select book_quantity, book_id from cart_book where cart_id= '" + cartId + "' order by book_id";
-            ResultSet resultSet = statement1.executeQuery(queryString1);
-            while (resultSet.next()) {
-                int bookQuantity = resultSet.getInt(1);
-                int bookId = resultSet.getInt(2);
-                booksWithQuantity.put(selectBookById(bookId), bookQuantity);
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-
+        Criteria myCriteria = session.createCriteria(CartBook.class).add(Restrictions.eq("cart.id", cartId));
+        List<CartBook> cartBooks = myCriteria.list();
+        for (CartBook cartBook : cartBooks) {
+            booksWithQuantity.put(cartBook.getBook(), cartBook.getBookQuantity());
         }
         return booksWithQuantity;
     }
 //23
+
     public boolean editUserData(User user) {
-        if (user.getProfilePicUrl() != null) {
-            try {
-                Statement statement1 = connection.createStatement();
-                String queryString1 = "update user set password='" + user.getPassword() + "',credit_Limit=" + user.getCreditLimit() + ",job='" + user.getJob() + "',address='" + user.getAddress() + "',photo='" + user.getProfilePicUrl() + "' where email='" + user.getEmail() + "'";
-                statement1.executeUpdate(queryString1);
-                return true;
-            } catch (SQLException ex) {
-                Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-                return false;
-            }
-        } else {
-            try {
-                Statement statement1 = connection.createStatement();
-                String queryString1 = "update user set password='" + user.getPassword() + "',credit_Limit=" + user.getCreditLimit() + ",job='" + user.getJob() + "',address='" + user.getAddress() + "'where email='" + user.getEmail() + "'";
-                statement1.executeUpdate(queryString1);
-                return true;
-            } catch (SQLException ex) {
-                Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-                return false;
-            }
+        session.update(user);
+        if (!session.getTransaction().wasCommitted()) {
+            session.getTransaction().commit();
         }
+        return true;
+//        if (user.getProfilePicUrl() != null) {
+//            try {
+//                Statement statement1 = connection.createStatement();
+//                String queryString1 = "update user set password='" + user.getPassword() + "',credit_Limit=" + user.getCreditLimit() + ",job='" + user.getJob() + "',address='" + user.getAddress() + "',photo='" + user.getProfilePicUrl() + "' where email='" + user.getEmail() + "'";
+//                statement1.executeUpdate(queryString1);
+//                return true;
+//            } catch (SQLException ex) {
+//                Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+//                return false;
+//            }
+//        } else {
+//            try {
+//                Statement statement1 = connection.createStatement();
+//                String queryString1 = "update user set password='" + user.getPassword() + "',credit_Limit=" + user.getCreditLimit() + ",job='" + user.getJob() + "',address='" + user.getAddress() + "'where email='" + user.getEmail() + "'";
+//                statement1.executeUpdate(queryString1);
+//                return true;
+//            } catch (SQLException ex) {
+//                Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+//                return false;
+//            }
+//        }
     }
 //24
-    public boolean deleteBook(String userName, int bookId) {
-        try {
-            Statement statement = connection.createStatement();
-            String query1 = "select cart_id from cart where user_name =  '" + userName + "'";
-            ResultSet resultSet = statement.executeQuery(query1);
-            if (resultSet.next()) {
-                int c_id = resultSet.getInt(1);
-                String query2 = "delete from cart_book where book_id ='" + bookId + "' and cart_id=" + c_id;
-                int result = statement.executeUpdate(query2);
 
-                if (result == 1) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+    public boolean deleteBook(String userName, int bookId) {
+        int cartId = selectPendingCartIdFromCart(userName);
+        Criteria myCriteria = session.createCriteria(CartBook.class).add(Restrictions.eq("book.id", bookId)).add(Restrictions.eq("cart.id", cartId));
+        CartBook cartBook = (CartBook) myCriteria.uniqueResult();
+        session.delete(cartBook);
+        if (!session.getTransaction().wasCommitted()) {
+            session.getTransaction().commit();
         }
+        return true;
+
     }
 //25
+
     public Vector<Book> selectAllBooksInCategory(String categoryName) {
-        Vector<Book> books = new Vector<>();
-        try {
-            Statement statement1 = connection.createStatement();
-            String queryString1 = "select category_id from category where category_name = '" + categoryName + "'";
-            ResultSet resultSet1 = statement1.executeQuery(queryString1);
-            while (resultSet1.next()) {
-                int category_id = resultSet1.getInt(1);
-                Category category = new Category(category_id, categoryName);
-                Statement statement = connection.createStatement();
-                String queryString = "select * from book where category_id = " + category_id;
-                ResultSet resultSet = statement.executeQuery(queryString);
-                while (resultSet.next()) {
-                    Book book = new Book();
-                    book.setCategory(category);
-                    book.setBookId(resultSet.getInt(1));
-                    book.setBookName(resultSet.getString(2));
-                    book.setQuantity(resultSet.getInt(3));
-                    book.setAuthor(resultSet.getString(4));
-                    book.setPrice(resultSet.getInt(6));
-                    book.setImg(resultSet.getString(7));
-                    book.setDescription(resultSet.getString(8));
-                    books.add(book);
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return books;
+        Criteria criteria = session.createCriteria(Book.class).createCriteria("category").add(Restrictions.eq("categoryName", categoryName));
+        List result = criteria.list();
+        Vector<Book> allBooks = new Vector<>(result);
+
+        return allBooks;
     }
 //26
-   public void updateCart(Cart cart) {
-        try {
-            PreparedStatement statment = connection.prepareStatement("update cart set pending = ? , total = ? where cart_id = ?");
-            statment.setInt(1, cart.getPending());
-            statment.setDouble(2, cart.getTotal());
-            statment.setInt(3, cart.getCartId());
 
-            statment.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    public void updateCart(Cart cart) {
+        Cart cart1 = selectCartById(cart.getCartId());
+        cart1.setPending(cart.getPending());
+        cart1.setTotal(cart.getTotal());
+        session.update(cart1);
+        session.getTransaction().commit();
     }
+
 //27
     public void updateBook(Book book) {
-        try {
-            PreparedStatement statment = connection.prepareStatement("update book set quantity = ? where book_id = ?");
-            statment.setInt(1, book.getQuantity());
-            statment.setInt(2, book.getBookId());
-            statment.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        session.update(book);
+        session.getTransaction().commit();
     }
-//38
+
+//28
     public void updateAllBookInfo(Book book) {
-        try {
-            PreparedStatement statment = connection.prepareStatement("UPDATE book SET quantity=?, author=?, price=?, description=? WHERE book_id= ?");
-            statment.setInt(1, book.getQuantity());
-            statment.setString(2, book.getAuthor());
-            statment.setInt(3, book.getPrice());
-            statment.setString(4, book.getDescription());
-            statment.setInt(5, book.getBookId());
-            statment.executeUpdate();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Criteria criteria = session.createCriteria(Book.class).add(Restrictions.eq("id", book.getBookId()));
+        Book oldBook = (Book) criteria.uniqueResult();
+        oldBook.setQuantity(book.getQuantity());
+        oldBook.setAuthor(book.getAuthor());
+        oldBook.setPrice(book.getPrice());
+        oldBook.setDescription(book.getDescription());
+        session.update(oldBook);
+        session.getTransaction().commit();
     }
-//39
+//29
+
     public boolean selectBookIdFromCart(int cartId, int bookId) {
 
-        try {
-            PreparedStatement statment = connection.prepareStatement("select book_id from cart_book  where cart_id = ? and book_id=?");
-            statment.setInt(1, cartId);
-            statment.setInt(2, bookId);
-            ResultSet rs = statment.executeQuery();
-            if (rs.next()) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+        CartBook cb = (CartBook) session.createCriteria(CartBook.class)
+                .add(Restrictions.eq("cart", (Cart) session.get(Cart.class, cartId)))
+                .add(Restrictions.eq("book", (Book) session.get(Book.class, bookId))).uniqueResult();
+        if (cb != null) {
+            return true;
+        } else {
             return false;
         }
     }
+
 //30
     public boolean increaseBookQuantityInCartByOne(int cartId, int bookId) {
-        try {
-            PreparedStatement sta = connection.prepareStatement("select book_quantity from  cart_book where cart_id = ? and  book_id = ?");
-            sta.setInt(1, cartId);
-            sta.setInt(2, bookId);
-            ResultSet rrs = sta.executeQuery();
-            if (rrs.next()) {
-                int quantity = rrs.getInt(1);
-                quantity = quantity + 1;
 
-                PreparedStatement statment = connection.prepareStatement("update cart_book set book_quantity = ? where book_id = ?");
-                statment.setInt(1, quantity);
-                statment.setInt(2, bookId);
-                if (statment.executeUpdate() == 1) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+        Criteria myCriteria = session.createCriteria(CartBook.class).add(Restrictions.eq("book.id", bookId)).add(Restrictions.eq("cart.id", cartId));
+        CartBook cartBook = (CartBook) myCriteria.uniqueResult();
+        cartBook.setBookQuantity(cartBook.getBookQuantity() + 1);
+        session.update(cartBook);
+        if (!session.getTransaction().wasCommitted()) {
+            session.getTransaction().commit();
         }
-
+        return true;
     }
 //31
+
     public boolean updateBookCountInCart(int cartID, int bookId, int value) {
         try {
-
-            PreparedStatement statment = connection.prepareStatement("update cart_book set book_quantity = ? where book_id = ? and cart_id = ?");
-            statment.setInt(1, value);
-            statment.setInt(2, bookId);
-            statment.setInt(3, cartID);
-            if (statment.executeUpdate() == 1) {
-                return true;
-            } else {
-                return false;
+            Criteria cartBookCriteria = session.createCriteria(CartBook.class, "cb").createAlias("cart", "c").add(Restrictions.and(Restrictions.eq("c.cartId", cartID), Restrictions.eq("cb.book.bookId", bookId)));
+            CartBook cartBook = (CartBook) cartBookCriteria.uniqueResult();
+            cartBook.setBookQuantity(value);                     //quantity type must be edited
+            session.update(cartBook);
+            if (!session.getTransaction().wasCommitted()) {
+                session.getTransaction().commit();
             }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
+            return true;
+        } catch (NullPointerException ex) {
             return false;
         }
-
     }
 //32
+
     public Vector<Cart> selectAllPastCarts(String userName) {
-        int cartId = 0;
-        Cart cart = new Cart();
-        Vector<Cart> pastCarts = new Vector<>();
-        try {
-            Statement statement1 = connection.createStatement();
-            String queryString1 = "select cart_id from cart where pending = '0' and user_name= '" + userName + "'";
-            ResultSet resultSet = statement1.executeQuery(queryString1);
-            while (resultSet.next()) {
-                cartId = resultSet.getInt(1);
-                cart = selectCartById(cartId);
-                pastCarts.add(cart);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ManipulateDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        Criteria myCriteria = session.createCriteria(Cart.class).add(Restrictions.eq("userName", userName)).add(Restrictions.eq("pending", 0));
+        List<Cart> carts = myCriteria.list();
+        Vector<Cart> pastCarts = new Vector<>(carts);
         return pastCarts;
     }
 }

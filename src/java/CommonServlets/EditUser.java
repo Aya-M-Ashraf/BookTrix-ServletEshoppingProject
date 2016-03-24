@@ -12,6 +12,9 @@ import controllers.ControlServlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -48,7 +51,7 @@ public class EditUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String email = null, userName = null, job = null, address = null, password = null, img = null, role = null;
-        double creditLimit = 0;
+        BigDecimal creditLimit = new BigDecimal(0);
 
         try {
             // Create a factory for disk-based file items
@@ -71,7 +74,13 @@ public class EditUser extends HttpServlet {
                     } else if (name.equalsIgnoreCase("userName")) {
                         userName = value;
                     } else if (name.equalsIgnoreCase("creditLimit")) {
-                        creditLimit = Double.parseDouble(value);
+                        DecimalFormatSymbols symbols = new DecimalFormatSymbols();
+                        symbols.setGroupingSeparator(',');
+                        symbols.setDecimalSeparator('.');
+                        String pattern = "#,##0.0#";
+                        DecimalFormat decimalFormat = new DecimalFormat(pattern, symbols);
+                        decimalFormat.setParseBigDecimal(true);
+                        creditLimit = (BigDecimal) decimalFormat.parse(value);
                     } else if (name.equalsIgnoreCase("job")) {
                         job = value;
 
@@ -80,12 +89,10 @@ public class EditUser extends HttpServlet {
                     } else if (name.equalsIgnoreCase("password")) {
                         password = value;
                     }
-                } else {
-                    if (!item.isFormField() && !item.getName().equals("")) {
-                        System.out.println(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 27) + "/web/Resources/users_pics/" + item.getName()));
-                        item.write(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 27) + "/web/Resources/users_pics/" + item.getName()));
-                        img = item.getName();
-                    }
+                } else if (!item.isFormField() && !item.getName().equals("")) {
+                    System.out.println(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 27) + "/web/Resources/users_pics/" + item.getName()));
+                    item.write(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 27) + "/web/Resources/users_pics/" + item.getName()));
+                    img = item.getName();
                 }
             }
 

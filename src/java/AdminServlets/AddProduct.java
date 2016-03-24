@@ -24,13 +24,15 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  * @author Ahmed
  */
 public class AddProduct extends HttpServlet {
+
     ControlServlet controlServlet;
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try {
-            String bookName =null,bookAuthor =null,category =null,desc =null,img =null;
-                    double quantity =0,price =0;
+            String bookName = null, bookAuthor = null, category = null, desc = null, img = null;
+            double quantity = 0, price = 0;
             // Create a factory for disk-based file items
             DiskFileItemFactory factory = new DiskFileItemFactory();
 // Create a new file upload handler
@@ -47,8 +49,8 @@ public class AddProduct extends HttpServlet {
                     String value = item.getString();
                     System.out.println(name);
                     System.out.println(value);
-                    
-                     if (name.equalsIgnoreCase("bookName")) {
+
+                    if (name.equalsIgnoreCase("bookName")) {
                         bookName = value;
                     } else if (name.equalsIgnoreCase("bookAuthor")) {
                         bookAuthor = value;
@@ -61,24 +63,28 @@ public class AddProduct extends HttpServlet {
                         desc = value;
                     } else if (name.equalsIgnoreCase("price")) {
                         price = Double.parseDouble(value);
-                    } 
-
-                } else {
-                    if (!item.isFormField()) {
-
-                        System.out.println(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 27) + "/web/Resources/pics/" + item.getName()));
-                        String imagesPath = "C:\\serverUpload";
-                        item.write(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 27) + "/web/Resources/pics/" + item.getName()));
-                        img =item.getName();
                     }
+
+                } else if (!item.isFormField()) {
+
+                    System.out.println(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 27) + "/web/Resources/pics/" + item.getName()));
+                    String imagesPath = "C:\\serverUpload";
+                    item.write(new File(AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").substring(0, AddProduct.class.getClassLoader().getResource("").getPath().replace("%20", " ").length() - 27) + "/web/Resources/pics/" + item.getName()));
+                    img = item.getName();
                 }
             }
-            
+
             ManipulateDB m = new ManipulateDB();
-            Category categoryObj=m.selectCategoryFromName(category);
-            
-            
-            Book b = new Book(bookName,(int)quantity,bookAuthor ,categoryObj,(int) price,img, desc);
+            Category categoryObj = m.selectCategoryFromName(category);
+
+            Book b = new Book();
+            b.setBookName(bookName);
+            b.setQuantity((int) quantity);
+            b.setAuthor(bookAuthor);
+            b.setCategory(categoryObj);
+            b.setPrice((int) price);
+            b.setImg(img);
+            b.setDescription(desc);
             System.out.println(b);
             m.insertBook(b);
 
@@ -89,19 +95,18 @@ public class AddProduct extends HttpServlet {
         }
 
     }
-    
+
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response){
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         PrintWriter out = null;
         try {
             String categoryName = request.getParameter("categoryName");
-            controlServlet=new ControlServlet();
+            controlServlet = new ControlServlet();
             out = response.getWriter();
             boolean inserted = controlServlet.addCategory(categoryName);
-            if(inserted==true){
+            if (inserted == true) {
                 out.println("Done");
-            }
-            else{
+            } else {
                 out.println("That category already exists");
             }
         } catch (IOException ex) {

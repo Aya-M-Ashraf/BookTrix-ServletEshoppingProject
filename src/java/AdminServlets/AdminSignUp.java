@@ -6,6 +6,7 @@ import controllers.ControlServlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
@@ -70,7 +71,7 @@ public class AdminSignUp extends HttpServlet {
             throws ServletException, IOException {
 
         String email = null, userName = null, job = null, address = null, password = null, img = null, role = "admin";
-        double creditLimit = 0;
+        BigDecimal creditLimit = new BigDecimal(0);
 
         try {
             // Create a factory for disk-based file items
@@ -94,7 +95,6 @@ public class AdminSignUp extends HttpServlet {
                         userName = value;
                     } else if (name.equalsIgnoreCase("job")) {
                         job = value;
-
                     } else if (name.equalsIgnoreCase("address")) {
                         address = value;
                     } else if (name.equalsIgnoreCase("password")) {

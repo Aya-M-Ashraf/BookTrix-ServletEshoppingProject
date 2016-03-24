@@ -81,7 +81,7 @@
     </head>
     <body align="center" onload="checkAdmin()">
 
-        <img src="Resources/users_pics/${sessionScope.viewUser.profilePicUrl}" style="display: inline-block; width: 12%;height: 5%;">
+        <img src="Resources/users_pics/${sessionScope.viewUser.photo}" style="display: inline-block; width: 12%;height: 5%;">
 
         <div class="container">
 
@@ -99,7 +99,7 @@
                         <div>Address<br><input type="text" placeholder="address" id="address"  name="address" value="${sessionScope.viewUser.address}"/></div>
                         <div>Password:<br><input type="password" placeholder="Password" required="" id="password"  name="password" value="${sessionScope.viewUser.password}"/></div>
                         <div id="passwordDiv2">Confirm Password:<br><input type="password" placeholder="Retype Password" required="" id="password2" value="${sessionScope.viewUser.password}" name="password2" onblur="checkPassword()"/></div>
-                        <div align = "center" id="pic"> <h5> Choose a Personal Photo</h5><input type="file" Name=fileName align="right" value="${sessionScope.viewUser.profilePicUrl}"/></div>
+                        <div align = "center" id="pic"> <h5> Choose a Personal Photo</h5><input type="file" Name=fileName align="right" value="${sessionScope.viewUser.photo}"/></div>
                         <div id="btn"><input type="submit" value="Save Changes"/></div> <span id="usernamemsg" style="color: red"></span>
                     </div>
                 </form>

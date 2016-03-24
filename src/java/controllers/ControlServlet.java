@@ -4,6 +4,7 @@ import Beans.Book;
 import Beans.Cart;
 import Beans.User;
 import DBconnectivity.ManipulateDB;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class ControlServlet {
         if (cartId == -1) {                 //no pending cart for this user is found
             Cart cart = new Cart();
             cart.setCreationDate(new java.sql.Date(new java.util.Date().getTime()));
-            cart.setUser(manipulateDB.selectUserByUserName(userName));
+            cart.setUserName(manipulateDB.selectUserByUserName(userName).getUserName());
             cart.setPending(1);
             manipulateDB.insertCart(cart);
             return manipulateDB.insertBookIntoCart(bookId, bookQuantity, manipulateDB.selectPendingCartIdFromCart(userName));
@@ -67,25 +68,23 @@ public class ControlServlet {
     }
 
     public boolean buyMyCart(String userName) {
-        double totalCartCost = 0;
+        BigDecimal totalCartCost = new BigDecimal(0);
         int cartId = manipulateDB.selectPendingCartIdFromCart(userName);
         System.out.println(cartId);
         Cart cart = manipulateDB.selectCartById(cartId);
         cart.setPending(0);
 
-        for (Map.Entry<Book, Integer> book : cart.getMyBooks().entrySet()) {
-            totalCartCost += ((book.getKey().getPrice()) * book.getValue());
+        for (Map.Entry<Book, Integer> book : manipulateDB.selectBooksWithQuantitiesFromCart(cartId).entrySet()) {
+            totalCartCost = totalCartCost.add(BigDecimal.valueOf(book.getKey().getPrice() * book.getValue()));
         }
-        System.out.println(totalCartCost);
-        System.out.println(cart.getUser().getCreditLimit());
-        if (totalCartCost <= cart.getUser().getCreditLimit()) // customer can afford the cart
+        User user = manipulateDB.selectUserByUserName(cart.getUserName());
+        if (totalCartCost.compareTo(user.getCreditLimit()) == -1 || totalCartCost.compareTo(user.getCreditLimit()) == 0) // customer can afford the cart
         {
-            cart.getUser().setCreditLimit(cart.getUser().getCreditLimit() - totalCartCost);
-            cart.setTotal(totalCartCost);
-            System.out.println(totalCartCost);
+            user.setCreditLimit(user.getCreditLimit().subtract(totalCartCost));
+            cart.setTotal(totalCartCost.intValue());
             manipulateDB.updateCart(cart);
-            manipulateDB.editUserData(cart.getUser());
-            for (Map.Entry<Book, Integer> book : cart.getMyBooks().entrySet()) {
+            manipulateDB.editUserData(user);
+            for (Map.Entry<Book, Integer> book : manipulateDB.selectBooksWithQuantitiesFromCart(cartId).entrySet()) {
                 Book eachBook = book.getKey();
                 eachBook.setQuantity((eachBook.getQuantity()) - book.getValue());
                 manipulateDB.updateBook(eachBook);
