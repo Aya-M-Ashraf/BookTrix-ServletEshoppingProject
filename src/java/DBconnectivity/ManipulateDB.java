@@ -250,7 +250,7 @@ public class ManipulateDB {
         int cartId = -1;
         Criteria myCriteria = session.createCriteria(Cart.class).add(Restrictions.eq("userName", userName)).add(Restrictions.eq("pending", 1));
         Cart cart = (Cart) myCriteria.uniqueResult();
-        session.close();
+        
         if (cart != null) {
             cartId = cart.getCartId();
         }
@@ -300,7 +300,7 @@ public class ManipulateDB {
         for (CartBook cartBook : cartBooks) {
             booksWithQuantity.put(cartBook.getBook(), cartBook.getBookQuantity());
         }
-        session.close();
+        
         return booksWithQuantity;
     }
 //23
@@ -357,8 +357,8 @@ public class ManipulateDB {
 
 //27
     public void updateBook(Book book) {
-        session = sessionFactory.openSession();
-        session.beginTransaction();
+//        session = sessionFactory.openSession();
+//        session.beginTransaction();
         session.update(book);
         session.getTransaction().commit();
         
