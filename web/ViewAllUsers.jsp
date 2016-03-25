@@ -83,7 +83,7 @@
             <c:forEach items="${sessionScope.allusers}" var="myUser" varStatus="stat">
 
                 <fmt:parseNumber var="i" type="number" value="${stat.index}" ></fmt:parseNumber>            
-                <c:url var="myUrl" value="/Resources/users_pics/${myUser.profilePicUrl}"  context="/BookTrix"/>
+                <c:url var="myUrl" value="/Resources/users_pics/${myUser.photo}"  context="/BookTrix"/>
                 <tr>
                     <td  class="myuser" style="width: 700px" id="${myUser.email}" > 
                         <table id="${myUser.email}">

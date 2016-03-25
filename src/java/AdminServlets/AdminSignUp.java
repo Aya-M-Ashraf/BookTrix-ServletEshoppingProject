@@ -42,7 +42,7 @@ public class AdminSignUp extends HttpServlet {
                 boolean emailFound = controlServlet.doesEmailExist(email);
                 System.out.println(emailFound);
                 if (emailFound) {
-                    out.println("This email alraedy exists");
+                    out.println("This email already exists");
                     System.out.println("email exists");
                 } else {
                     out.println("valid");

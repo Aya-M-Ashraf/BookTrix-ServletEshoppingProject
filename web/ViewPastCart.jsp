@@ -70,9 +70,9 @@
                                     <td style="width:100px;" id="${myCart.cartId}">
                                     </td>
                                     <td  id="${myCart.cartId}" >
-                                        <h3 id="${myCart.cartId}">${myCart.user.userName}</h3>
+                                        <h3 id="${myCart.cartId}">${myCart.userName}</h3>
                                         <h3 id="${myCart.cartId}">Cost : ${myCart.total} $</h3>
-                                        <h3 id="${myCart.cartId}">with ${myCart.myBooks.size()} books</h3>
+                                        <h3 id="${myCart.cartId}">with ${myCart.cartBooks.size()} books</h3>
                                     </td>
                                 </tr> 
                             </table>                      

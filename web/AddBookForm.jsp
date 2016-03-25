@@ -85,7 +85,7 @@
                         <select name="category" id="categories" >
                             <c:forEach items="${sessionScope.allcategories}" var="myCategory" varStatus="stat">
                                 <fmt:parseNumber var="i" type="number" value="${stat.index}" ></fmt:parseNumber> 
-                                <option value="${myCategory.name}">${myCategory.name}</option>
+                                <option value="${myCategory.categoryName}">${myCategory.categoryName}</option>
                             </c:forEach>
                         </select>
                         <br>

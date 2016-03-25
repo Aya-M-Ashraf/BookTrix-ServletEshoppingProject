@@ -95,7 +95,7 @@
             <tr>
                 <td align="center">
 
-                    Category: <br><input type="text" name="category" value="${sessionScope.book.category.name}" style="width: 40%; " disabled >
+                    Category: <br><input type="text" name="category" value="${sessionScope.book.category.categoryName}" style="width: 40%; " disabled >
 
 
                 </td>
