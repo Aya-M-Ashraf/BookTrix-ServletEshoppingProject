@@ -115,11 +115,13 @@ public class ManipulateDB {
         for (Iterator iterator = cartBook.iterator(); iterator.hasNext();) {
             CartBook c = (CartBook) iterator.next();
             session.delete(c);
+            System.out.println("delete book from cart" +c.getCart().getUserName()+ c.getBook().getBookName());
         }
         Criteria myCriteria = session.createCriteria(Book.class);
         Book book = (Book) myCriteria.add(Restrictions.eq("bookId", bookId)).uniqueResult();
         session.delete(book);
-        
+        System.out.println("delete book"+book.getBookName());
+        session.getTransaction().commit();
         return true;
 
     }
